@@ -1,0 +1,2335 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>5 Calculation of statistics &mdash; AURA Data Aggregation Guide 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=14e3707c" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../_static/aura-sidebar.js?v=6695ddf7"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="6 Calculation of basic exceedance information" href="06_exceedances.html" />
+    <link rel="prev" title="4 Calculation of base aggregations" href="04_base_aggregations.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div class="aura-branding">
+  <div class="aura-brand-row">
+    <a class="aura-eea-link" href="https://www.eea.europa.eu/" aria-label="European Environment Agency">
+      <img class="aura-eea-logo" src="../_static/EEA.png" alt="European Environment Agency">
+    </a>
+    <div class="aura-name">AURA</div>
+  </div>
+
+  <nav class="aura-sites" aria-label="AURA websites">
+    <a href="https://eeadata.github.io/AQ.Portal/">portal</a>
+    <a href="https://eeadata.github.io/AQ.Documentation.ReportingGuide/">reporting guide</a>
+    <a href="https://eeadata.github.io/AQ.Documentation.ReferenceGuide/">reference guide</a>
+  </nav>
+
+  <div class="aura-resources">
+    <div class="aura-resources-label">AURA resources</div>
+    <span class="aura-current" aria-current="page">data aggregation guide</span>
+    <a class="aura-register-link" href="https://eeadata.github.io/AQ.Documentation.ReferenceGuide/register.html">
+      Correction &amp; modification register
+    </a>
+  </div>
+</div>
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+  
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_raw_data.html">2 Processing of raw data by EEA system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_preprocessing.html">3 Data pre-processing prior to calculation of aggregations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_base_aggregations.html">4 Calculation of base aggregations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">5 Calculation of statistics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#averages">5.1 Averages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#calculation-of-averages">5.1.1 Calculation of Averages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#winter-and-summer-means">5.1.2 Winter and summer means</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#rolling-six-month-averages">5.2 Rolling Six-Month Averages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#maximum-and-minimum">5.3 Maximum and minimum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#number-of-exceedances-above-a-threshold">5.4 Number of Exceedances Above a Threshold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#three-consecutive-values-above-a-threshold">5.5 Three consecutive values Above a Threshold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#kth-highest-value-maxk">5.6 Kth highest value (maxk)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#percentiles">5.7 Percentiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#aot40-only-o3">5.8 AOT40 (only O<sub>3</sub>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#numberof-valid-hours-for-aot40-aot40-nv">5.8.1 Numberof valid hours for AOT40 (AOT40-nv)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aot40-for-vegetation-protection-aot40c">5.8.2 AOT40 for vegetation protection (AOT40c)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aot40-for-forest-protection-aot40f">5.8.3 AOT40 for forest protection (AOT40f)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aot40-for-vegetation-protection-averaged-over-5-years">5.8.4 AOT40 for vegetation protection averaged over 5 years</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#somo35-and-somo10-only-o3">5.9 SOMO35 and SOMO10 (Only O₃)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#multi-annual-aggregates">5.10 Multi-Annual Aggregates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#p3y-3-year-average-of-annual-means">5.10.1 P3Y (3-Year Average of Annual Means)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#p3y-dmaxabove120">5.10.2 P3Y-dmaxAbove120</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#average-exposure-indicator-aei-pm2-5-and-no2">5.11 Average Exposure Indicator (AEI) (PM<sub>2.5</sub> and NO<sub>2</sub>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#national-exposure-reduction-target-nert">5.12 National Exposure Reduction Target (NERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#average-exposure-reduction-obligation-aero">5.13 Average Exposure Reduction Obligation (AERO)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="06_exceedances.html">6 Calculation of basic exceedance information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_data_coverage.html">7 Data capture, time coverage and data coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_aqi.html">8 European Air Quality Index (AQI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_references.html">9 References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="footnotes.html">Footnotes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex_a.html">Annex A: Environmental objectives and reporting metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex_b.html">Annex B: Assessment thresholds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex_c.html">Annex C: Historical methods for calculation of data capture and time coverage from multi day sampler-based data types integrated over an averaging period</a></li>
+</ul>
+
+  <a class="aura-pdf-link" href="../_static/AQ_Data_Aggregation_Guide.pdf" title="Complete guide in PDF format">PDF version</a>
+
+
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">AURA Data Aggregation Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">5 Calculation of statistics</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/chapters/05_statistics.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="calculation-of-statistics">
+<h1>5 Calculation of statistics<a class="headerlink" href="#calculation-of-statistics" title="Link to this heading"></a></h1>
+<p>This section provides a description of compliance assessment and general statistics that are required by the e-Reporting system. The statistics or aggregations are parameters that are calculated from the raw and/or base aggregations presented in Chapter 4. All statistics shall be accompanied by an associated % data capture rate as specified in Chapter 7.</p>
+<p>The following sections mathematically describe the statistics to be calculated as specified in Table 3.</p>
+<p>Table 4 and Table 5 complement Table 3 by specifying:</p>
+<ul class="simple">
+<li><p>the base primary observation or aggregation each statistic is based on,</p></li>
+<li><p>the minimum valid base values to consider the aggregation valid and</p></li>
+<li><p>the vocabulary URL to get more information on the aggregation.</p></li>
+</ul>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><blockquote>
+<p><strong>KEY NOTE</strong></p>
+<p>Table 3 <em>details all the KEY aggregations necessary for checking compliance with the Ambient Air Quality Directive 2004/107/EC and 2008/50/EC, as well as with the recast Directive (EU) 2024/2881, together with the IPR Decision. The EXTRA statistics might be useful for Air Quality Assessment. All the statistics are to be calculated at SamplingPoint (i.e., station) level.</em></p>
+</blockquote></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p>Table 3: Key aggregations and extra statistics. See also Table 4 and Table 5</p>
+<div class="aura-table-scroll" role="region" aria-label="Table 3: horizontally scrollable aggregation table" tabindex="0">
+<table class="aura-stat-table aura-stat-table-3">
+<colgroup>
+<col style="width: 6%" />
+<col style="width: 5%" />
+<col style="width: 11%" />
+<col style="width: 10%" />
+<col style="width: 11%" />
+<col style="width: 11%" />
+<col style="width: 13%" />
+<col style="width: 10%" />
+<col style="width: 11%" />
+<col style="width: 6%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th colspan="2" rowspan="3"><strong>Pollutant [code] **</strong></th>
+<th colspan="8"><strong>Aggregation based on</strong></th>
+</tr>
+<tr class="odd">
+<th colspan="2"><p><strong>Hourly values</strong></p>
+<p>(…/aq/primaryObservation/hour)</p></th>
+<th colspan="2"><p><strong>Daily values</strong></p>
+<p>(…/aq/primaryObservation/day)</p>
+<p>(…/aq/aggregationprocess/P1D)</p></th>
+<th colspan="2"><p><strong>Daily maximum 8-hour running mean</strong> (aggregated from hourly values)</p>
+<p>(…/aq/aggregationprocess/P8H-dmax)</p></th>
+<th colspan="2"><p><strong>Non hourly/daily</strong> (sample) data</p>
+<p>(…/aq/primaryObservation/var)</p></th>
+</tr>
+<tr class="header">
+<th><blockquote>
+<p><strong>Description</strong></p>
+</blockquote></th>
+<th><strong>Notation</strong></th>
+<th><blockquote>
+<p><strong>Description</strong></p>
+</blockquote></th>
+<th><strong>Notation</strong></th>
+<th><blockquote>
+<p><strong>Description</strong></p>
+</blockquote></th>
+<th><strong>Notation</strong></th>
+<th><blockquote>
+<p><strong>Description</strong></p>
+</blockquote></th>
+<th><strong>Notation</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td rowspan="3"><p>SO<sub>2</sub></p>
+<p><a class="aura-pollutant-code" href="http://dd.eionet.europa.eu/vocabulary/aq/pollutant/1">1</a></p></td>
+<td><blockquote>
+<p>KEY</p>
+<p>(UNTIL 31/12/2029)</p>
+</blockquote></td>
+<td><ul>
+<li><p>annual mean</p></li>
+<li><p>hours with c&gt;350 µg/m<sup>3</sup> in 1 year</p></li>
+<li><p>winter mean</p></li>
+<li><p>periods of 3 consecutive hours c&gt;500 µg/m<sup>3</sup> in 1 year</p></li>
+</ul></td>
+<td><p><strong>P1Y</strong></p>
+<p><strong>P1Y-hrsAbove350</strong></p>
+<p><strong>winter-avg</strong></p>
+<p><strong>P1Y-3hAbove500</strong></p></td>
+<td><ul>
+<li><p>annual mean*</p></li>
+<li><p>days with c&gt;125 μg/m<sup>3</sup> in 1y</p></li>
+<li><p>winter mean *</p></li>
+</ul></td>
+<td><p><strong>P1Y</strong></p>
+<p><strong>P1Y-daysAbove125</strong></p>
+<p><strong>winter-avg</strong></p></td>
+<td></td>
+<td></td>
+<td><ul>
+<li><p>annual mean weighted average</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+</tr>
+<tr class="even">
+<td><blockquote>
+<p>KEY</p>
+<p>(FROM 01/01/2030)</p>
+</blockquote></td>
+<td><ul>
+<li><p>annual mean</p></li>
+<li><p>hours with c&gt;350 µg/m<sup>3</sup> in 1 year</p></li>
+<li><p>winter mean</p></li>
+<li><p>periods of 3 consecutive hours c&gt;350 µg/m<sup>3</sup> in 1 year</p></li>
+<li><p>hours with c&gt;275 µg/m<sup>3</sup> in 1 year</p></li>
+</ul></td>
+<td><p><strong>P1Y</strong></p>
+<p><strong>P1Y-hrsAbove350</strong></p>
+<p><strong>winter-avg</strong></p>
+<p><strong>P1Y-3hAbove350</strong></p>
+<p><strong>P1Y-hrsAbove275</strong></p></td>
+<td><ul>
+<li><p>annual mean*</p></li>
+<li><p>days with c&gt;50 μg/m<sup>3</sup> in 1y</p></li>
+<li><p>winter mean *</p></li>
+</ul></td>
+<td><p><strong>P1Y</strong></p>
+<p><strong>P1Y-daysAbove50</strong></p>
+<p><strong>winter-avg</strong></p></td>
+<td></td>
+<td></td>
+<td><ul>
+<li><p>annual mean weighted average</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+</tr>
+<tr class="odd">
+<td><blockquote>
+<p>EXTRA</p>
+</blockquote></td>
+<td><ul>
+<li><p>daily mean</p></li>
+<li><p>hours with c&gt;350 µg/m<sup>3</sup> in 1 month</p></li>
+<li><p>25<sup>th</sup> highest hourly value</p></li>
+<li><p>99.73 percentile</p></li>
+<li><p>99.79 percentile</p></li>
+<li><p>50 percentile</p></li>
+<li><p>hourly maximum</p></li>
+<li><p>hourly minimum</p></li>
+</ul></td>
+<td><p><strong>P1D</strong></p>
+<p><strong>P1M-hrsAbove350</strong></p>
+<p><strong>P1Y-hr-max25</strong></p>
+<p><strong>P1Y-hr-max-per99.73</strong></p>
+<p><strong>P1Y-hr-max-per99.97</strong></p>
+<p><strong>P1Y-hr-per50</strong></p>
+<p><strong>P1Y-hr-max</strong></p>
+<p><strong>P1Y-hr-min</strong></p></td>
+<td><ul>
+<li><p>4<sup>th</sup> highest daily value</p></li>
+<li><p>99.18 percentile{ref}`[14] <footnote-14>`</p></li>
+<li><p>99 percentile</p></li>
+<li><p>95.07 percentile</p></li>
+<li><p>50 percentile</p></li>
+<li><p>daily maximum</p></li>
+<li><p>daily minimum</p></li>
+</ul></td>
+<td><p><strong>P1Y-day-max4</strong></p>
+<p><strong>P1Y-day-max-per99.18</strong><a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<p><strong>P1Y-P1D-per99</strong></p>
+<p><strong>P1Y-P1D-per95.07</strong></p>
+<p><strong>P1Y-day-per50</strong></p>
+<p><strong>P1Y-day-max</strong></p>
+<p><strong>P1Y-day-min</strong></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td rowspan="3"><p>NO<sub>2</sub></p>
+<p><a class="aura-pollutant-code" href="http://dd.eionet.europa.eu/vocabulary/aq/pollutant/8">8</a></p></td>
+<td><blockquote>
+<p>KEY</p>
+<p>(UNTIL 31/12/2029)</p>
+</blockquote></td>
+<td><ul>
+<li><p>annual mean</p></li>
+</ul>
+<ul>
+<li><p>hours with c&gt;200 μg/m<sup>3</sup></p></li>
+<li><p>periods 3 consecutive hours c&gt;400 μg/m<sup>3</sup></p></li>
+</ul></td>
+<td><p><strong>P1Y</strong></p>
+<p><strong>P1Y-hrsAbove200</strong></p>
+<p><strong>P1Y-3hAbove400</strong></p></td>
+<td><ul>
+<li><p>annual mean*</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+<td></td>
+<td></td>
+<td><ul>
+<li><p>annual mean weighted average</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+</tr>
+<tr class="odd">
+<td><blockquote>
+<p>KEY</p>
+<p>(FROM 01/01/2030)</p>
+</blockquote></td>
+<td><ul>
+<li><p>annual mean</p></li>
+<li><p>hours with c&gt;150 µg/m<sup>3</sup></p></li>
+</ul>
+<ul>
+<li><p>hours with c&gt;200 μg/m<sup>3</sup></p></li>
+<li><p>periods 3 consecutive hours c&gt;200 μg/m<sup>3</sup></p></li>
+</ul></td>
+<td><p><strong>P1Y</strong></p>
+<p><strong>P1Y-hrsAbove150</strong></p>
+<p><strong>P1Y-hrsAbove200</strong></p>
+<p><strong>P1Y-3hAbove200</strong></p></td>
+<td><ul>
+<li><p>annual mean*</p></li>
+<li><p>days with c&gt;50 μg/m<sup>3</sup> in 1y</p></li>
+</ul></td>
+<td><p><strong>P1Y</strong></p>
+<p><strong>P1Y-daysAbove50</strong></p></td>
+<td></td>
+<td></td>
+<td><ul>
+<li><p>annual mean weighted average</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+</tr>
+<tr class="even">
+<td><blockquote>
+<p>EXTRA</p>
+</blockquote></td>
+<td><ul>
+<li><p>daily mean</p></li>
+<li><p>day hour max</p></li>
+<li><p>hours with c&gt;200 μg/m<sup>3</sup> in 1 month</p></li>
+<li><p>19<sup>th</sup> highest hourly value</p></li>
+<li><p>99.79 percentile</p></li>
+<li><p>99.97 percentile</p></li>
+<li><p>hours c&gt;400 μg/m<sup>3</sup></p></li>
+</ul>
+<ul>
+<li><p>50 percentile</p></li>
+<li><p>hourly maximum</p></li>
+<li><p>hourly minimum</p></li>
+<li><p>monthly mean</p></li>
+<li><p>3-year mean</p></li>
+</ul></td>
+<td><p><strong>P1D</strong></p>
+<p><strong>P1D-hr-max</strong></p>
+<p><strong>P1M-hrsAbove200</strong></p>
+<p><strong>P1Y-hr-max19</strong></p>
+<p><strong>P1Y-hr-max-per99.79</strong></p>
+<p><strong>P1Y-hr-max-per99.97</strong></p>
+<p><strong>P1Y-hrsAbove400</strong></p>
+<p><strong>P1Y- hr-per50</strong></p>
+<p><strong>P1Y-hr-max</strong></p>
+<p><strong>P1Y-hr-min</strong></p>
+<p><strong>P1M</strong></p>
+<p><strong>P3Y</strong></p></td>
+<td><ul>
+<li><p>99 percentile</p></li>
+<li><p>95.07 percentile</p></li>
+<li><p>50 percentile</p></li>
+<li><p>daily maximum</p></li>
+<li><p>daily minimum</p></li>
+</ul></td>
+<td><p><strong>P1Y-P1D-per99</strong></p>
+<p><strong>P1Y-P1D-per95.07</strong></p>
+<p><strong>P1Y-day-per50</strong></p>
+<p><strong>P1Y-day-max</strong></p>
+<p><strong>P1Y-day-min</strong></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td rowspan="2"><p>NO<sub>x</sub></p>
+<p><a class="aura-pollutant-code" href="http://dd.eionet.europa.eu/vocabulary/aq/pollutant/9">9</a></p></td>
+<td><blockquote>
+<p>KEY</p>
+</blockquote></td>
+<td><ul>
+<li><p>annual mean</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+<td><ul>
+<li><p>annual mean*</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+<td></td>
+<td></td>
+<td><ul>
+<li><p>annual mean weighted average</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+</tr>
+<tr class="even">
+<td><blockquote>
+<p>EXTRA</p>
+</blockquote></td>
+<td><ul>
+<li><p>daily mean</p></li>
+<li><p>50 percentile</p></li>
+<li><p>hourly maximum</p></li>
+<li><p>hourly minimum</p></li>
+<li><p>monthly mean</p></li>
+<li><p>3-year mean</p></li>
+</ul></td>
+<td><p><strong>P1D</strong></p>
+<p><strong>P1Y- hr-per50</strong></p>
+<p><strong>P1Y-hr-max</strong></p>
+<p><strong>P1Y-hr-min</strong></p>
+<p><strong>P1M</strong></p>
+<p><strong>P3Y</strong></p></td>
+<td><ul>
+<li><p>50 percentile</p></li>
+<li><p>daily maximum</p></li>
+<li><p>daily minimum</p></li>
+</ul></td>
+<td><p><strong>P1Y-day-per50</strong></p>
+<p><strong>P1Y-day-max</strong></p>
+<p><strong>P1Y-day-min</strong></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td rowspan="3"><p>O<sub>3</sub></p>
+<p><a class="aura-pollutant-code" href="http://dd.eionet.europa.eu/vocabulary/aq/pollutant/7">7</a></p></td>
+<td><blockquote>
+<p>KEY</p>
+<p>(UNTIL 31/12/2029)</p>
+</blockquote></td>
+<td><ul>
+<li><p>hours with c&gt;180 μg/m<sup>3</sup> in 1 year</p></li>
+<li><p>hours with c&gt;240 μg/m<sup>3</sup> in 1 year</p></li>
+<li><p>AOT40c</p></li>
+<li><p>AOT40c averaged over 5y</p></li>
+</ul></td>
+<td><p><strong>P1Y-hrsAbove180</strong></p>
+<p><strong>P1Y-hrsAbove240</strong></p>
+<p><strong>AOT40c</strong></p>
+<p><strong>AOT40c-P5Y</strong></p></td>
+<td></td>
+<td></td>
+<td><ul>
+<li><p>days with dmax&gt;120 µg/m<sup>3</sup> in 1 year</p></li>
+<li><p>days with dmax&gt;120 μg/m<sup>3</sup> in 3 years</p></li>
+</ul></td>
+<td><p><strong>P1Y-dmaxAbove120</strong></p>
+<p><strong>P3Y-dmaxAbove120</strong></p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><blockquote>
+<p>KEY</p>
+<p>(FROM 01/01/2030)</p>
+</blockquote></td>
+<td><ul>
+<li><p>hours with c&gt;180 μg/m<sup>3</sup> in 1 year</p></li>
+<li><p>hours with c&gt;240 μg/m<sup>3</sup> in 1 year</p></li>
+<li><p>AOT40c</p></li>
+<li><p>AOT40c averaged over 5y</p></li>
+</ul></td>
+<td><p><strong>P1Y-hrsAbove180</strong></p>
+<p><strong>P1Y-hrsAbove240</strong></p>
+<p><strong>AOT40c</strong></p>
+<p><strong>AOT40c-P5Y</strong></p></td>
+<td></td>
+<td></td>
+<td><ul>
+<li><p>days with dmax&gt;120 μg/m<sup>3</sup> in 3 year</p></li>
+<li><p>days with dmax&gt;100 μg/m<sup>3</sup> in 1 year</p></li>
+</ul></td>
+<td><p><strong>P3Y-dmaxAbove120</strong></p>
+<p><strong>P1Y-dmaxAbove100</strong></p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><blockquote>
+<p>EXTRA</p>
+</blockquote></td>
+<td><ul>
+<li><p>daily mean</p></li>
+<li><p>hours with c&gt;180 μg/m<sup>3</sup> in 1 day</p></li>
+<li><p>hours with c&gt;240 μg/m<sup>3</sup> in 1 day</p></li>
+<li><p>monthly mean</p></li>
+<li><p>hours with c&gt;180 μg/m<sup>3</sup> in 1 month</p></li>
+<li><p>hours with c&gt;240 μg/m<sup>3</sup> in 1 month</p></li>
+<li><p>AOT40h</p></li>
+<li><p>AOT40 forest protection</p></li>
+<li><p>AOT40cmeasured</p></li>
+<li><p>AOT40fmeasured</p></li>
+<li><p>running 8h mean</p></li>
+<li><p>maximum daily 8h mean</p></li>
+<li><p>days with dmax&gt;100 μg/m<sup>3</sup> in 1 month</p></li>
+<li><p>days with dmax&gt;120 μg/m<sup>3</sup> in 1 month</p></li>
+<li><p>50 percentile</p></li>
+<li><p>annual mean</p></li>
+<li><p>hourly maximum</p></li>
+<li><p>hourly minimum</p></li>
+<li><p>summer average</p></li>
+<li><p>SOMO35</p></li>
+<li><p>SOMO10</p></li>
+<li><p>6-month mean</p></li>
+<li><p>3-year mean</p></li>
+</ul></td>
+<td><p><strong>P1D</strong></p>
+<p><strong>P1D-hrsAbove180</strong></p>
+<p><strong>P1D-hrsAbove240</strong></p>
+<p><strong>P1M</strong></p>
+<p><strong>P1M-hrsAbove180</strong></p>
+<p><strong>P1M-hrsAbove240</strong></p>
+<p><strong>AOT40h</strong></p>
+<p><strong>AOT40f</strong></p>
+<p><strong>AOT40cmeasured</strong></p>
+<p><strong>AOT40fmeasured</strong></p>
+<p><strong>P8H-run</strong></p>
+<p><strong>P8H-dmax</strong></p>
+<p><strong>P1M-dmaxAbove100</strong></p>
+<p><strong>P1M-dmaxAbove120</strong></p>
+<p><strong>P1Y-hr-per50</strong></p>
+<p><strong>P1Y</strong></p>
+<p><strong>P1Y-hr-max</strong></p>
+<p><strong>P1Y-hr-min</strong></p>
+<p><strong>summer-avg</strong></p>
+<p><strong>SOMO35</strong></p>
+<p><strong>SOMO10</strong></p>
+<p><strong>P6M</strong></p>
+<p><strong>P3Y</strong></p></td>
+<td><ul>
+<li><p>annual mean*</p></li>
+<li><p>50 percentile</p></li>
+<li><p>99 percentile</p></li>
+<li><p>daily maximum</p></li>
+<li><p>daily minimum</p></li>
+</ul></td>
+<td><p><strong>P1Y</strong></p>
+<p><strong>P1Y-day-per50</strong></p>
+<p><strong>P1Y-P1D-per99</strong></p>
+<p><strong>P1Y-day-max</strong></p>
+<p><strong>P1Y-day-min</strong></p></td>
+<td><ul>
+<li><p>Maximum daily 8-hour max in a year</p></li>
+<li><p>26<sup>th</sup> highest 8h day max</p></li>
+<li><p>93.15 percentile (max26)</p></li>
+<li><p>95.07 perdentile</p></li>
+<li><p>99 percentile</p></li>
+<li><p>day max average over 1y</p></li>
+<li><p>P8H-dmax average over 6-months</p></li>
+<li><p>annual max of P6M-P8H-dmax (peak season)</p></li>
+</ul></td>
+<td><p><strong>P1Y-dx-max</strong></p>
+<p><strong>P1Y-dx-max26</strong></p>
+<p><strong>P1Y-dmax-per93.15</strong></p>
+<p><strong>P1Y-dmax-per95.07</strong></p>
+<p><strong>P1Y-dmax-per99</strong></p>
+<p><strong>P1Y-dx-avg</strong></p>
+<p><strong>P6M-P8H-dmax</strong></p>
+<p><strong>P1Y-maxP6M-P8H-dmax</strong></p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td rowspan="3"><p>CO</p>
+<p><a class="aura-pollutant-code" href="http://dd.eionet.europa.eu/vocabulary/aq/pollutant/10">10</a></p></td>
+<td><blockquote>
+<p>KEY</p>
+<p>(UNTIL 31/12/2029)</p>
+</blockquote></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td><ul>
+<li><p>days with P8H-dmax&gt;10 mg/m<sup>3</sup></p></li>
+</ul></td>
+<td><strong>P1Y-8hdmxAbove10</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><blockquote>
+<p>KEY</p>
+<p>(FROM 01/01/2030)</p>
+</blockquote></td>
+<td></td>
+<td></td>
+<td><ul>
+<li><p>days with c&gt;4 mg/m<sup>3</sup> in 1y</p></li>
+</ul></td>
+<td><strong>P1Y-daysAbove4</strong></td>
+<td><ul>
+<li><p>days with P8H-dmax&gt;10 mg/m<sup>3</sup></p></li>
+</ul></td>
+<td><strong>P1Y-8hdmxAbove10</strong></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td><blockquote>
+<p>EXTRA</p>
+</blockquote></td>
+<td><ul>
+<li><p>daily mean</p></li>
+<li><p>annual mean</p></li>
+<li><p>monthly mean</p></li>
+<li><p>running 8h mean</p></li>
+<li><p>maximum daily 8h mean</p></li>
+<li><p>50 percentile</p></li>
+<li><p>hourly maximum</p></li>
+<li><p>hourly minimum</p></li>
+<li><p>3-year mean</p></li>
+</ul></td>
+<td><p><strong>P1D</strong></p>
+<p><strong>P1Y</strong></p>
+<p><strong>P1M</strong></p>
+<p><strong>P8H-run</strong></p>
+<p><strong>P8H-dmax</strong></p>
+<p><strong>P1Y- hr-per50</strong></p>
+<p><strong>P1Y-hr-max</strong></p>
+<p><strong>P1Y-hr-min</strong></p>
+<p><strong>P3Y</strong></p></td>
+<td><ul>
+<li><p>annual mean*</p></li>
+<li><p>50 percentile</p></li>
+<li><p>99 percentile</p></li>
+<li><p>95.07 percentile</p></li>
+<li><p>daily maximum</p></li>
+<li><p>daily minimum</p></li>
+</ul></td>
+<td><p><strong>P1Y</strong></p>
+<p><strong>P1Y-day-per50</strong></p>
+<p><strong>P1Y-P1D-per99</strong></p>
+<p><strong>P1Y-P1D-per95.07</strong></p>
+<p><strong>P1Y-day-max</strong></p>
+<p><strong>P1Y-day-min</strong></p></td>
+<td><ul>
+<li><p>day max average over 1y</p></li>
+<li><p>Maximum daily 8-hour max over 1y</p></li>
+</ul></td>
+<td><p><strong>P1Y-dx-avg</strong></p>
+<p><strong>P1Y-dx-max</strong></p></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td rowspan="3"><p>PM<sub>10</sub></p>
+<p><a class="aura-pollutant-code" href="http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5">5</a></p></td>
+<td><blockquote>
+<p>KEY</p>
+<p>(UNTIL 31/12/2029)</p>
+</blockquote></td>
+<td><ul>
+<li><p>annual mean</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+<td><ul>
+<li><p>annual mean*</p></li>
+<li><p>days with c&gt;50 µg/m<sup>3</sup></p></li>
+<li><p>90.4 percentile</p></li>
+</ul></td>
+<td><p><strong>P1Y</strong></p>
+<p><strong>P1Y-daysAbove50</strong></p>
+<p><strong>P1Y-P1D-per90.4</strong></p></td>
+<td></td>
+<td></td>
+<td><ul>
+<li><p>annual mean weighted average</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+</tr>
+<tr class="even">
+<td><blockquote>
+<p>KEY</p>
+<p>(FROM 01/01/2030)</p>
+</blockquote></td>
+<td><ul>
+<li><p>annual mean</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+<td><ul>
+<li><p>annual mean*</p></li>
+<li><p>days with c&gt;45 µg/m<sup>3</sup></p></li>
+<li><p>days with c&gt;90 µg/m<sup>3</sup></p></li>
+<li><p>periods 3 consecutive days c&gt;90 µg/m<sup>3</sup></p></li>
+</ul></td>
+<td><p><strong>P1Y</strong></p>
+<p><strong>P1Y-daysAbove45</strong></p>
+<p><strong>P1Y-daysAbove90</strong></p>
+<p><strong>P1Y-3daysAbove90</strong></p></td>
+<td></td>
+<td></td>
+<td><ul>
+<li><p>annual mean weighted average</p></li>
+</ul></td>
+<td><blockquote>
+<p><strong>P1Y</strong></p>
+</blockquote></td>
+</tr>
+<tr class="odd">
+<td><blockquote>
+<p>EXTRA</p>
+</blockquote></td>
+<td><ul>
+<li><p>daily mean</p></li>
+<li><p>50 percentile</p></li>
+<li><p>hourly maximum</p></li>
+<li><p>hourly minimum</p></li>
+<li><p>monthly mean</p></li>
+<li><p>3-year mean</p></li>
+</ul></td>
+<td><p><strong>P1D</strong></p>
+<p><strong>P1Y- hr-per50</strong></p>
+<p><strong>P1Y-hr-max</strong></p>
+<p><strong>P1Y-hr-min</strong></p>
+<p><strong>P1M</strong></p>
+<p><strong>P3Y</strong></p></td>
+<td><ul>
+<li><p>90.41 percentile</p></li>
+<li><p>99 percentile</p></li>
+<li><p>95.07 percentile</p></li>
+<li><p>36<sup>th</sup> highest daily value</p></li>
+<li><p>50<sup>th</sup> percentile</p></li>
+<li><p>daily maximum</p></li>
+<li><p>daily minimum</p></li>
+</ul></td>
+<td><p><strong>P1Y-P1D-per90.41</strong></p>
+<p><strong>P1Y-P1D-per99</strong></p>
+<p><strong>P1Y-P1D-per95.07</strong></p>
+<p><strong>P1Y-day-max36</strong></p>
+<p><strong>P1Y-day-per50</strong></p>
+<p><strong>P1Y-day-max</strong></p>
+<p><strong>P1Y-day-min</strong></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td rowspan="3"><p>PM<sub>2.5</sub></p>
+<p><a class="aura-pollutant-code" href="http://dd.eionet.europa.eu/vocabulary/aq/pollutant/6001">6001</a></p></td>
+<td><blockquote>
+<p>KEY</p>
+<p>(UNTIL 31/12/2029)</p>
+</blockquote></td>
+<td><ul>
+<li><p>annual mean</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+<td><ul>
+<li><p>annual mean*</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+<td></td>
+<td></td>
+<td><ul>
+<li><p>annual mean weighted average</p></li>
+</ul></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td><blockquote>
+<p>KEY</p>
+<p>(FROM 01/01/2030)</p>
+</blockquote></td>
+<td><ul>
+<li><p>annual mean</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+<td><ul>
+<li><p>annual mean*</p></li>
+<li><p>days with c&gt;25 µg/m<sup>3</sup></p></li>
+<li><p>days with c&gt;50 µg/m<sup>3</sup></p></li>
+<li><p>periods 3 consecutive days c&gt;50 µg/m<sup>3</sup></p></li>
+</ul></td>
+<td><p><strong>P1Y</strong></p>
+<p><strong>P1Y-daysAbove25</strong></p>
+<p><strong>P1Y-daysAbove50</strong></p>
+<p><strong>P1Y-3daysAbove50</strong></p></td>
+<td></td>
+<td></td>
+<td><ul>
+<li><p>annual mean weighted average</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+</tr>
+<tr class="even">
+<td><blockquote>
+<p>EXTRA</p>
+</blockquote></td>
+<td><ul>
+<li><p>daily mean</p></li>
+<li><p>50 percentile</p></li>
+<li><p>hourly maximum</p></li>
+<li><p>hourly minimum</p></li>
+<li><p>monthly mean</p></li>
+<li><p>3-year mean</p></li>
+</ul></td>
+<td><p><strong>P1D</strong></p>
+<p><strong>P1Y- hr-per50</strong></p>
+<p><strong>P1Y-hr-max</strong></p>
+<p><strong>P1Y-hr-min</strong></p>
+<p><strong>P1M</strong></p>
+<p><strong>P3Y</strong></p></td>
+<td><ul>
+<li><p>99 percentile</p></li>
+<li><p>50 percentile</p></li>
+<li><p>95.07 percentile</p></li>
+<li><p>daily maximum</p></li>
+<li><p>daily minimum</p></li>
+</ul></td>
+<td><p><strong>P1Y-P1D-per99</strong></p>
+<p><strong>P1Y-day-per50</strong></p>
+<p><strong>P1Y-P1D-per95.07</strong></p>
+<p><strong>P1Y-day-max</strong></p>
+<p><strong>P1Y-day-min</strong></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td rowspan="2"><p>Benzene (C<sub>6</sub>H<sub>6</sub>)</p>
+<p><a class="aura-pollutant-code" href="http://dd.eionet.europa.eu/vocabulary/aq/pollutant/20">20</a></p></td>
+<td><blockquote>
+<p>KEY</p>
+</blockquote></td>
+<td><ul>
+<li><p>annual mean</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+<td><ul>
+<li><p>annual mean*</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+<td></td>
+<td></td>
+<td><ul>
+<li><p>annual mean weighted average</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+</tr>
+<tr class="even">
+<td><blockquote>
+<p>EXTRA</p>
+</blockquote></td>
+<td><ul>
+<li><p>daily mean</p></li>
+<li><p>50 percentile</p></li>
+<li><p>hourly maximum</p></li>
+<li><p>hourly minimum</p></li>
+</ul></td>
+<td><p><strong>P1D</strong></p>
+<p><strong>P1Y- hr-per50</strong></p>
+<p><strong>P1Y-hr-max</strong></p>
+<p><strong>P1Y-hr-min</strong></p></td>
+<td><ul>
+<li><p>50 percentile</p></li>
+<li><p>daily maximum</p></li>
+<li><p>daily minimum</p></li>
+</ul></td>
+<td><p><strong>P1Y-day-per50</strong></p>
+<p><strong>P1Y-day-max</strong></p>
+<p><strong>P1Y-day-min</strong></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td rowspan="2"><p>As in PM<sub>10</sub></p>
+<p><a class="aura-pollutant-code" href="http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5018">5018</a></p>
+<p>Cd in PM<sub>10</sub></p>
+<p><a class="aura-pollutant-code" href="http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5014">5014</a></p>
+<p>Ni in PM<sub>10</sub></p>
+<p><a class="aura-pollutant-code" href="http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5015">5015</a></p>
+<p>Pb in PM<sub>10</sub></p>
+<p><a class="aura-pollutant-code" href="http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5012">5012</a></p>
+<p>BaP in PM<sub>10</sub></p>
+<p><a class="aura-pollutant-code" href="http://dd.eionet.europa.eu/vocabulary/aq/pollutant/5029">5029</a></p></td>
+<td><blockquote>
+<p>KEY</p>
+</blockquote></td>
+<td></td>
+<td></td>
+<td><ul>
+<li><p>annual mean</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+<td></td>
+<td></td>
+<td><ul>
+<li><p>annual mean weighted average</p></li>
+</ul></td>
+<td><strong>P1Y</strong></td>
+</tr>
+<tr class="even">
+<td><blockquote>
+<p>EXTRA</p>
+</blockquote></td>
+<td></td>
+<td></td>
+<td><ul>
+<li><p>50 percentile</p></li>
+<li><p>daily maximum</p></li>
+<li><p>daily minimum</p></li>
+<li><p>monthly mean (BaP)</p></li>
+<li><p>3-year mean (BaP)</p></li>
+</ul></td>
+<td><p><strong>P1Y-day-per50</strong></p>
+<p><strong>P1Y-day-max</strong></p>
+<p><strong>P1Y-day-min</strong></p>
+<p><strong>P1M</strong></p>
+<p><strong>P3Y</strong></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>All other pollutants</td>
+<td><blockquote>
+<p>EXTRA</p>
+</blockquote></td>
+<td><ul>
+<li><p>annual mean</p></li>
+<li><p>daily mean</p></li>
+<li><p>50 percentile</p></li>
+<li><p>hourly maximum</p></li>
+<li><p>hourly minimum</p></li>
+</ul></td>
+<td><p><strong>P1Y</strong></p>
+<p><strong>P1D</strong></p>
+<p><strong>P1Y-hr-per50</strong></p>
+<p><strong>P1Y-hr-max</strong></p>
+<p><strong>P1Y-hr-min</strong></p></td>
+<td><ul>
+<li><p>annual mean*</p></li>
+<li><p>50 percentile</p></li>
+<li><p>daily maximum</p></li>
+<li><p>daily minimum</p></li>
+</ul></td>
+<td><p><strong>P1Y</strong></p>
+<p><strong>P1Y-day-per50</strong></p>
+<p><strong>P1Y-day-max</strong></p>
+<p><strong>P1Y-day-min</strong></p></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="simple">
+<li></li>
+</ul>
+<p>NOTES:* * <em>If daily values reported. ** Component codelist is http://dd.eionet.europa.eu/vocabulary/aq/pollutant/[code]</em></p>
+<ul class="simple">
+<li></li>
+<li></li>
+</ul>
+<p>Table 4: List of base statistics used in the computation of derived aggregation indicators, their pollutant applicability, minimum validity criteria (for fixed measurements), and corresponding vocabulary URLs</p>
+<table class="aura-stat-table aura-stat-table-4">
+<thead>
+<tr>
+<th><strong>Statistic</strong></th>
+<th><strong>Used in aggregation(s)</strong></th>
+<th><strong>Pollutant</strong></th>
+<th><strong>Minimum valid values</strong></th>
+<th><strong>Vocabulary URL</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>AOT40c</strong></td>
+<td>AOT40cmeasured</td>
+<td>O&lt;sub&gt;3&lt;/sub&gt;</td>
+<td>85% (939) hours in averaging period (1 May to 31 July)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/AOT40c">&lt;u&gt;https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/AOT40c&lt;/u&gt;</a></td>
+</tr>
+<tr>
+<td><strong>P1D</strong></td>
+<td>All aggregations with base P1D</td>
+<td>All</td>
+<td>75% of hours in the day (18 hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1D">&lt;u&gt;https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1D&lt;/u&gt;</a></td>
+</tr>
+<tr>
+<td><strong>P1Y</strong></td>
+<td>P3Y</td>
+<td>PM&lt;sub&gt;10&lt;/sub&gt;, BaP in PM&lt;sub&gt;10&lt;/sub&gt;, PM&lt;sub&gt;2.5&lt;/sub&gt;, O&lt;sub&gt;3&lt;/sub&gt;{ref}<code>[15] &lt;footnote-15&gt;</code>, NO&lt;sub&gt;2&lt;/sub&gt;, NO&lt;sub&gt;X&lt;/sub&gt; as NO&lt;sub&gt;2&lt;/sub&gt;</td>
+<td>85% of hours/days (7446 hours/311 days) (if leap year 7470 hours/312 days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y">&lt;u&gt;https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y&lt;/u&gt;</a></td>
+</tr>
+<tr>
+<td><strong>P1Y</strong></td>
+<td>P3Y</td>
+<td>BaP in PM&lt;sub&gt;10&lt;/sub&gt;</td>
+<td>30% of hours/days (2628 hours/110 days) (if leap year 2636 hours/110 days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y">&lt;u&gt;https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y&lt;/u&gt;</a></td>
+</tr>
+<tr>
+<td><strong>P1Y-dmaxAbove120</strong></td>
+<td>P3Y-dmaxAbove120</td>
+<td>O&lt;sub&gt;3&lt;/sub&gt;</td>
+<td>85% of P8H-dmax (311 values) (if leap year 312 values)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dmaxAbove120">&lt;u&gt;https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dmaxAbove120&lt;/u&gt;</a></td>
+</tr>
+<tr>
+<td><strong>P8H-dmax</strong></td>
+<td>All aggregations with base P8H-dmax</td>
+<td>O&lt;sub&gt;3&lt;/sub&gt;, CO</td>
+<td>75% of valid P8H-run in the day (18)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P8H-dmax">&lt;u&gt;https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P8H-dmax&lt;/u&gt;</a></td>
+</tr>
+<tr>
+<td><strong>P8H-run</strong></td>
+<td>P8H-dmax</td>
+<td>O&lt;sub&gt;3&lt;/sub&gt;, CO</td>
+<td>75% of hours</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P8H-run">https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P8H-run</a></td>
+</tr>
+</tbody>
+</table>
+<div class="aura-table-separator" aria-hidden="true"></div>
+<p>Table 5: List of statistics, the primary observation or aggregation they are based on the pollutant for which it is calculated, the minimum number of valid values<a class="reference internal" href="footnotes.html#footnote-16"><span class="std std-ref">[16]</span></a> in order to be flagged as valid (for fixed measurements), and the corresponding vocabulary URL</p>
+<table class="aura-stat-table aura-stat-table-5">
+<colgroup>
+<col style="width: 13%" />
+<col style="width: 6%" />
+<col style="width: 4%" />
+<col style="width: 9%" />
+<col style="width: 7%" />
+<col style="width: 10%" />
+<col style="width: 48%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Statistic</strong></th>
+<th colspan="2"><strong>Base</strong></th>
+<th><strong>Pollutant</strong></th>
+<th colspan="2"><strong>Minimum valid values</strong></th>
+<th><strong>Vocabulary URL</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>AOT40c</strong></td>
+<td colspan="2">AOT40h</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">85% (939) hours in averaging period</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/AOT40c"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/AOT40c</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>AOT40cmeasured</strong></td>
+<td colspan="2">AOT40h</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">85% (939) hours in averaging period</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/AOT40cmeasured"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/AOT40cmeasured</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>AOT40c-P5Y</strong></td>
+<td colspan="2">AOT40h</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">3 valid AOT40c<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/AOT40c-P5Y"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/AOT40c-P5Y</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>AOT40f</strong></td>
+<td colspan="2">AOT40h</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">85% (1867) hours in averaging period</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/AOT40f"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/AOT40f</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>AOT40fmeasured</strong></td>
+<td colspan="2">AOT40h</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">85% (1867) hours in averaging period</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/AOT40fmeasured"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/AOT40fmeasured</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>AOT40h</strong></td>
+<td colspan="2">hour</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">-</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/AOT40h"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/AOT40h</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1D</strong></td>
+<td colspan="2">hour</td>
+<td>All</td>
+<td colspan="2">75% of hours in the day (18 hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1D"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1D</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1D-hr-max</strong></td>
+<td colspan="2">hour</td>
+<td>NO<sub>2</sub></td>
+<td colspan="2">75% of hours in the day (18 hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1D-hr-max"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1D-hr-max</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1D-hrsAbove180</strong></td>
+<td colspan="2">hour</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">75% of hours in the day (18 hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1D-hrsAbove180"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1D-hrsAbove180</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1D-hrsAbove240</strong></td>
+<td colspan="2">hour</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">75% of hours in the day (18 hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1D-hrsAbove240"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1D-hrsAbove240</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1M</strong></td>
+<td colspan="2">hour, day</td>
+<td>PM<sub>10</sub>, BaP in PM<sub>10</sub>, PM<sub>2.5</sub>, O<sub>3</sub>, NO<sub>2</sub>, NO<sub>X</sub> as NO<sub>2</sub></td>
+<td colspan="2">75% of hours/day in the month</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1M"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1M</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1M-dmaxAbove100</strong></td>
+<td colspan="2">P8H-dmax</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">75% of daily P8H-dmax values in month</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1M-dmaxAbove100"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1M-dmaxAbove100</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1M-dmaxAbove120</strong></td>
+<td colspan="2">P8H-dmax</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">75% of daily P8H-dmax values in month</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1M-dmaxAbove120"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1M-dmaxAbove120</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1M-hrsAbove180</strong></td>
+<td colspan="2">hour</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">75% of hours in the month</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1M-hrsAbove180"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1M-hrsAbove180</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1M-hrsAbove200</strong></td>
+<td colspan="2">hour</td>
+<td>NO<sub>2</sub></td>
+<td colspan="2">75% of hours in the month</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1M-hrsAbove200"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1M-hrsAbove200</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1M-hrsAbove240</strong></td>
+<td colspan="2">hour</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">75% of hours in the month</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1M-hrsAbove240"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1M-hrsAbove240</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1M-hrsAbove350</strong></td>
+<td colspan="2">hour</td>
+<td>SO<sub>2</sub></td>
+<td colspan="2">75% of hours in the month</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1M-hrsAbove350"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1M-hrsAbove350</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y</strong></td>
+<td colspan="2">hour, day, var</td>
+<td>SO<sub>2</sub>, NO<sub>2</sub>, NO<sub>X</sub> as NO<sub>2</sub>, O<sub>3</sub><sup>9</sup>, PM<sub>10</sub>, PM<sub>2.5</sub>, C<sub>6</sub>H<sub>6</sub></td>
+<td colspan="2">85% of hours/days (7446 hours*/311 days**)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y</strong></td>
+<td colspan="2">day, var</td>
+<td>BaP in PM<sub>10</sub></td>
+<td colspan="2">30% of hours/days (2628 hours/110 days) (if leap year 2636 hours/110 days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y</strong></td>
+<td colspan="2">day, var</td>
+<td>Metals</td>
+<td colspan="2">45% of hours/days (3942 hours/165 days) (if leap year 3953 hours/165 days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-3daysAbove50</strong></td>
+<td colspan="2">day, P1D</td>
+<td>PM<sub>2.5</sub></td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-3daysAbove50</u></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-3daysAbove90</strong></td>
+<td colspan="2">day, P1D</td>
+<td>PM<sub>10</sub></td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><u><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-3daysAbove90">https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-3daysAbove90</a></u></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-3hAbove200</strong></td>
+<td colspan="2">hour</td>
+<td>NO<sub>2</sub></td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-3hAbove200"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-3hAbove200</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-3hAbove350</strong></td>
+<td colspan="2">hour</td>
+<td>SO<sub>2</sub></td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-3hAbove350"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-3hAbove350</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-3hAbove400</strong></td>
+<td colspan="2">hour</td>
+<td>NO<sub>2</sub></td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-3hAbove400"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-3hAbove400</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-3hAbove500</strong></td>
+<td colspan="2">hour</td>
+<td>SO<sub>2</sub></td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-3hAbove500"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-3hAbove500</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-8hdmxAbove10</strong></td>
+<td colspan="2">P8H-dmax</td>
+<td>CO</td>
+<td colspan="2">85% of P8H-dmax (311*** values)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-8hdmxAbove10"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-8hdmxAbove10</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-day-max</strong></td>
+<td colspan="2">P1D, day</td>
+<td>All</td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-day-max"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-day-max</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-day-max36</strong></td>
+<td colspan="2">P1D, day</td>
+<td>PM<sub>10</sub></td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-day-max36"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-day-max36</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-day-max4</strong></td>
+<td colspan="2">P1D, day</td>
+<td>SO<sub>2</sub></td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-day-max4"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-day-max4</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-day-max-per99.18</strong></td>
+<td colspan="2">P1D, day</td>
+<td>SO<sub>2</sub></td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-day-max-per99.18"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-day-max-per99.18</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-day-min</strong></td>
+<td colspan="2">P1D, day</td>
+<td>All</td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-day-min"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-day-min</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-day-per50</strong></td>
+<td colspan="2">P1D, day</td>
+<td>All</td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-day-per50"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-day-per50</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-daysAbove125</strong></td>
+<td colspan="2">P1D, day</td>
+<td>SO<sub>2</sub></td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-daysAbove125"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-daysAbove125</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-daysAbove25</strong></td>
+<td colspan="2">P1D, day</td>
+<td>PM<sub>2.5</sub></td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-daysAbove25">https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-daysAbove25</a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-daysAbove4</strong></td>
+<td colspan="2">P1D, day</td>
+<td>CO</td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-daysAbove4">https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-daysAbove4</a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-daysAbove45</strong></td>
+<td colspan="2">P1D, day</td>
+<td>PM<sub>10</sub></td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-daysAbove45">https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-daysAbove45</a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-daysAbove50</strong></td>
+<td colspan="2">P1D, day</td>
+<td>PM<sub>10</sub>, NO<sub>2</sub>, SO<sub>2</sub>, PM<sub>2.5</sub></td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-daysAbove50"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-daysAbove50</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-daysAbove90</strong></td>
+<td colspan="2">P1D, day</td>
+<td>PM<sub>10</sub></td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-daysAbove90">https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-daysAbove90</a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-dmaxAbove100</strong></td>
+<td colspan="2">P8H-dmax</td>
+<td>O<sub>3</sub> <sup>9</sup></td>
+<td colspan="2">85% of P8H-dmax (311*** values)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dmaxAbove100">https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dmaxAbove100</a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-dmaxAbove120</strong></td>
+<td colspan="2">P8H-dmax</td>
+<td>O<sub>3</sub> <sup>9</sup></td>
+<td colspan="2">85% of P8H-dmax (311*** values)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dmaxAbove120"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dmaxAbove120</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-dmax-per93.15</strong></td>
+<td colspan="2">P8H-dmax</td>
+<td>O<sub>3</sub> <sup>9</sup></td>
+<td colspan="2">85% of P8H-dmax (311*** values)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dmax-per93.15"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dmax-per93.15</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-dmax-per95.07</strong></td>
+<td colspan="2">P8H-dmax</td>
+<td>O<sub>3</sub> <sup>9</sup></td>
+<td colspan="2">85% of P8H-dmax (311*** values)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dmax-per95.07">https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dmax-per95.07</a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-dmax-per99</strong></td>
+<td colspan="2">P8H-dmax</td>
+<td>O<sub>3</sub> <sup>9</sup></td>
+<td colspan="2">85% of P8H-dmax (311*** values)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dmax-per99"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dmax-per99</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-dx-avg</strong></td>
+<td colspan="2">P8H-dmax</td>
+<td>O<sub>3</sub>, CO</td>
+<td colspan="2">85% of P8H-dmax (311*** values)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dx-avg"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dx-avg</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-dx-max</strong></td>
+<td colspan="2">P8H-dmax</td>
+<td>O<sub>3</sub>, CO</td>
+<td colspan="2">85% of P8H-dmax (311*** values)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dx-max"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dx-max</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-dx-max26</strong></td>
+<td colspan="2">P8H-dmax</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">85% of P8H-dmax (311*** values)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dx-max26"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-dx-max26</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-hr-max</strong></td>
+<td colspan="2">hour</td>
+<td>All</td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hr-max"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hr-max</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-hr-max19</strong></td>
+<td colspan="2">hour</td>
+<td>NO<sub>2</sub></td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hr-max19"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hr-max19</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-hr-max25</strong></td>
+<td colspan="2">hour</td>
+<td>SO<sub>2</sub></td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hr-max25"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hr-max25</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-hr-max-per99.73</strong></td>
+<td colspan="2">hour</td>
+<td>SO<sub>2</sub></td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hr-max-per99.73"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hr-max-per99.73</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-hr-max-per99.79</strong></td>
+<td colspan="2">hour</td>
+<td>NO<sub>2</sub></td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hr-max-per99.79"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hr-max-per99.79</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-hr-max-per99.97</strong></td>
+<td colspan="2">hour</td>
+<td>SO<sub>2</sub>, NO<sub>2</sub></td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hr-max-per99.97">https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hr-max-per99.97</a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-hr-min</strong></td>
+<td colspan="2">hour</td>
+<td>All</td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hr-min"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hr-min</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-hr-per50</strong></td>
+<td colspan="2">hour</td>
+<td>All</td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hr-per50"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hr-per50</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-hrsAbove150</strong></td>
+<td colspan="2">hour</td>
+<td>NO<sub>2</sub></td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hrsAbove150">https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hrsAbove150</a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-hrsAbove180</strong></td>
+<td colspan="2">hour</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hrsAbove180"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hrsAbove180</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-hrsAbove200</strong></td>
+<td colspan="2">hour</td>
+<td>NO<sub>2</sub></td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hrsAbove200"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hrsAbove200</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-hrsAbove240</strong></td>
+<td colspan="2">hour</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hrsAbove240"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hrsAbove240</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-hrsAbove275</strong></td>
+<td colspan="2">hour</td>
+<td>SO<sub>2</sub></td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hrsAbove275">https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hrsAbove275</a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-hrsAbove350</strong></td>
+<td colspan="2">hour</td>
+<td>SO<sub>2</sub></td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hrsAbove350"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hrsAbove350</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-hrsAbove400</strong></td>
+<td colspan="2">hour</td>
+<td>NO<sub>2</sub></td>
+<td colspan="2">85% of hours (7446* hours)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hrsAbove400"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-hrsAbove400</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-maxP6M-P8H-dmax</strong></td>
+<td colspan="2">P8H-dmax</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">10 valid P6M-P8H-dmax</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-maxP6M-P8H-dmax"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-maxP6M-P8H-dmax</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-P1D-per90.4</strong></td>
+<td colspan="2">P1D, day</td>
+<td>PM<sub>10</sub></td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-P1D-per90.4"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-P1D-per90.4</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-P1D-per90.41</strong></td>
+<td colspan="2">P1D, day</td>
+<td>PM<sub>10</sub></td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-P1D-per90.41"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-P1D-per90.41</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P1Y-P1D-per95.07</strong></td>
+<td colspan="2">P1D, day</td>
+<td>PM<sub>10</sub>, PM<sub>2.5</sub>, CO, SO<sub>2</sub>, NO<sub>2</sub></td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-P1D-per95.07">https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-P1D-per95.07</a></td>
+</tr>
+<tr class="odd">
+<td><strong>P1Y-P1D-per99</strong></td>
+<td colspan="2">P1D, day</td>
+<td>PM<sub>10</sub>, PM<sub>2.5</sub>, NO<sub>2</sub>, SO<sub>2</sub>, CO, O<sub>3</sub></td>
+<td colspan="2">85% of days/P1Ds (311** days)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-P1D-per99"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P1Y-P1D-per99</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P3Y</strong></td>
+<td colspan="2">hour, day</td>
+<td>PM<sub>10</sub>, BaP in PM<sub>10</sub>, PM<sub>2.5</sub>, O<sub>3</sub>, NO<sub>2</sub>, NO<sub>X</sub> as NO<sub>2</sub></td>
+<td colspan="2">85% of hours/days (22338 hours/931 days)****</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P3Y"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P3Y</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P3Y-dmaxAbove120</strong></td>
+<td colspan="2">P8H-dmax</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">85% of P8H-dmax (931***** values)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P3Y-dmaxAbove120"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P3Y-dmaxAbove120</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P6M</strong></td>
+<td colspan="2">hour, day</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">75% of hours/day in the 6 months</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P6M"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P6M</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>P6M-P8H-dmax</strong></td>
+<td colspan="2">P8H-dmax</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">75% of daily P8H-dmax values in the 6 months</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P6M-P8H-dmax"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P6M-P8H-dmax</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>P8H-dmax</strong></td>
+<td colspan="2">P8H-run</td>
+<td>O<sub>3</sub>, CO</td>
+<td colspan="2">75% of valid P8H-run in the day (18)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P8H-dmax"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P8H-dmax</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>SOMO10</strong></td>
+<td colspan="2">P8H-dmax</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">85% of P8H-dmax (311*** values)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/SOMO10"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/SOMO10</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>SOMO35</strong></td>
+<td colspan="2">P8H-dmax</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">85% of P8H-dmax (311*** values)</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/SOMO35"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/SOMO35</u></a></td>
+</tr>
+<tr class="odd">
+<td><strong>summer-avg</strong></td>
+<td colspan="2">hour, day</td>
+<td>O<sub>3</sub></td>
+<td colspan="2">3734 hours/156 days</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/summer-avg"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/summer-avg</u></a></td>
+</tr>
+<tr class="even">
+<td><strong>winter-avg</strong></td>
+<td colspan="2">hour, day</td>
+<td>SO<sub>2</sub></td>
+<td colspan="2">3713 hours/155 days******</td>
+<td><a href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/winter-avg"><u>https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/winter-avg</u></a></td>
+</tr>
+<tr class="odd">
+<td colspan="2"><strong>Note:</strong></td>
+<td colspan="3"><p><strong>* if leap year: 7470 hours</strong></p>
+<p><strong>** if leap year: 312 days</strong></p>
+<p><strong>*** if leap year: 312 valid P8H-dmax</strong></p>
+<p><strong>**** if leap year: 22359 hours/932 days</strong></p>
+<p><strong>***** if leap year: 932 valid P8H-dmax</strong></p>
+<p><strong>****** if leap year: 3734 hours/156 days</strong>{ref}`[17] <footnote-17>`</p></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<section id="averages">
+<h2>5.1 Averages<a class="headerlink" href="#averages" title="Link to this heading"></a></h2>
+<p>Averages (means) shall be calculated using the shortest available reported averaging period, in accordance with Directive (EU) 2024/2881, Annex V, Section C. Based on this principle, the preferred order for calculating means is: first, hourly data; second, daily data.</p>
+<p>In cases where data are reported with irregular or variable averaging intervals (VAR), these are first converted into hourly values, as described in Chapter 3.3. Once transformed, the resulting hourly series are used for the calculation of the relevant averages.</p>
+<section id="calculation-of-averages">
+<h3>5.1.1 Calculation of Averages<a class="headerlink" href="#calculation-of-averages" title="Link to this heading"></a></h3>
+<p>For <strong>hourly and daily</strong> data types, the mean over a given averaging period shall be calculated as the arithmetic average of all valid values:</p>
+<div class="math notranslate nohighlight">
+\[Mean = \frac{\Sigma_{i}C_{i}}{N_{valid}}\]</div>
+<p>where Cᵢ represents each valid concentration value (e.g. hourly or daily), and N_valid is the total number of valid values in the period.</p>
+<p>If all values within a given period are invalid, no valid average is produced; instead, the result is flagged as invalid.</p>
+<p>For <strong>data reported with AggType = var</strong>, as explained in Chapter 3.3, such records are used exclusively for the calculation of the <strong>annual mean (P1Y)</strong> and are excluded from the computation of other statistical indicators</p>
+<p>To ensure consistency with the minimum temporal resolution required for aggregations, variable-period data are first <strong>converted into an equivalent hourly time series</strong>.<br />
+Each reported concentration is expanded to all full hours within its validity interval.<br />
+After this conversion, the mean is calculated as for other data types; however, to properly reflect differences in measurement coverage, the calculation must consider both the <strong>duration</strong> and the <strong>data capture</strong> associated with each record.</p>
+<p>This results in a <strong>weighted mean</strong>, computed as follows:</p>
+<div class="math notranslate nohighlight">
+\[Weighted\ mean = \frac{\Sigma_{i}{(C}_{i} \cdot T_{i} \cdot {DCap}_{i})}{\Sigma_{i}(T_{i} \cdot {DCap}_{i})}\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p>C<sub>i</sub>​ = reported concentration value,</p></li>
+<li><p>T<sub>i</sub>​ = duration of the measurement interval,</p></li>
+<li><p>DCap<sub>i</sub>​ = data capture representing completeness for that interval.</p></li>
+</ul>
+<div class="aura-example admonition">
+<p class="admonition-title">Example 4. Conversion of variable-period data (<em>AggType = var</em>) to an equivalent hourly series including data capture</p>
+<p>The table below illustrates the transformation of data reported with <em>AggType = var</em> into an hourly-equivalent time series, before calculating the annual mean (P1Y).<br />
+Each record represents a concentration valid over a time interval, expanded into hourly periods and weighted by its data capture.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>datetime_begin</p></th>
+<th class="head"><p>datetime_end</p></th>
+<th class="head"><p>Reported value (μg/m³)</p></th>
+<th class="head"><p>Duration (Ti) (h)</p></th>
+<th class="head"><p>Data capture</p></th>
+<th class="head"><p>Effective duration</p></th>
+<th class="head"><p></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>2025-01-01 08:00</p></td>
+<td><p>2025-01-01 10:00</p></td>
+<td><p>48.0</p></td>
+<td><p>2</p></td>
+<td><p>50</p></td>
+<td><p>2x0.5 = 1</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p>2025-01-01 11:00</p></td>
+<td><p>2025-01-01 14:00</p></td>
+<td><p>52.0</p></td>
+<td><p>3</p></td>
+<td><p>100</p></td>
+<td><p>3x1=33</p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p>2025-01-01 15:00</p></td>
+<td><p>2025-01-01 17:00</p></td>
+<td><p>56.0</p></td>
+<td><p>2</p></td>
+<td><p>100</p></td>
+<td><p>2x1=2</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<p>The weighted mean concentration is calculated as:</p>
+<div class="math notranslate nohighlight">
+\[Mean = \frac{(48x1) + (52x3) + (56x2)}{1 + 3 + 2} = \ 52,7µg/m^{3}\]</div>
+<p>If the data capture were not considered, the mean would be:</p>
+<div class="math notranslate nohighlight">
+\[Mean = \frac{(48x2) + (52x3) + (56x2)}{2 + 3 + 2} = \ 52,3µg/m^{3}\]</div>
+<p>The lower data capture in the first interval reduces its weight in the overall mean</p>
+</div>
+<p>The aggregates calculated using this method are:</p>
+<ul class="simple">
+<li><p>P1D (daily mean): <a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1D">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1D</a></p></li>
+<li><p>P1M (monthly mean):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1M">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1M</a></p>
+<ul class="simple">
+<li><p>P1Y (annual mean): <a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y</a></p></li>
+<li><p>P1Y-dx-avg: <a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-dx-avg">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-dx-avg</a></p></li>
+</ul>
+</section>
+<section id="winter-and-summer-means">
+<h3>5.1.2 Winter and summer means<a class="headerlink" href="#winter-and-summer-means" title="Link to this heading"></a></h3>
+<p>lLke the annual means, the <strong>winter or summer averages</strong> shall be calculated using the shortest reported averaging time available (e.g. hourly or daily).</p>
+<p>The winter mean shall be calculated as follows:</p>
+<div class="math notranslate nohighlight">
+\[Winter\ Mean = \ \frac{\Sigma_{i}{CW}_{i}}{{NW}_{valid}}\]</div>
+<p>where <em>CW<sub>i</sub></em> represents each valid concentration value (e.g. hourly or daily) over the winter period, and <em>NW<sub>valid</sub></em> is the total number of valid values in the winter period. The winter mean corresponding to year X is calculated over the winter months (i.e., <u>1<sup>st</sup> October year X-1 to 31<sup>st</sup> March year X</u>).</p>
+<p>The <strong>summer mean</strong> is calculated analogously over the summer months, between <u>1<sup>st</sup> April and 30<sup>th</sup> September</u>.</p>
+<div class="math notranslate nohighlight">
+\[Summer\ Mean = \ \frac{\Sigma_{i}{CS}_{i}}{{NS}_{valid}}\]</div>
+<p>where <em>CS<sub>i</sub></em> represents each valid concentration value (e.g. hourly or daily) over the summer period, and <em>NS<sub>valid</sub></em> is the total number of valid values in the summer period.</p>
+<p>The aggregates calculated using this method are:</p>
+<ul class="simple">
+<li><p>Summer-avg (mean between 1<sup>st</sup> April to 30<sup>th</sup> September):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/summer-avg">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/summer-avg</a></p>
+<ul class="simple">
+<li><p>Winter-avg (mean between 1st October to 31th March):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/winter-avg">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/winter-avg</a></p>
+</section>
+</section>
+<section id="rolling-six-month-averages">
+<h2>5.2 Rolling Six-Month Averages<a class="headerlink" href="#rolling-six-month-averages" title="Link to this heading"></a></h2>
+<p>This statistical indicator refers to the rolling six-month average concentration, calculated by taking the average from the first hour/day of the month X–5 to the last hour/day of month X. Each calculation thus corresponds to a continuous six-month window, shifted monthly throughout the time series.</p>
+<p>The mean concentration over each six-month period is calculated as:</p>
+<div class="math notranslate nohighlight">
+\[Six - Month\ Mean = \ \frac{\sum_{i = 1}^{N_{6M\_ valid}}C_{i}}{N_{6M\_ valid}}\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><strong>C<sub>i</sub></strong>= each valid concentration value (hourly or daily) in the six-month period</p></li>
+<li><p><strong>N<sub>6M_valid</sub></strong> = total number of valid values within the six-month period</p></li>
+</ul>
+<div class="aura-example admonition">
+<p class="admonition-title">Example 5. Calculation Rolling Six-Months</p>
+<ul class="simple">
+<li><p>For <strong>January 2021</strong>, the average is computed over the period <strong>1 August 2020 to 31 January 2021</strong>.</p></li>
+<li><p>For <strong>February 2021</strong>, the period would be <strong>1 September 2020 to 28 February 2021</strong>, and so on.</p></li>
+</ul>
+<p>The <strong>mean concentration</strong> over each six-month period is calculated following the methodology defined in Chapter 5.1.1 Calculation of Averages.</p>
+</div>
+<p>The aggregates calculated using this method are:</p>
+<ul class="simple">
+<li><p>P6M (6 monthly average, hourly data):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P6M">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P6M</a></p>
+<ul class="simple">
+<li><p>P6M-P8H-dmax (Average of the daily maximum eight-hour mean (P8H-dmax) in 6 consecutive months):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P6M-P8H-dmax">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P6M-P8H-dmax</a></p>
+</section>
+<section id="maximum-and-minimum">
+<h2>5.3 Maximum and minimum<a class="headerlink" href="#maximum-and-minimum" title="Link to this heading"></a></h2>
+<p>The maximum shall be calculated as follows:</p>
+<table class="aura-formula-table">
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><blockquote>
+<p><em>Maximum = max(C<sub>i</sub>)</em></p>
+</blockquote></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p>where <em>C<sub>i</sub></em> represents each valid concentration value (e.g. hourly or daily) over the period.</p>
+<p>Similarly, the minimum shall be calculated as:</p>
+<p><em>Minimum = min(C<sub>i</sub>)</em></p>
+<p>where <em>C<sub>i</sub></em> is defined as above.</p>
+<p>The aggregates calculated using this method are:</p>
+<ul class="simple">
+<li><p>P1D-hr-max (highest hourly value of the year)</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-max">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-max</a></p>
+<ul class="simple">
+<li><p>P1Y-day-max (highest daily value of the year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-day-max">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-day-max</a></p>
+<ul class="simple">
+<li><p>P1Y-day-min (lowest daily value of the year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-day-min">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-day-min</a></p>
+<ul class="simple">
+<li><p>P1Y-dx-max (highest P8H-dmax value of the year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-dx-max">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-dx-max</a></p>
+<ul class="simple">
+<li><p>P1Y-hr-max (highest hourly value of the year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-max">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-max</a></p>
+<ul class="simple">
+<li><p>P1Y-hr-min (lowest hourly value of the year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-min">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-min</a></p>
+<ul class="simple">
+<li><p>P1Y-maxP6M-P8H-dmax (Yearly highest six monthly average of daily maximum 8-hour mean concentration also know as peak season for ozone):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-maxP6M-P8H-dmax">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-maxP6M-P8H-dmax</a></p>
+</section>
+<section id="number-of-exceedances-above-a-threshold">
+<h2>5.4 Number of Exceedances Above a Threshold<a class="headerlink" href="#number-of-exceedances-above-a-threshold" title="Link to this heading"></a></h2>
+<p>The number of exceedances of a given limit value (LV) or Assessment Threshold (AT) over a specified period (e.g., day, month, or year) shall be calculated as the count of valid concentration values that are higher than the predefined threshold. These values shall be rounded (see Chapter 6).</p>
+<p>This calculation applies to hourly and daily data, where exceedances correspond to hours or days with values above the predefined threshold.</p>
+<p>Formally, for a period <strong>T</strong>, the number of exceedances <strong>N<sub>exceed</sub></strong> is:</p>
+<div class="math notranslate nohighlight">
+\[N_{\mathrm{exceed}}(T) = \sum_{i \in T} \mathbf{1}(C_i &gt; AT)\]</div>
+<p>The aggregates calculated using this method are:</p>
+<ul class="simple">
+<li><p>P1D-hrsAbove180 (Number of hours with values higher than 180 (unit) in given day):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1D-hrsAbove180">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1D-hrsAbove180</a></p>
+<ul class="simple">
+<li><p>P1D-hrsAbove240 (Number of hours with values higher than 240 (unit) in given day):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1D-hrsAbove240">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1D-hrsAbove240</a></p>
+<ul class="simple">
+<li><p>P1M-dmaxAbove100 (Number of days with daymax (P8H-dmax) values higher than 100 (unit) in given month):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1M-dmaxAbove100">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1M-dmaxAbove100</a></p>
+<ul class="simple">
+<li><p>P1M-dmaxAbove120 (Number of days with daymax (P8H-dmax) values higher than 120 (unit) in given month):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1M-dmaxAbove120">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1M-dmaxAbove120</a></p>
+<ul class="simple">
+<li><p>P1M-hrsAbove180 (Number of hours with values higher than 180 (unit) in given month):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1M-hrsAbove180">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1M-hrsAbove180</a></p>
+<ul class="simple">
+<li><p>P1M-hrsAbove200 (Number of hours with values higher than 200 (unit) in given month):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1M-hrsAbove200">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1M-hrsAbove200</a></p>
+<ul class="simple">
+<li><p>P1M-hrsAbove240 (Number of hours with values higher than 240 (unit) in given month):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1M-hrsAbove240">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1M-hrsAbove240</a></p>
+<ul class="simple">
+<li><p>P1M-hrsAbove350 (Number of hours with values higher than 350 (unit) in given month):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1M-hrsAbove350">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1M-hrsAbove350</a></p>
+<ul class="simple">
+<li><p>P1Y-8hdmxAbove10 (Number of days with daymax values (P8H_dmax) higher than 10 (unit) in given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-8hdmxAbove10">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-8hdmxAbove10</a></p>
+<ul class="simple">
+<li><p>P1Y-daysAbove125 (Number of days with daily average values higher than 125 (unit) in given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-daysAbove125">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-daysAbove125</a></p>
+<ul class="simple">
+<li><p>P1Y-daysAbove25 (Number of days with daily average values higher than 25 (unit) in given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-daysAbove25">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-daysAbove25</a></p>
+<ul class="simple">
+<li><p>P1Y-daysAbove4 (Number of days with daily average values higher than 4 (unit) in given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-daysAbove4">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-daysAbove4</a></p>
+<ul class="simple">
+<li><p>P1Y-daysAbove45 (Number of days with daily average values higher than 45 (unit) in given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-daysAbove45">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-daysAbove45</a></p>
+<ul class="simple">
+<li><p>P1Y-daysAbove50 (Number of days with daily average values higher than 50 (unit) in given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-daysAbove50">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-daysAbove50</a></p>
+<ul class="simple">
+<li><p>P1Y-daysAbove90 (Number of days with daily average values higher than 90 (unit) in given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-daysAbove90">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-daysAbove90</a></p>
+<ul class="simple">
+<li><p>P1Y-dmaxAbove100 (Number of days with daymax (P8H-dmax) values higher than 100 (unit) in given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-dmaxAbove100">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-dmaxAbove100</a></p>
+<ul class="simple">
+<li><p>P1Y-dmaxAbove120 (Number of days with daymax (P8H-dmax) values higher than 120 (unit) in given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-dmaxAbove120">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-dmaxAbove120</a></p>
+<ul class="simple">
+<li><p>P1Y-hrsAbove150 (Number of hours with values higher than 150 (unit) in given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hrsAbove150">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hrsAbove150</a></p>
+<ul class="simple">
+<li><p>P1Y-hrsAbove180 (Number of hours with values higher than 180 (unit) in given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hrsAbove180">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hrsAbove180</a></p>
+<ul class="simple">
+<li><p>P1Y-hrsAbove200 (Number of hours with values higher than 200 (unit) in given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hrsAbove200">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hrsAbove200</a></p>
+<ul class="simple">
+<li><p>P1Y-hrsAbove240 (Number of hours with values higher than 240 (unit) in given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hrsAbove240">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hrsAbove240</a></p>
+<ul class="simple">
+<li><p>P1Y-hrsAbove275 (Number of hours with values higher than 275 (unit) in given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hrsAbove275">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hrsAbove275</a></p>
+<ul class="simple">
+<li><p>P1Y-hrsAbove350 (Number of hours with values higher than 350 (unit) in given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hrsAbove350">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hrsAbove350</a></p>
+<ul class="simple">
+<li><p>P1Y-hrsAbove400 (Number of hours with values higher than 400 (unit) in given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hrsAbove400">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hrsAbove400</a></p>
+</section>
+<section id="three-consecutive-values-above-a-threshold">
+<h2>5.5 Three consecutive values Above a Threshold<a class="headerlink" href="#three-consecutive-values-above-a-threshold" title="Link to this heading"></a></h2>
+<p>Some exceedance-based indicators are designed to detect persistent pollution episodes, rather than isolated exceedances. These metrics quantify the number of periods per year in which three consecutive valid values (either hourly or daily) exceed a specified limit value (LV) or an Assessment Threshold (AT).</p>
+<p>A valid exceedance event is defined as a group of at least three consecutive valid time steps (hours or days) where each concentration value exceeds the predefined threshold. These indicators are referred to as:</p>
+<ul class="simple">
+<li><p>P1Y–3hAboveX: number of periods in a year with 3 consecutive hourly values above the predefined threshold;</p></li>
+<li><p>P1Y–3daysAboveX: number of periods in a year with 3 consecutive daily values above the predefined threshold.</p></li>
+</ul>
+<p>In both cases, each continuous block of exceedances is counted only once, regardless of its length (e.g. 5 consecutive exceedances still count as one event).</p>
+<p>These values shall be rounded before testing (see Chapter 6).</p>
+<p>Formally, an exceedance event is identified when:</p>
+<p><em>C<sub>t</sub> &gt; LV &amp; C<sub>t-1</sub> &gt; LV &amp; C<sub>t-2</sub> &gt; LV</em></p>
+<p>Where:</p>
+<p><em>C<sub>t</sub>​</em> is the concentration at time <em>t</em> (hour or day)</p>
+<p>The aggregates calculated using this method are:</p>
+<ul class="simple">
+<li><p>P1Y-3daysAbove50 (Number of periods when 3 consecutive days are higher than 50 in a given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-3daysAbove50">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-3daysAbove50</a></p>
+<ul class="simple">
+<li><p>P1Y-3daysAbove90 (Number of periods when 3 consecutive days are higher than 90 in a given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-3daysAbove90">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-3daysAbove90</a></p>
+<ul class="simple">
+<li><p>P1Y-3hAbove200 (Number of periods when 3 consecutive hours are higher than 200 in a given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-3hAbove200">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-3hAbove200</a></p>
+<ul class="simple">
+<li><p>P1Y-3hAbove350 (Number of periods when 3 consecutive hours are higher than 350 in a given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-3hAbove350">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-3hAbove350</a></p>
+<ul class="simple">
+<li><p>P1Y-3hAbove400 (Number of periods when 3 consecutive hours are higher than 400 in a given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-3hAbove400">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-3hAbove400</a></p>
+<ul class="simple">
+<li><p>P1Y-3hAbove500 (Number of periods when 3 consecutive hours are higher than 500 in a given year):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-3hAbove500">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-3hAbove500</a></p>
+</section>
+<section id="kth-highest-value-maxk">
+<h2>5.6 Kth highest value (maxk)<a class="headerlink" href="#kth-highest-value-maxk" title="Link to this heading"></a></h2>
+<p>The <strong>Kth highest value</strong> is defined as the concentration value ranked Kth in descending order from the highest valid measurement within a given period (e.g., a calendar year). Formally, given the ordered sequence of valid concentrations:</p>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><blockquote>
+<p><em>X<sub>1</sub> ≥ X<sub>2</sub> ≥ X<sub>3</sub> ≥ … ≥ <strong>X<sub>k</sub></strong> ≥ … ≥ X<sub>N1</sub> ≥ X<sub>N</sub></em></p>
+</blockquote></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p>The <em>k<sup>th</sup></em> highest value is the concentration <em>X<sub>k</sub></em> evaluated in descending order from the maximum (1<sup>st</sup> is the highest). The 4<sup>th</sup>, 25<sup>th</sup>, 19<sup>th</sup>, 26<sup>th</sup> and 36<sup>th</sup> highest values (maxk) are important to air quality regulations (see Table 3).</p>
+<p>It should be noted that values flagged as invalid (Validity &lt; 1) or missing are excluded from the ranking.</p>
+<p>The aggregates calculated using this method are:</p>
+<ul class="simple">
+<li><p>P1Y-day-max4 (SO<sub>2</sub>, 4<sup>th</sup> daily highest value):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-day-max4">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-day-max4</a></p>
+<ul class="simple">
+<li><p>P1Y-hr-max19 (NO<sub>2</sub>, 19<sup>th</sup> hourly highest value):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-max19">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-max19</a></p>
+<ul class="simple">
+<li><p>P1Y-hr-max25 (SO<sub>2</sub>, 25<sup>th</sup> hourly highest value):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-max25">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-max25</a></p>
+<ul class="simple">
+<li><p>P1Y-dx-max26 (O<sub>3</sub>, 26<sup>th</sup> P8H-dmax highest value):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-dx-max26">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-dx-max26</a></p>
+<ul class="simple">
+<li><p>P1Y-day-max36 (PM<sub>10</sub>, 36<sup>th</sup> daily highest value):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-day-max36">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-day-max36</a></p>
+</section>
+<section id="percentiles">
+<h2>5.7 Percentiles<a class="headerlink" href="#percentiles" title="Link to this heading"></a></h2>
+<p>Percentiles are statistical indicators that provide information about the distribution of concentration values, especially in the upper tail, and are mainly applied in the context of assessment thresholds defined under the Ambient Air Quality Directives.</p>
+<p>The yᵗʰ percentile is defined as the concentration value below which <em>y</em> percent of the valid values fall. It is calculated based on ranked valid measurement values:</p>
+<p><em>X<sub>1</sub> ≤ X<sub>2</sub> ≤ X<sub>3</sub> ≤ … ≤ <strong>X<sub>k</sub></strong> ≤ … ≤ X<sub>N-1</sub> ≤ X<sub>N</sub></em></p>
+<p>The index <em>k</em> corresponding to the yᵗʰ percentile is given by:</p>
+<p><em>k = (q.N)</em></p>
+<p><em>where:</em></p>
+<ul class="simple">
+<li><p>q = y/100</p></li>
+<li><p>N is the number of valid values within the calendar year</p></li>
+</ul>
+<p>The value of <em>k</em> is then <strong>rounded to the nearest integer</strong>, using the following rule:</p>
+<ul class="simple">
+<li><p>If the decimal component of <em>k</em> is &lt; 0.5, round down.</p></li>
+<li><p>If ≥ 0.5, round up.</p></li>
+</ul>
+<p>If <em>k</em> falls below 1, the first ranked value is returned; if <em>k</em> exceeds <em>N</em>, the last value is returned.</p>
+<p>This method provides a robust estimation even when the percentile rank does not fall exactly on an integer position.</p>
+<div class="admonition aura-example">
+<p class="admonition-title">Example 6. Code in R to calculate percentiles</p>
+<div class="aura-example-body">
+<p><em>calculate_defined_percentile &lt;- function(values, y) {</em></p>
+<p><em># Filter valid values (not NA)</em></p>
+<p><em>valid_values &lt;- na.omit(values)</em></p>
+<p><em># Sort values in increasing order</em></p>
+<p><em>sorted_values &lt;- sort(valid_values)</em></p>
+<p><em>N &lt;- length(sorted_values)</em></p>
+<p><em>q &lt;- y / 100</em></p>
+<p><em>k &lt;- q * N</em></p>
+<p><em># Round k to the nearest integer</em></p>
+<p><em>rounded_k &lt;- ifelse(k - floor(k) == 0.5, ceiling(k), round(k))</em></p>
+<p><em># Bound the index to the valid range</em></p>
+<p><em>if (rounded_k &lt; 1) {</em></p>
+<p><em>rounded_k &lt;- 1</em></p>
+<p><em>} else if (rounded_k &gt; N) {</em></p>
+<p><em>rounded_k &lt;- N</em></p>
+<p><em>}</em></p>
+<p><em>return(sorted_values[rounded_k])</em></p>
+<p><em>}</em></p>
+</div>
+</div>
+<p>Aggregates calculated in this way:</p>
+<ul class="simple">
+<li><p>P1Y-hr-per50 (All pollutants, hourly median):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-per50">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-per50</a></p>
+<ul class="simple">
+<li><p>P1Y-hr-max-per99.73 (SO<sub>2</sub>, 25<sup>th</sup> hourly highest value):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-max-per99.73">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-max-per99.73</a></p>
+<ul class="simple">
+<li><p>P1Y-hr-max-per99.79 (NO<sub>2</sub>, 19<sup>th</sup> hourly highest value):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-max-per99.79">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-max-per99.79</a></p>
+<ul class="simple">
+<li><p>P1Y-hr-max-per99.97 (SO<sub>2</sub> - NO<sub>2</sub>, 4<sup>th</sup> hourly highest value):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-max-per99.97">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-hr-max-per99.97</a></p>
+<ul class="simple">
+<li><p>P1Y-day-per50 (All pollutants, daily median):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-day-per50">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-day-per50</a></p>
+<ul class="simple">
+<li><p>P1Y-day-max-per99.18<a class="reference internal" href="footnotes.html#footnote-18"><span class="std std-ref">[18]</span></a> (SO<sub>2</sub>, 4<sup>th</sup> daily highest value):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-day-max-per99.18">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-day-max-per99.18</a></p>
+<ul class="simple">
+<li><p>P1Y-P1D-per90.4 (PM<sub>10</sub>, AQ Directive 2008/50, 36th daily highest value)</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-P1D-per90.4">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-P1D-per90.4</a></p>
+<ul class="simple">
+<li><p>P1Y-P1D-per90.41 (PM<sub>10</sub>, 36th daily highest value)</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-P1D-per90.41">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-P1D-per90.41</a></p>
+<ul class="simple">
+<li><p>P1Y-P1D-per95.07 (PM<sub>10</sub>, PM<sub>2.5</sub>, CO, SO<sub>2</sub>, NO<sub>2</sub>, 19th daily highest value)</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-P1D-per95.07">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-P1D-per95.07</a></p>
+<ul class="simple">
+<li><p>P1Y-P1D-per99 (PM<sub>10</sub>, PM<sub>2.5</sub>, CO, SO<sub>2</sub>, NO<sub>2</sub>, O<sub>3</sub>, WHO guidelines)</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-P1D-per99">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-P1D-per99</a></p>
+<ul class="simple">
+<li><p>P1Y-dmax-per93.15 (O<sub>3</sub>, 26<sup>th</sup> P8H-dmax highest value):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-dmax-per93.15">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-dmax-per93.15</a></p>
+<ul class="simple">
+<li><p>P1Y-dmax-per95.07 (O<sub>3</sub>, 19<sup>th</sup> P8H-dmax highest value):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-dmax-per95.07">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-dmax-per95.07</a></p>
+<ul class="simple">
+<li><p>P1Y-dmax-per99 (O<sub>3</sub>, WHO guidelines):</p></li>
+</ul>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-dmax-per99">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y-dmax-per99</a></p>
+</section>
+<section id="aot40-only-o3">
+<h2>5.8 AOT40 (only O<sub>3</sub>)<a class="headerlink" href="#aot40-only-o3" title="Link to this heading"></a></h2>
+<p>AOT40 is the cumulative concentration observed above 80 µg/m<sup>3</sup> of O<sub>3</sub> (= 40 parts per billion; ppb) based on hourly measurements. There are currently 2 different AOT40 to be calculated:</p>
+<ul class="simple">
+<li><p><strong>AOT40c</strong> (vegetation protection; crops) – 1 May to 31 July</p></li>
+<li><p><strong>AOT40f</strong> (forest protection) – 1 April to 30 September</p></li>
+</ul>
+<p>For each of these AOT, two statistics shall be calculated in order to obtain a final AOT40 for compliance:</p>
+<ul class="simple">
+<li><p>AOT40<sub>measured</sub></p></li>
+<li><p>AOT40<sub>estimate</sub> (= final)</p></li>
+</ul>
+<p>Only hourly concentrations between 08:00 and 20:00 Central European Time (CET) are considered. <strong>AOT40<sub>measured</sub> is calculated as follows</strong> (See also Chapter 4.5):</p>
+<div class="math notranslate nohighlight">
+\[{AOT40}_{measured} = \sum_{i\ (8 - 20\ CET)}^{}{AOT40h} = \ \sum_{i\ (8 - 20\ CET)}^{}{max\left\{ 0,\left( C_{i} - 80 \right) \right\}}\]</div>
+<p>where <em>C<sub>i</sub></em> is the hourly mean ozone concentration in µg/m<sup>3</sup> and the summation is to the period 08.00 – 20.00 Central European Time each day in a certain time period<a class="reference internal" href="footnotes.html#footnote-19"><span class="std std-ref">[19]</span></a>.</p>
+<p>For AOT40c the time period is the 3-month growing season of crops: from 1 May to 31 July each year. For the AOT40f, the time period is 1 April to 30 September.</p>
+<p>AOT40 has a unit of (µg/m<sup>3</sup>)·hours and is sensitive to missing values. <strong><u>The required proportion of valid data is 85% of the hourly values</u></strong><a class="reference internal" href="footnotes.html#footnote-20"><span class="std std-ref">[20]</span></a> over the time period defined for calculating the AOT40 value. Therefore, <em>AOT40<sub>measured</sub></em> shall be routinely corrected to full time coverage to derive <em>AOT40<sub>estimate</sub></em> as follows:</p>
+<div class="math notranslate nohighlight">
+\[{AOT40}_{estimate} = \ \frac{{AOT40}_{measured} \cdot N_{period}}{N_{valid}}\]</div>
+<p>where <em>N<sub>valid</sub></em> is the number of valid hourly values and <em>N<sub>period</sub></em> is the number of hours in the period (1104 hours for AOT40c and 2196 for AOT40f).</p>
+<section id="numberof-valid-hours-for-aot40-aot40-nv">
+<h3>5.8.1 Numberof valid hours for AOT40 (AOT40-nv)<a class="headerlink" href="#numberof-valid-hours-for-aot40-aot40-nv" title="Link to this heading"></a></h3>
+<p>In order to process AOT40, the number of valid hourly values need to be calculated. This will depend on whether the AOT40 is calculated for the protection of vegetation or the forest protection:</p>
+<ul class="simple">
+<li><p>Number of valid hours for AOT40c (<strong>AOT40c-nv</strong>)[^19]: Count the number of valid hourly (flag 1, 2, 3 or 4) between <em>StartTime</em> ≥ 07:00 UTC and <em>EndTime</em> ≤ 19:00 UTC (or <em>StartTime</em> &gt;= 08:00 UTC+01 and <em>EndTime</em> &lt;= 20:00 UTC+01) between 1<sup>st</sup> May and 31<sup>th</sup> July.</p></li>
+<li><p>Number of valid hours for AOT40f (AOT40f-nv)[^20]: Count the number of valid hourly values (flag 1, 2 or 3) between <em>StartTime</em> ≥ 07:00 UTC and <em>EndTime</em> ≤ 19:00 UTC (or <em>StartTime</em> &gt;= 08:00 UTC+01 and <em>EndTime</em> &lt;= 20:00 UTC+01) between 1<sup>st</sup> April and 31<sup>st</sup> September.</p></li>
+</ul>
+</section>
+<section id="aot40-for-vegetation-protection-aot40c">
+<h3>5.8.2 AOT40 for vegetation protection (AOT40c)<a class="headerlink" href="#aot40-for-vegetation-protection-aot40c" title="Link to this heading"></a></h3>
+<p>For the AOT40 vegetation (AOT40c) the time period is the 3-month growing season for crops: from 1<sup>st</sup> May to 31<sup>th</sup> July each year. It is calculated as follows:</p>
+<div class="math notranslate nohighlight">
+\[AOT40c = \frac{AOT40c_{measured}}{AOT40c\_ nv}*1104\]</div>
+<p>where AOT40c<sub>measured</sub> is the sum of all AOT40h in this period.</p>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/AOT40c">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/AOT40c</a></p>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/AOT40cmeasured">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/AOT40cmeasured</a></p>
+</section>
+<section id="aot40-for-forest-protection-aot40f">
+<h3>5.8.3 AOT40 for forest protection (AOT40f)<a class="headerlink" href="#aot40-for-forest-protection-aot40f" title="Link to this heading"></a></h3>
+<p>For the AOT40 forest (AOT40f) the time period is from 1<sup>st</sup> April to 30<sup>th</sup> September each year. It is calculated as follows:</p>
+<div class="math notranslate nohighlight">
+\[AOT40f = \frac{AOT40f_{measured}}{AOT40c\_ nv}*2196\]</div>
+<p>where AOT40f<sub>measured</sub> is the sum of all AOT40h in this period</p>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/AOT40f">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/AOT40f</a></p>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/AOT40fmeasured">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/AOT40fmeasured</a></p>
+</section>
+<section id="aot40-for-vegetation-protection-averaged-over-5-years">
+<h3>5.8.4 AOT40 for vegetation protection averaged over 5 years<a class="headerlink" href="#aot40-for-vegetation-protection-averaged-over-5-years" title="Link to this heading"></a></h3>
+<p>AOT40c is also averaged over 5 years. For this calculation, at least 3 years must have valid AOT40c.</p>
+<p>A year shall be included in the 5-year average of the AOT40c if the data coverage is higher than 85% achieved for the hours between 08:00 and 20:00 CET in this year (939 hours).</p>
+<p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/AOT40c-P5Y">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/AOT40c-P5Y</a></p>
+</section>
+</section>
+<section id="somo35-and-somo10-only-o3">
+<h2>5.9 SOMO35 and SOMO10 (Only O₃)<a class="headerlink" href="#somo35-and-somo10-only-o3" title="Link to this heading"></a></h2>
+<p>To support the quantification of health impacts, the <strong>SOMO35</strong> (Sum of Ozone Means Over 35 ppb) and <strong>SOMO10</strong> (Sum of Ozone Means Over 10 ppb) indicators are used, as recommended by the World Health Organization.</p>
+<p>These indicators are based on daily maximum 8-hour running mean ozone concentrations, and represent the accumulated excess above predefined thresholds. The units are (µg/m³)·days.</p>
+<ul class="simple">
+<li><p><strong>SOMO35</strong> is defined as the sum of the differences between daily maximum 8-hour running mean concentrations above a threshold of <strong>70 µg/m³ (35 ppb)</strong>:</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\({SOMO35}_{measured} = \Sigma_{i}\max\{ 0,\left( C_{i} - 70 \right)\}\)</span></p>
+<ul class="simple">
+<li><p><strong>SOMO10</strong> is calculated analogously using a threshold of <strong>20 µg/m³ (10 ppb)</strong>:</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[{SOMO10}_{measured} = \Sigma_{i}\max\{ 0,\left( C_{i} - 20 \right)\}\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><em>C<sub>i</sub></em>  is the daily maximum 8-hour running mean ozone concentration in µg/m³;</p></li>
+<li><p>The summation is over all days of the calendar year with valid data.</p></li>
+</ul>
+<p>Both indicators are sensitive to missing data, and a correction is applied to account for incomplete time series. The correction follows the WHO recommendation and consists of scaling the measured value by the number of valid data:</p>
+<div class="math notranslate nohighlight">
+\[SOMOX = \frac{SOMOX_{measured} \cdot N_{period}}{N_{valid}}\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><em>N<sub>valid</sub></em> is the number of valid daily values available;</p></li>
+</ul>
+<p>Aggregates calculated in this way:</p>
+<ul class="simple">
+<li><p>SOMO35: <a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/SOMO35">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/SOMO35</a></p></li>
+<li><p>SOMO10: <a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/SOMO10">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/SOMO10</a></p></li>
+</ul>
+</section>
+<section id="multi-annual-aggregates">
+<h2>5.10 Multi-Annual Aggregates<a class="headerlink" href="#multi-annual-aggregates" title="Link to this heading"></a></h2>
+<p>Multi-annual indicators are computed to provide a more robust assessment of air quality trends and exceedance patterns over time. These aggregates are calculated using three consecutive calendar years, based on the annual indicators defined in Directive (EU) 2024/2881, and in accordance with the vocabulary maintained by the EEA.</p>
+<p><strong>The 3-year average is calculated between 1st January of year X–2 and 31st December of year X</strong></p>
+<section id="p3y-3-year-average-of-annual-means">
+<h3>5.10.1 P3Y (3-Year Average of Annual Means)<a class="headerlink" href="#p3y-3-year-average-of-annual-means" title="Link to this heading"></a></h3>
+<p>This indicator represents the arithmetic mean of the annual mean concentrations over three consecutive years, for a given air pollutant and sampling point.</p>
+<p>Let <em>M<sub>i</sub></em><sub>​</sub> denote the annual mean concentration in year <em>i</em>, the P3Y value is calculated as:</p>
+<div class="math notranslate nohighlight">
+\[P3Y = \ \frac{\sum_{i = 1}^{n}M_{i}}{n}\]</div>
+<p>where <sub>n</sub> is the number of years with valid annual means.<a class="reference internal" href="footnotes.html#footnote-23"><span class="std std-ref">[23]</span></a></p>
+<p>Aggregate:</p>
+<ul class="simple">
+<li><p>P3Y (3-Year Average of Annual Means):</p></li>
+</ul>
+<blockquote>
+<div><p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P3Y">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P3Y</a></p>
+</div></blockquote>
+</section>
+<section id="p3y-dmaxabove120">
+<h3>5.10.2 P3Y-dmaxAbove120<a class="headerlink" href="#p3y-dmaxabove120" title="Link to this heading"></a></h3>
+<p>This indicator applies only to ozone (O₃). It reflects the average number of days per year in which the daily maximum of the 8-hour running average (P8H-dmax) exceeds 120 µg/m³, calculated over a rolling 3-year period.</p>
+<p>For each year, the number of exceedance days is determined using the aggregate P1Y-dmaxAbove120 (see Chapter 5.4). The 3-year indicator is then the average of the valid annual counts:</p>
+<div class="math notranslate nohighlight">
+\[P3Y - dmaxAbove120 = \ \frac{\sum_{i = 1}^{n}D_{i}}{n}\]</div>
+<p>where <em>D<sub>i</sub>​</em> is the number of days exceeding 120 µg/m³ in year <em>i</em>, and <em>n</em> is the number of valid years.</p>
+<p>Aggregate:</p>
+<ul class="simple">
+<li><p>P3Y-dmaxAbove120 (Number of days with daymax values higher than 120 µg/m³ averaged over 3 years):</p></li>
+</ul>
+<blockquote>
+<div><p><a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P3Y-dmaxAbove120">http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P3Y-dmaxAbove120</a></p>
+</div></blockquote>
+</section>
+</section>
+<section id="average-exposure-indicator-aei-pm2-5-and-no2">
+<h2>5.11 Average Exposure Indicator (AEI) (PM<sub>2.5</sub> and NO<sub>2</sub>)<a class="headerlink" href="#average-exposure-indicator-aei-pm2-5-and-no2" title="Link to this heading"></a></h2>
+<p>In the 2024/2881 Directive, the methodology for calculating the Average Exposure Indicator (AEI) remains consistent with that defined in Part A of Annex XIV of Directive 2008/50/EC. The AEI shall be assessed as a three-calendar-year running annual mean concentration averaged over all relevant sampling points. However, Directive (EU) 2024/2881 introduces significant updates regarding the selection of sampling points and the pollutants covered.</p>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><p><strong>KEY NOTE FOR EEA DEVELOPERS</strong></p>
+<p><em>AEI statistics are calculated at national level, disaggregated by Average Exposure Territorial Unit (AETU). At SamplingPoint level, the annual mean (e.g. P1Y-mean) and its associated data capture value must be calculated and retained.</em></p></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>Key changes introduced by Directive (EU) 2024/2881:</strong></p>
+<ul class="simple">
+<li><p>The AEI shall be calculated both for PM₂.₅ and NO₂.</p></li>
+<li><p>The AEI shall be based on measurements taken at urban background locations in each Average Exposure Territorial Unit (AETU) throughout the Member State.</p></li>
+<li><p>In AETUs where no urban area is located, measurements at rural background locations shall be used.</p></li>
+<li><p>AEI is to be used for assessing whether the average exposure reduction obligation and the average exposure concentration objective have been met, per pollutant and territorial unit.</p></li>
+<li><p>Where exceedances are identified as being attributable to natural sources, such contributions shall be deducted prior to AEI calculation.</p></li>
+</ul>
+<p>Then, the average of the annual concentrations across all AEI monitoring stations<a class="reference internal" href="footnotes.html#footnote-24"><span class="std std-ref">[24]</span></a> within each AETU shall be computed for each calendar year. The AEI is obtained as the arithmetic mean of the three yearly values (i.e. the reporting year and the two previous years). All aggregation operations must be performed using the full numeric precision of the data; rounding to one decimal place shall be applied only after all aggregation steps are completed.</p>
+<p>To ensure transparent and unambiguous calculation for the reported AEI, the following shall be observed:</p>
+<blockquote>
+<div><p>• calculate the annual average PM2.5 concentration at each AEI monitoring station, applying the criteria laid down in Annex XI.A of Dir. 2008/50/EC for each year (or its corresponding successor provisions).</p>
+<p>• calculate the average over all AEI monitoring stations within the member state for each year</p>
+<p>• calculate the average over three years (the reporting year and the two previous years)</p>
+</div></blockquote>
+<p>The set of AEI stations must remain stable across years and established in accordance with Point B of Annex III of Directive (EU) 2024/2881. Any changes in the AEI network are strongly discouraged and must be submitted.</p>
+<p>Where data coverage is below 90% for any given year, it is recommended to follow the methodology developed by the AQUILA network<a class="reference internal" href="footnotes.html#footnote-25"><span class="std std-ref">[25]</span></a> to ensure comparability and robustness of the results. AEI concentration thresholds should be presented with one decimal precision, in line with the practice already recommended under the previous Directive, e.g., 8.5, 13.0, 18.0 and 22.0 µg/m³.</p>
+</section>
+<section id="national-exposure-reduction-target-nert">
+<h2>5.12 National Exposure Reduction Target (NERT)<a class="headerlink" href="#national-exposure-reduction-target-nert" title="Link to this heading"></a></h2>
+<p>The National Exposure Reduction Target (NERT) according to the Directive 2008/50/EC, Annex I, Section B will be established based on the first reporting of AEI. According to the Member States, difficulties were encountered in calculating the first AEI mainly because it was not possible to attain 90% data capture for all sites for various reasons (e.g. insufficient time to choose the monitoring sites and to install the equipment). Due to the importance of having a basis for establishing the NERT, AQUILA has produced guidance recommending<sup>18</sup> how to deal with the AEI when minimum requirement for data capture is not fulfilled for some stations. Therefore, if minimum data capture was not achieved in the years needed to establish the baseline AEI, it is recommended to follow the procedure developed by AQUILA. Other procedures/methods may be used if they are well documented [e.g., Spanish Royal Decret 102/2011].</p>
+<p>For example, if the average exposure indicator of one member state is equal to 16.4 µg/m<sup>3</sup>, this value has to be compared with the initial concentration threshold of 18.0 µg/m<sup>3</sup> to establish the reduction target.</p>
+</section>
+<section id="average-exposure-reduction-obligation-aero">
+<h2>5.13 Average Exposure Reduction Obligation (AERO)<a class="headerlink" href="#average-exposure-reduction-obligation-aero" title="Link to this heading"></a></h2>
+<p>In accordance with Article 13 and Annex XIV, Part B of Directive (EU) 2024/2881, the <em>Average Exposure Reduction Obligation</em> (AERO) is assessed per average exposure territorial unit (AETU) for the pollutants PM₂.₅ and NO₂, based on the evolution of the Average Exposure Indicator (AEI) over a ten-year period.</p>
+<p>The AERO expresses the required reduction in population exposure over time. It is established by comparing the AEI calculated for a target year with the AEI of the reference base year, set ten years prior. The assessment is pollutant-specific and applies to each AETU independently.</p>
+<p>The AEI used in this comparison must be calculated in accordance with the methodology described in Chapter 5.11 and based on measurements at all urban background sampling points, or rural background sampling points if no urban areas exist within the AETU, as established in Point B of Annex III of the Directive.</p>
+<p><strong>Determination of the reference AEI (base year)</strong></p>
+<ul class="simple">
+<li><p>The reference AEI is the three-year running mean for the base year, defined as the calendar year ten years prior to the target year.</p></li>
+<li><p>For instance, in the reporting year 2030, the reference AEI corresponds to the average over 2018, 2019, and 2020.</p></li>
+<li><p>As per the Directive, Member States may opt to exclude data from 2020 in the calculation of the reference AEI, due to the exceptional conditions caused by the COVID-19 pandemic. In such cases, the reference AEI shall be based on the average of 2017, 2018, and 2019.</p></li>
+</ul>
+<p><strong>Determination of the AEI in the target year</strong></p>
+<ul class="simple">
+<li><p>The AEI in the target year is also computed as the three-year running mean for that year (e.g., for 2030, average of 2028, 2029, and 2030), following the same data quality and station selection criteria.</p></li>
+</ul>
+<p>For implementation purposes, the AEI shall be rounded to one decimal place only after all aggregation steps have been completed. The set of AEI monitoring stations used for both the base and target AEI calculations must remain stable and consistent over time; any changes to the monitoring network must be duly justified and submitted.</p>
+<p>When calculating the levels for the years 2030, 2031 and 2032, Member States may exclude the year 2020 from the calculation of the AEI for the base year.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="04_base_aggregations.html" class="btn btn-neutral float-left" title="4 Calculation of base aggregations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="06_exceedances.html" class="btn btn-neutral float-right" title="6 Calculation of basic exceedance information" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, EEA AQ Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

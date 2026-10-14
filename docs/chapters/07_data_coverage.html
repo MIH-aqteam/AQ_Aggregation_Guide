@@ -1,0 +1,331 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>7 Data capture, time coverage and data coverage &mdash; AURA Data Aggregation Guide 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=14e3707c" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../_static/aura-sidebar.js?v=6695ddf7"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="8 European Air Quality Index (AQI)" href="08_aqi.html" />
+    <link rel="prev" title="6 Calculation of basic exceedance information" href="06_exceedances.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div class="aura-branding">
+  <div class="aura-brand-row">
+    <a class="aura-eea-link" href="https://www.eea.europa.eu/" aria-label="European Environment Agency">
+      <img class="aura-eea-logo" src="../_static/EEA.png" alt="European Environment Agency">
+    </a>
+    <div class="aura-name">AURA</div>
+  </div>
+
+  <nav class="aura-sites" aria-label="AURA websites">
+    <a href="https://eeadata.github.io/AQ.Portal/">portal</a>
+    <a href="https://eeadata.github.io/AQ.Documentation.ReportingGuide/">reporting guide</a>
+    <a href="https://eeadata.github.io/AQ.Documentation.ReferenceGuide/">reference guide</a>
+  </nav>
+
+  <div class="aura-resources">
+    <div class="aura-resources-label">AURA resources</div>
+    <span class="aura-current" aria-current="page">data aggregation guide</span>
+    <a class="aura-register-link" href="https://eeadata.github.io/AQ.Documentation.ReferenceGuide/register.html">
+      Correction &amp; modification register
+    </a>
+  </div>
+</div>
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+  
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_raw_data.html">2 Processing of raw data by EEA system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_preprocessing.html">3 Data pre-processing prior to calculation of aggregations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_base_aggregations.html">4 Calculation of base aggregations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_statistics.html">5 Calculation of statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_exceedances.html">6 Calculation of basic exceedance information</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">7 Data capture, time coverage and data coverage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#definitions">7.1 Definitions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#data-capture-dcap">7.1.1 Data capture (Dcap)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#time-coverage-tc">7.1.2 Time coverage (TC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#data-coverage-dc">7.1.3 Data coverage (DC)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#calculation-algorithms">7.2 Calculation algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#calculations-for-hourly-and-daily-data-types-29">7.2.1 Calculations for hourly and daily data types<span class="xref std std-ref">[29]</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#calculations-from-base-aggregation-data">7.2.2 ### Calculations from base aggregation data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#missing-data-fractions-arising-from-maintenance-and-calibration">7.2.3 Missing data fractions arising from maintenance and calibration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="08_aqi.html">8 European Air Quality Index (AQI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_references.html">9 References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="footnotes.html">Footnotes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex_a.html">Annex A: Environmental objectives and reporting metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex_b.html">Annex B: Assessment thresholds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex_c.html">Annex C: Historical methods for calculation of data capture and time coverage from multi day sampler-based data types integrated over an averaging period</a></li>
+</ul>
+
+  <a class="aura-pdf-link" href="../_static/AQ_Data_Aggregation_Guide.pdf" title="Complete guide in PDF format">PDF version</a>
+
+
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">AURA Data Aggregation Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">7 Data capture, time coverage and data coverage</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/chapters/07_data_coverage.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="data-capture-time-coverage-and-data-coverage">
+<h1>7 Data capture, time coverage and data coverage<a class="headerlink" href="#data-capture-time-coverage-and-data-coverage" title="Link to this heading"></a></h1>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><blockquote>
+<p><strong>KEY NOTE</strong></p>
+<p><em>All statistics calculated from the primary data or from the base aggregations described in Chapter 5 shall be accompanied with information on data capture, time coverage and data coverage. These will be provided for all aggregations in order for users to select data appropriately for their needs. If aggregations are used for compliance purposes, the user needs to use those percentages required under the Directive (see Table 4).</em></p>
+</blockquote></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<section id="definitions">
+<h2>7.1 Definitions<a class="headerlink" href="#definitions" title="Link to this heading"></a></h2>
+<p>To automate the calculation across all pollutants, reported primary data and statistics, three statistics are needed to understand the aggregation results. These statistics are defined in this section.</p>
+<section id="data-capture-dcap">
+<h3>7.1.1 Data capture (Dcap)<a class="headerlink" href="#data-capture-dcap" title="Link to this heading"></a></h3>
+<p>The data capture is the percentage of valid measurements over the total number of reported measurements over the averaging period.</p>
+<p>For continuous measurement monitoring, EEA expects full delivery across all measuring period with appropriate validity flag. Please note that if full deliveries are not provided for continuous measurements (hourly/daily), the data capture calculated by EEA might differ from reporter’s calculations. If full data delivery is not provided, please use data coverage to obtain the % of valid measures over the averaging period.</p>
+</section>
+<section id="time-coverage-tc">
+<h3>7.1.2 Time coverage (TC)<a class="headerlink" href="#time-coverage-tc" title="Link to this heading"></a></h3>
+<p>The time coverage is the percentage of measurement time in each averaging period.</p>
+</section>
+<section id="data-coverage-dc">
+<h3>7.1.3 Data coverage (DC)<a class="headerlink" href="#data-coverage-dc" title="Link to this heading"></a></h3>
+<p>The data coverage is the percentage of valid measurements over the given averaging period. When assessing the appropriateness of any statistics, data coverage is the most appropriate statistic to understand the representativeness of a statistic over an averaging period.</p>
+</section>
+</section>
+<section id="calculation-algorithms">
+<h2>7.2 Calculation algorithms<a class="headerlink" href="#calculation-algorithms" title="Link to this heading"></a></h2>
+<p>For all aggregations, the following is “counted” in the corresponding period of aggregation[^26]:</p>
+<ul class="simple">
+<li><p><em>count_validdata</em>: number of measures with validity flag &gt; 0</p></li>
+<li><p><em>count_notvalid_maint</em>: number of measures with validity flag -99</p></li>
+<li><p><em>count_notvalid_other</em>: number of measures with validity flag -1</p></li>
+<li><p><em>count_notvalid_null</em>: number of measures with validity flag 0 or missing</p></li>
+<li><p><em>interval</em>: total number of measures</p></li>
+</ul>
+<p>Note that where a measurement method delivers hourly values, these counts and interval shall be calculated using number of hours. Where a measurement method delivers daily values, the counts and interval shall be calculated using number of days.</p>
+<p>Then, Dcap, DC and TC are calculated according to the following algorithms:</p>
+<div class="math notranslate nohighlight">
+\[Dcap = \frac{count\_ validdata\ }{count\_ validdata + count\_ notvalid\_ maint\  + count\_ notvalid\_ other} \bullet 100\%\]</div>
+<div class="math notranslate nohighlight">
+\[DataCoverage = \frac{count\_ validdata\ }{interval} \times 100\%\]</div>
+<div class="math notranslate nohighlight">
+\[TC = \frac{count\_ validdata + count\_ notvalid\_ maint\  + count\_ notvalid\_ other\ }{interval} \bullet 100\%\]</div>
+<p>i.e.:</p>
+<div class="math notranslate nohighlight">
+\[DC = Dcap \times TC\]</div>
+<section id="calculations-for-hourly-and-daily-data-types-29">
+<h3>7.2.1 Calculations for hourly and daily data types<a class="reference internal" href="footnotes.html#footnote-29"><span class="std std-ref">[29]</span></a><a class="headerlink" href="#calculations-for-hourly-and-daily-data-types-29" title="Link to this heading"></a></h3>
+<p>The <strong>data capture</strong> for hourly and daily measurements is the percentage of valid measurement values in a given data set. The data capture in a given averaging period is defined as follows:</p>
+<div class="math notranslate nohighlight">
+\[Dcap = \frac{N_{valid}}{N_{totalReported}} \bullet 100\ \%\]</div>
+<p>The <strong>data coverage</strong> for hourly and daily measurements is the percentage of expected measurement (based on the official measurement schedule) that are present and valid in the dataset. It is defined as:</p>
+<div class="math notranslate nohighlight">
+\[DataCoverage = \frac{N_{valid}}{N_{expected}} \bullet 100\ \%\]</div>
+<p>The <strong>time coverage</strong> is the percentage of measurement time in a given averaging period.</p>
+<div class="math notranslate nohighlight">
+\[TC = \frac{N_{totalReported}}{N_{expected}} \bullet 100\ \%\]</div>
+<p>Where:</p>
+<img class="aura-inline-illustration" src="../_static/aggregation_figures/image2.png" alt="Illustration of the terms used in the data capture, data coverage and time coverage formulas" />
+<ul class="simple">
+<li><p>N<sub>valid</sub> is the number of valid hourly/daily values (validity flag &gt; 0)</p></li>
+<li><p>N<sub>totalReported</sub> is the number of hours/days reported in that measurement period.</p></li>
+<li><p>N<sub>expected</sub> number of expected measurement values, based on the nominal temporal resolution (e.g. 24 per day for hourly data, 365/366 per year for daily data)</p></li>
+</ul>
+<div class="admonition aura-example">
+<p class="admonition-title">Example 13</p>
+<div class="aura-example-body">
+<blockquote>
+<p>Calculating annual mean from NO<sub>2</sub> primary hourly values.</p>
+<p>Nvalid: 7724 h</p>
+<p>Ntotalreported: 8760 hours (full dataset)</p>
+<p>Nexpected: 8760 hours</p>
+</blockquote>
+<table>
+<colgroup>
+<col style="width: 30%"/>
+<col style="width: 34%"/>
+<col style="width: 34%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th>TimeCoverage</th>
+<th>DataCapture</th>
+<th>DataCoverage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math display">$$\frac{8760}{8760} \bullet 100 = 100\ \%$$</span></td>
+<td><span class="math display">$$\frac{7724}{8760} \bullet 100 = 88,17\ \%$$</span></td>
+<td><span class="math display">$$\frac{7724}{8760} \bullet 100 = 88,17\ \%$$</span></td>
+</tr>
+</tbody>
+</table><span class="math display">$$\frac{8760}{8760} \bullet 100 = 100\ \%$$</span><span class="math display">$$\frac{7724}{8760} \bullet 100 = 88,17\ \%$$</span><span class="math display">$$\frac{7724}{8760} \bullet 100 = 88,17\ \%$$</span>
+</div>
+</div>
+<div class="admonition aura-example">
+<p class="admonition-title">Example 14</p>
+<div class="aura-example-body">
+<blockquote>
+<p>Calculating annual mean from PM<sub>10</sub> primary daily values.</p>
+<p>Nvalid: 309 days</p>
+<p>Ntotalreported: 362 days (missing 3 days for averaging period)</p>
+<p>Nexpected: 365 days</p>
+</blockquote>
+<table>
+<colgroup>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+<col style="width: 33%"/>
+</colgroup>
+<thead>
+<tr class="header">
+<th>TimeCoverage</th>
+<th>DataCapture</th>
+<th>DataCoverage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><span class="math display">$$\frac{362}{365} \bullet 100 = 99,18\ \%$$</span></td>
+<td><span class="math display">$$\frac{309}{362} \bullet 100 = 85,36\ \%$$</span></td>
+<td><span class="math display">$$\frac{309}{365} \bullet 100 = 84,66\ \%$$</span></td>
+</tr>
+</tbody>
+</table><span class="math display">$$\frac{362}{365} \bullet 100 = 99,18\ \%$$</span><span class="math display">$$\frac{309}{362} \bullet 100 = 85,36\ \%$$</span><span class="math display">$$\frac{309}{365} \bullet 100 = 84,66\ \%$$</span>
+</div>
+</div>
+</section>
+<section id="calculations-from-base-aggregation-data">
+<h3>7.2.2 ### Calculations from base aggregation data<a class="headerlink" href="#calculations-from-base-aggregation-data" title="Link to this heading"></a></h3>
+<p>The calculations for base aggregation data are done following same logic as shown in Chapter 7.2.1</p>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><p>KEY NOTE</p>
+<p><em>In this case, it must be clearly stated that data coverage, data capture, and time coverage depend not on the original data type (hourly or daily), but on the <strong>base aggregation level</strong> employed.</em></p>
+<ul>
+<li><p><em>For instance, when calculating an indicator such as <strong>P1Y-daysAbove25</strong> (Number of days with daily average values higher than 25 [unit] in a given year), and the original data are hourly, the base aggregation to be considered is <strong>P1D</strong>, because the objective is to count the number of days.</em></p></li>
+<li><p><em>Similarly, if the indicator is <strong>P1Y-dmax-per93.15</strong> (e.g. O₃, 26th highest P8H-dmax value), the reference for completeness is not the number of hourly measurements reported, but the number of <strong>P8H-dmax</strong> values calculated.</em></p></li>
+</ul>
+<p><em>Therefore, completeness metrics (data coverage, data capture, time coverage) must always be assessed based on the temporal resolution of the <strong>base aggregation</strong> required by the specific indicator, regardless of the original input frequency.</em></p></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+</section>
+<section id="missing-data-fractions-arising-from-maintenance-and-calibration">
+<h3>7.2.3 Missing data fractions arising from maintenance and calibration<a class="headerlink" href="#missing-data-fractions-arising-from-maintenance-and-calibration" title="Link to this heading"></a></h3>
+<p>The percentage of values missing due to station maintenance or calibration in a given averaging period is calculated as follows:</p>
+<div class="math notranslate nohighlight">
+\[Perc_{main\_ cal} = \frac{N_{main\_ cal}}{N_{expected}} \times 100\%\]</div>
+<p>where <em>N<sub>main_cal</sub></em> is the number of invalid hourly or daily values with a validity flag = -99 (Not valid due to station maintenance or calibration) and *N<sub>expected </sub>*is the number of hours/days in the averaging period.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="06_exceedances.html" class="btn btn-neutral float-left" title="6 Calculation of basic exceedance information" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="08_aqi.html" class="btn btn-neutral float-right" title="8 European Air Quality Index (AQI)" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, EEA AQ Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,245 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>3 Data pre-processing prior to calculation of aggregations &mdash; AURA Data Aggregation Guide 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=14e3707c" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/aura-sidebar.js?v=6695ddf7"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="4 Calculation of base aggregations" href="04_base_aggregations.html" />
+    <link rel="prev" title="2 Processing of raw data by EEA system" href="02_raw_data.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div class="aura-branding">
+  <div class="aura-brand-row">
+    <a class="aura-eea-link" href="https://www.eea.europa.eu/" aria-label="European Environment Agency">
+      <img class="aura-eea-logo" src="../_static/EEA.png" alt="European Environment Agency">
+    </a>
+    <div class="aura-name">AURA</div>
+  </div>
+
+  <nav class="aura-sites" aria-label="AURA websites">
+    <a href="https://eeadata.github.io/AQ.Portal/">portal</a>
+    <a href="https://eeadata.github.io/AQ.Documentation.ReportingGuide/">reporting guide</a>
+    <a href="https://eeadata.github.io/AQ.Documentation.ReferenceGuide/">reference guide</a>
+  </nav>
+
+  <div class="aura-resources">
+    <div class="aura-resources-label">AURA resources</div>
+    <span class="aura-current" aria-current="page">data aggregation guide</span>
+    <a class="aura-register-link" href="https://eeadata.github.io/AQ.Documentation.ReferenceGuide/register.html">
+      Correction &amp; modification register
+    </a>
+  </div>
+</div>
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+  
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_raw_data.html">2 Processing of raw data by EEA system</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">3 Data pre-processing prior to calculation of aggregations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#outlier-detection-and-removal">3.1 Outlier Detection and Removal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#overlap-resolution">3.2 Overlap Resolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#handling-of-variable-aggregation-types-var">3.3 Handling of Variable Aggregation Types (var)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#time-zone-adjustment">3.4 Time Zone Adjustment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#application-of-validity-and-verification-flags">3.5 Application of Validity and Verification Flags</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="04_base_aggregations.html">4 Calculation of base aggregations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_statistics.html">5 Calculation of statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_exceedances.html">6 Calculation of basic exceedance information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_data_coverage.html">7 Data capture, time coverage and data coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_aqi.html">8 European Air Quality Index (AQI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_references.html">9 References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="footnotes.html">Footnotes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex_a.html">Annex A: Environmental objectives and reporting metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex_b.html">Annex B: Assessment thresholds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex_c.html">Annex C: Historical methods for calculation of data capture and time coverage from multi day sampler-based data types integrated over an averaging period</a></li>
+</ul>
+
+  <a class="aura-pdf-link" href="../_static/AQ_Data_Aggregation_Guide.pdf" title="Complete guide in PDF format">PDF version</a>
+
+
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">AURA Data Aggregation Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">3 Data pre-processing prior to calculation of aggregations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/chapters/03_preprocessing.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="data-pre-processing-prior-to-calculation-of-aggregations">
+<h1>3 Data pre-processing prior to calculation of aggregations<a class="headerlink" href="#data-pre-processing-prior-to-calculation-of-aggregations" title="Link to this heading"></a></h1>
+<p>Before any statistical aggregation is performed, raw measurement data (data submitted by the countries) undergo a series of pre-processing steps designed to ensure consistency, reliability, and compliance with methodological standards. These preparatory operations are critical to guarantee that aggregated results are based on data of sufficient quality, properly formatted and timely aligned.</p>
+<p>The pre-processing pipeline includes the following key steps:</p>
+<ul class="simple">
+<li><p><strong>Outlier removal</strong>, to discard implausible values that may distort statistical indicators.</p></li>
+<li><p><strong>Resolution of overlaps</strong>, where multiple records exist for the same time interval.</p></li>
+<li><p><strong>Time zone adjustment:</strong> converting timestamps to the declared time zone used for calculating statistics assigned to each air quality network by the country (data stored in UTC+1).</p></li>
+<li><p><strong>Exclusion or flagging of variable-length intervals</strong>, which are not compatible with fixed-time aggregations.</p></li>
+<li><p><strong>Filtering based on validity and verification status</strong>, to ensure that only suitable records are used, particularly in compliance-related calculations.</p></li>
+</ul>
+<p>Each of these steps is further detailed in the following subsections.</p>
+<section id="outlier-detection-and-removal">
+<h2>3.1 Outlier Detection and Removal<a class="headerlink" href="#outlier-detection-and-removal" title="Link to this heading"></a></h2>
+<p>As a first step in the data preparation process, all reported measurement values below <strong>-50</strong> are systematically classified as invalid, regardless of the validity flag provided by the reporting country. This threshold-based filter ensures the removal of clearly erroneous values that would otherwise compromise the reliability of subsequent statistical calculations.</p>
+<p>This treatment affects not only the statistical indicators (e.g., mean, percentiles) but also the accompanying quality parameters such as data coverage, time coverage, and data capture. Outliers excluded in this step are therefore not considered in subsequent stage of data aggregation or compliance assessment.</p>
+</section>
+<section id="overlap-resolution">
+<h2>3.2 Overlap Resolution<a class="headerlink" href="#overlap-resolution" title="Link to this heading"></a></h2>
+<p>To ensure that each time interval within a time series is represented by a single, consistent measurement, a dedicated methodological approach is applied to resolve overlaps in reported data. This procedure addresses cases where multiple measurements are reported for overlapping time intervals by identifying and invalidating redundant or outdated records based on temporal and procedural criteria.</p>
+<p>All measurements are first organised chronologically based on their start time. For each time interval, all available records for the same SPO are initially considered, and any overlapping intervals are identified. Overlaps are defined as cases where the start or end of a time interval lies within another, or when one interval is entirely nested within another.To resolve these overlaps, records are compared based on the <strong>ResultTime</strong> attribute (see Table 1), which indicates the time of generation or submission of the data. When overlapping records are detected:</p>
+<ul class="simple">
+<li><p>Only the most recently reported one is retained, based on the latest <strong>ResultTime</strong>.</p></li>
+<li><p>Older records are invalidated.</p></li>
+<li><p>If two overlapping records have the same <strong>ResultTime</strong>, both are invalidated to prevent ambiguity.</p></li>
+</ul>
+<p>These rules apply solely based on temporal and procedural criteria, irrespective of whether the reported values are identical. This ensures that for each time interval, a single, unambiguous record is selected.This process is systematically applied throughout the dataset, ensuring temporal consistency by retaining a single, authoritative measurement for each time interval. It is designed to handle complex cases where one record may overlap with several others, always prioritising the most current submission. The result is a harmonised and traceable dataset that reflects the most up-to-date information available for subsequent statistical processing.</p>
+</section>
+<section id="handling-of-variable-aggregation-types-var">
+<h2>3.3 Handling of Variable Aggregation Types (var)<a class="headerlink" href="#handling-of-variable-aggregation-types-var" title="Link to this heading"></a></h2>
+<p>Measurement records reported with the aggregation type <strong>var</strong> are exclusively used for the calculation of the annual mean (P1Y) and are not considered for any other statistical indicators.</p>
+<p>In many instances, the start and end timestamps of these records do not fall exactly on the hour and may include minutes or seconds (e.g., 12:17:10). To ensure temporal consistency across all records, the minimum time unit for aggregation is set to one hour. This implies that all time intervals must start and end on the hour (e.g., 08:00, 17:00).</p>
+<p>To achieve this, a rounding procedure is applied to adjust the timestamps to the nearest appropriate hour. This procedure follows a pragmatic rule grounded in the data quality requirements defined by the Annex V, point C of Directive 2004/2881 (EU, 2024), which states that an hour can be considered valid if at least 75% of its measurements are available—that is, a minimum of 45 valid minutes.</p>
+<p>This threshold forms the basis for rounding decisions: timestamps are adjusted to include only those hours where sufficient data coverage exists, ensuring consistency and alignment with regulatory standards.</p>
+<p>The specific rounding thresholds and examples are detailed below.</p>
+<div class="aura-example admonition">
+<p class="admonition-title">Example 1</p>
+<p>To standardise the time intervals and ensure consistency in calculations, the following rounding criteria are applied to the start and end times of var records:</p>
+<p><strong>Start Time Rounding</strong></p>
+<ul class="simple">
+<li><p>If the <strong>minute</strong> value is <strong>≤ 15</strong>, round <strong>down</strong> to the hour.</p>
+<ul>
+<li><p><em>Example: 08:15 → 08:00; 08:05 → 08:00</em></p></li>
+</ul>
+</li>
+<li><p>If the <strong>minute</strong> value is <strong>&gt; 15</strong>, round <strong>up</strong> to the next full hour.</p>
+<ul>
+<li><p><em>Example: 08:16 → 09:00; 08:50 → 09:00</em></p></li>
+</ul>
+</li>
+</ul>
+<p><strong>End Time Rounding</strong></p>
+<ul class="simple">
+<li><p>If the <strong>minute</strong> value is <strong>&lt; 45</strong>, round <strong>down</strong> to the hour.</p>
+<ul>
+<li><p><em>Example: 17:30 → 17:00; 17:05 → 17:00</em></p></li>
+</ul>
+</li>
+<li><p>If the <strong>minute</strong> value is <strong>≥ 45</strong>, round <strong>up</strong> to the next full hour.</p>
+<ul>
+<li><p><em>Example: 17:45 → 18:00; 17:55 → 18:00</em></p></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="time-zone-adjustment">
+<h2>3.4 Time Zone Adjustment<a class="headerlink" href="#time-zone-adjustment" title="Link to this heading"></a></h2>
+<p>To ensure temporal consistency across data reported from different countries and monitoring stations, all hourly data is stored on a common reference time (UTC+1). This harmonisation step is essential, particularly when dealing with hourly or sub-daily data, where discrepancies in time zones could significantly affect the accuracy of aggregations.</p>
+<p>Although all measurement records are stored internally in UTC+1 format (as per the processing pipeline), the actual calculation of statistical aggregations is carried out in the time zone declared by data provider for the corresponding sampling point (via each network). This zone information is provided via country-specific metadata and must be considered to reflect the true temporal context of measurements.</p>
+<p>The approach varies according to the temporal resolution (<strong>AggType</strong>) of the reported data:</p>
+<ul class="simple">
+<li><p><strong>Daily data (P1D):</strong> No transformation is applied. These values are already considered aggregated at the day level and are assumed to be correctly aligned, as submitted by the reporting Member State.</p></li>
+<li><p><strong>Hourly and VAR data:</strong> These data types require time correction, particularly for records originating from “VAR” sources. In these cases, the time shift between the reported local time zone and UTC+1 is computed and applied, ensuring proper alignment.</p></li>
+</ul>
+<p><strong>Note:</strong> For all statistics related to <strong>AOT40</strong>, no time zone adjustment is applied. In accordance with Directive (EU) 2024/2881, Annex I, Section 2.A, the calculation of AOT40 must be based strictly on Central European Time (UTC+1). Therefore, all hourly values used for AOT40-related aggregations are processed directly in UTC+1, regardless of the local time zone of the sampling point.</p>
+</section>
+<section id="application-of-validity-and-verification-flags">
+<h2>3.5 Application of Validity and Verification Flags<a class="headerlink" href="#application-of-validity-and-verification-flags" title="Link to this heading"></a></h2>
+<p>Each measurement is associated with two key quality indicators (see Table 2).:</p>
+<ul class="simple">
+<li><p><strong>Validity status</strong>: Indicates whether the value is acceptable for use.</p></li>
+<li><p><strong>Verification status</strong>: Indicates whether the value has undergone quality control checks, and its current verification state.</p></li>
+</ul>
+<p>Only values with a <strong>validity code of 1, 2, 3, or 4</strong><a class="reference internal" href="footnotes.html#footnote-7"><span class="std std-ref">[7]</span></a> are considered valid and are included in the calculation of statistics and related metrics such as data capture, time coverage, and data coverage. Values flagged as invalid (e.g. -1, -99) or lacking a validity flag are excluded.</p>
+<p>The <strong>verification flag</strong> determines whether a value has been quality-assured and can be considered when performing data aggregation, particularly depending on the context.</p>
+<ul class="simple">
+<li><p>For <strong>regulatory compliance assessments</strong>, only <strong>valid and verified</strong> data (i.e. validity flags 1–4 and verification flag 1) must be used.</p></li>
+<li><p>For <strong>non-regulatory assessments</strong> (e.g., Up-to-date – UTD), aggregations may include <strong>valid but unverified</strong> data too (e.g. verification codes 1, 2, and 3), depending on the use case.</p></li>
+</ul>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="02_raw_data.html" class="btn btn-neutral float-left" title="2 Processing of raw data by EEA system" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="04_base_aggregations.html" class="btn btn-neutral float-right" title="4 Calculation of base aggregations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, EEA AQ Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

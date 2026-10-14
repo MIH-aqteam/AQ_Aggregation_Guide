@@ -1,0 +1,310 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>2 Processing of raw data by EEA system &mdash; AURA Data Aggregation Guide 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=14e3707c" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/aura-sidebar.js?v=6695ddf7"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="3 Data pre-processing prior to calculation of aggregations" href="03_preprocessing.html" />
+    <link rel="prev" title="1 Introduction" href="01_introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div class="aura-branding">
+  <div class="aura-brand-row">
+    <a class="aura-eea-link" href="https://www.eea.europa.eu/" aria-label="European Environment Agency">
+      <img class="aura-eea-logo" src="../_static/EEA.png" alt="European Environment Agency">
+    </a>
+    <div class="aura-name">AURA</div>
+  </div>
+
+  <nav class="aura-sites" aria-label="AURA websites">
+    <a href="https://eeadata.github.io/AQ.Portal/">portal</a>
+    <a href="https://eeadata.github.io/AQ.Documentation.ReportingGuide/">reporting guide</a>
+    <a href="https://eeadata.github.io/AQ.Documentation.ReferenceGuide/">reference guide</a>
+  </nav>
+
+  <div class="aura-resources">
+    <div class="aura-resources-label">AURA resources</div>
+    <span class="aura-current" aria-current="page">data aggregation guide</span>
+    <a class="aura-register-link" href="https://eeadata.github.io/AQ.Documentation.ReferenceGuide/register.html">
+      Correction &amp; modification register
+    </a>
+  </div>
+</div>
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+  
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">1 Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">2 Processing of raw data by EEA system</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#data-delivery-and-storage-architecture">2.1 Data Delivery and Storage Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#structure-of-parquet-files">2.2 Structure of Parquet Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#storage-of-key-attributes-for-processing-and-traceability">2.3 Storage of Key Attributes for Processing and Traceability</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sampling-point-as-primary-identifier">2.3.1 Sampling Point as Primary Identifier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pollutant-and-unit">2.3.2 Pollutant and Unit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#temporal-boundaries-of-observations">2.3.3 Temporal Boundaries of Observations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#validity-and-verification-flags">2.3.4 Validity and Verification Flags</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="03_preprocessing.html">3 Data pre-processing prior to calculation of aggregations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="04_base_aggregations.html">4 Calculation of base aggregations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="05_statistics.html">5 Calculation of statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_exceedances.html">6 Calculation of basic exceedance information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_data_coverage.html">7 Data capture, time coverage and data coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_aqi.html">8 European Air Quality Index (AQI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_references.html">9 References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="footnotes.html">Footnotes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex_a.html">Annex A: Environmental objectives and reporting metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex_b.html">Annex B: Assessment thresholds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex_c.html">Annex C: Historical methods for calculation of data capture and time coverage from multi day sampler-based data types integrated over an averaging period</a></li>
+</ul>
+
+  <a class="aura-pdf-link" href="../_static/AQ_Data_Aggregation_Guide.pdf" title="Complete guide in PDF format">PDF version</a>
+
+
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">AURA Data Aggregation Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">2 Processing of raw data by EEA system</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/chapters/02_raw_data.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="processing-of-raw-data-by-eea-system">
+<h1>2 Processing of raw data by EEA system<a class="headerlink" href="#processing-of-raw-data-by-eea-system" title="Link to this heading"></a></h1>
+<p>The EEA processes primary air quality measurement data submitted by countries to calculate the statistics described in this document. Reported data are stored and accessed through a system of Parquet files, which serve as the primary data source for all subsequent processing and aggregation.</p>
+<section id="data-delivery-and-storage-architecture">
+<h2>2.1 Data Delivery and Storage Architecture<a class="headerlink" href="#data-delivery-and-storage-architecture" title="Link to this heading"></a></h2>
+<p>Primary data are delivered by reporting countries through two main channels:</p>
+<ul class="simple">
+<li><p><strong>E1a</strong>: Officially validated data, submitted via the Central Data Repository (CDR).</p></li>
+<li><p><strong>UTD (****Up-To-Date)</strong>: Near-real-time data, provided via File Transfer Protocol (FTP) or Sensor Observation Service (SOS) endpoints.</p></li>
+</ul>
+<p>For each unique Sampling Point (SPO), the system stores:</p>
+<ul class="simple">
+<li><p><strong>One Parquet file for E1a data</strong>: containing fully validated and verified records.</p></li>
+<li><p><strong>One Parquet file for UTD data</strong>: containing preliminary data with varying levels of verification.</p></li>
+</ul>
+<p>Files are organised by country and SPO unique identifier and are accessible through structured URLs.</p>
+<p><strong>Example URL pattern</strong>:</p>
+<p><u>E1a data:</u></p>
+<blockquote>
+<div><p><a class="reference external" href="https://eeadmz1batchservice02.blob.core.windows.net/airquality-p-e1a/%3ccountry_code%3e/%3cSPO%3e.parquet"><em><strong>https://eeadmz1batchservice02.blob.core.windows.net/airquality-p-e1a/&lt;country_code&gt;/&lt;SPO&gt;.parquet</strong></em></a></p>
+</div></blockquote>
+<p><u>UTD data:</u></p>
+<blockquote>
+<div><p><a class="reference external" href="https://eeadmz1batchservice02.blob.core.windows.net/airquality-p/%3ccountry_code%3e/%3cSPO%3e.parquet"><em><strong>https://eeadmz1batchservice02.blob.core.windows.net/airquality-p/&lt;country_code&gt;/&lt;SPO&gt;.parquet</strong></em></a></p>
+</div></blockquote>
+</section>
+<section id="structure-of-parquet-files">
+<h2>2.2 Structure of Parquet Files<a class="headerlink" href="#structure-of-parquet-files" title="Link to this heading"></a></h2>
+<p>Each Parquet file contains a complete time series for a given Sampling Point (SPO) and pollutant, including the metadata most relevant for compliance assessment, quality control and time series as reported by national authorities. The structure is standardised and follows a schema optimised for high-performance processing and interoperability. The following fields are defined:</p>
+<p>Table 1: Structure of parquet files</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Field</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Samplingpoint</p></td>
+<td><p>Unique local identifier for the sampling point, prefixed by the country code. Created by Member States and not subject to controlled vocabulary.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Pollutant</p></td>
+<td><p>Identifier of the pollutant measured. It follows the standard pollutant codes as per the EEA reporting schema.<a class="reference internal" href="footnotes.html#footnote-1"><span class="std std-ref">[1]</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>Start</p></td>
+<td><p>Start timestamp of the observation interval (format: yyyy-mm-dd HH:MM:SS).</p></td>
+</tr>
+<tr class="row-odd"><td><p>End</p></td>
+<td><p>End timestamp of the observation interval (format: yyyy-mm-dd HH:MM:SS).</p></td>
+</tr>
+<tr class="row-even"><td><p>Value</p></td>
+<td><p>Numerical result of the measurement corresponding to the interval defined by Start and End.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Unit</p></td>
+<td><p>Measurement unit associated with the value. Units are standardised (e.g. µg/m³, mg/m³, etc.).<a class="reference internal" href="footnotes.html#footnote-2"><span class="std std-ref">[2]</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>AggType</p></td>
+<td><p>Aggregation type indicating the temporal granularity of the observation. Possible values include hour, day, or var (for variable intervals such as weekly or monthly). Find <a class="reference external" href="https://dd.eionet.europa.eu/vocabulary/aq/primaryObservation">here</a> more detailed information on aggregation types.</p></td>
+</tr>
+<tr class="row-odd"><td><p>Validity</p></td>
+<td><p>Validity flag indicating the data quality status. Refer to EEA definitions for accepted validity codes.<a class="reference internal" href="footnotes.html#footnote-3"><span class="std std-ref">[3]</span></a></p></td>
+</tr>
+<tr class="row-even"><td><p>Verification</p></td>
+<td><p>Verification level indicating the extent of quality assurance applied. Usually ranges from level 1 to level 3.<a class="reference internal" href="footnotes.html#footnote-4"><span class="std std-ref">[4]</span></a></p></td>
+</tr>
+<tr class="row-odd"><td><p>ResultTime</p></td>
+<td><p>Timestamp indicating when the file containing the observation was submitted.</p></td>
+</tr>
+<tr class="row-even"><td><p>DataCapture</p></td>
+<td><p>Percentage of time within the interval during which the instrument was operational or sampling.</p></td>
+</tr>
+<tr class="row-odd"><td><p>FkObservationLog</p></td>
+<td><p>Internal reference used for traceability in the EEA system. This field is not relevant for end users.</p></td>
+</tr>
+</tbody>
+</table>
+<p>These fields provide the necessary metadata to support compliance assessment, time series aggregation, and quality control. The schema ensures consistency across countries and pollutant types, thereby enabling centralised and reproducible analysis workflows.</p>
+</section>
+<section id="storage-of-key-attributes-for-processing-and-traceability">
+<h2>2.3 Storage of Key Attributes for Processing and Traceability<a class="headerlink" href="#storage-of-key-attributes-for-processing-and-traceability" title="Link to this heading"></a></h2>
+<p>To ensure full traceability and enable robust statistical processing, the EEA system captures and stores a defined set of key attributes for each record. These elements are detailed (see Table 1) and are fully integrated in the Parquet schema outlined above. This section clarifies the role of each key attribute in supporting validation, temporal aggregation, and data provenance.</p>
+<section id="sampling-point-as-primary-identifier">
+<h3>2.3.1 Sampling Point as Primary Identifier<a class="headerlink" href="#sampling-point-as-primary-identifier" title="Link to this heading"></a></h3>
+<p>The <strong>Samplingpoint</strong> field uniquely identifies the source (origin) of each measurement and links the observation to its associated metadata (e.g., station type, location, instrumentation). All other record attributes are interpreted in the context of this identifier.</p>
+</section>
+<section id="pollutant-and-unit">
+<h3>2.3.2 Pollutant and Unit<a class="headerlink" href="#pollutant-and-unit" title="Link to this heading"></a></h3>
+<p>The <strong>Pollutant</strong> and <strong>Unit</strong> fields ensure that each observation is correctly interpreted and processed. Pollutant codes follow the EEA reporting standards, and units are harmonised to allow comparison and aggregation.</p>
+</section>
+<section id="temporal-boundaries-of-observations">
+<h3>2.3.3 Temporal Boundaries of Observations<a class="headerlink" href="#temporal-boundaries-of-observations" title="Link to this heading"></a></h3>
+<p>Each measurement is associated with a <strong>Start</strong> and <strong>End</strong> timestamps that defines the observation period. For hourly data, all timestamps are converted and stored using the <strong><u>UTC+01</u></strong> time zone. For daily or var data, the <strong>Start</strong> and <strong>End</strong> timestamps are kept as originally reported.</p>
+<p>The <strong>ResultTime</strong> field (timestamp) records when the observation was generated or last updated by the provider. It is used to ensure version control and avoid overwriting newer data with older submissions. The ResultTime is a timestamp provided by the data provider within their submission.</p>
+</section>
+<section id="validity-and-verification-flags">
+<h3>2.3.4 Validity and Verification Flags<a class="headerlink" href="#validity-and-verification-flags" title="Link to this heading"></a></h3>
+<p>Data quality is indicated through two fields:</p>
+<ul class="simple">
+<li><p>Validity: The validity flag is essential to correctly calculate any statistics and derived indicators like data capture, time coverage and data coverage.</p></li>
+<li><p>Verification: The verification flag indicates the level of quality control applied to the observations.</p></li>
+</ul>
+<p>The following table summarises the validity and verification codes:</p>
+<p>Table 2: Validity and verification status flags</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Category</p></th>
+<th class="head"><p>Number</p></th>
+<th class="head"><p>Code</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Validity status<a class="reference internal" href="footnotes.html#footnote-5"><span class="std std-ref">[5]</span></a></p></td>
+<td><p>1</p></td>
+<td><p>Valid</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>2</p></td>
+<td><p>Valid below detection limit and the measurement value is given</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>3</p></td>
+<td><p>Valid, but below detection limit and number replaced by 0.5*detection limit</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>4</p></td>
+<td><p>Valid (Ozone only) using CCQM.O3.2019</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>-1</p></td>
+<td><p>Not valid</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>-99</p></td>
+<td><p>Not valid due to station maintenance or calibration</p></td>
+</tr>
+<tr class="row-even"><td><p>Verification status<a class="reference internal" href="footnotes.html#footnote-6"><span class="std std-ref">[6]</span></a></p></td>
+<td><p>1</p></td>
+<td><p>Verified</p></td>
+</tr>
+<tr class="row-odd"><td><p></p></td>
+<td><p>2</p></td>
+<td><p>Preliminary verified</p></td>
+</tr>
+<tr class="row-even"><td><p></p></td>
+<td><p>3</p></td>
+<td><p>Not verified</p></td>
+</tr>
+</tbody>
+</table>
+<p>Each value (measurement or observation) will have a validity flag and a verification flag.</p>
+<p>The verification flag status for validated assessment datasets (Data flows E1a – measurements and E1b – modelling) must be 1 (verified) only when data has been fully verified and is ready for compliance reporting. The verification status for UTD datasets (Data flows E2a) may take any value from 1 to 3. 3 is typically used when transmitting hourly data directly from the monitoring network every hour, 2 when data has gone through intial qa/qc, and 1 when data has been fully verified and is final.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="01_introduction.html" class="btn btn-neutral float-left" title="1 Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="03_preprocessing.html" class="btn btn-neutral float-right" title="3 Data pre-processing prior to calculation of aggregations" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, EEA AQ Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

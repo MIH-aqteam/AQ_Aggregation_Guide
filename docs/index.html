@@ -1,0 +1,284 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AURA Data Aggregation Guide &mdash; AURA Data Aggregation Guide 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="_static/custom.css?v=14e3707c" />
+
+  
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=2709fde1"></script>
+      <script src="_static/doctools.js?v=9a2dae69"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/design-tabs.js?v=f930bc37"></script>
+      <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="_static/aura-sidebar.js?v=6695ddf7"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="1 Introduction" href="chapters/01_introduction.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div class="aura-branding">
+  <div class="aura-brand-row">
+    <a class="aura-eea-link" href="https://www.eea.europa.eu/" aria-label="European Environment Agency">
+      <img class="aura-eea-logo" src="_static/EEA.png" alt="European Environment Agency">
+    </a>
+    <div class="aura-name">AURA</div>
+  </div>
+
+  <nav class="aura-sites" aria-label="AURA websites">
+    <a href="https://eeadata.github.io/AQ.Portal/">portal</a>
+    <a href="https://eeadata.github.io/AQ.Documentation.ReportingGuide/">reporting guide</a>
+    <a href="https://eeadata.github.io/AQ.Documentation.ReferenceGuide/">reference guide</a>
+  </nav>
+
+  <div class="aura-resources">
+    <div class="aura-resources-label">AURA resources</div>
+    <span class="aura-current" aria-current="page">data aggregation guide</span>
+    <a class="aura-register-link" href="https://eeadata.github.io/AQ.Documentation.ReferenceGuide/register.html">
+      Correction &amp; modification register
+    </a>
+  </div>
+</div>
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+  
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/01_introduction.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/02_raw_data.html">2 Processing of raw data by EEA system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/03_preprocessing.html">3 Data pre-processing prior to calculation of aggregations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/04_base_aggregations.html">4 Calculation of base aggregations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/05_statistics.html">5 Calculation of statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/06_exceedances.html">6 Calculation of basic exceedance information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/07_data_coverage.html">7 Data capture, time coverage and data coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/08_aqi.html">8 European Air Quality Index (AQI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/09_references.html">9 References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/footnotes.html">Footnotes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/annex_a.html">Annex A: Environmental objectives and reporting metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/annex_b.html">Annex B: Assessment thresholds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/annex_c.html">Annex C: Historical methods for calculation of data capture and time coverage from multi day sampler-based data types integrated over an averaging period</a></li>
+</ul>
+
+  <a class="aura-pdf-link" href="_static/AQ_Data_Aggregation_Guide.pdf" title="Complete guide in PDF format">PDF version</a>
+
+
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">AURA Data Aggregation Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">AURA Data Aggregation Guide</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="aura-data-aggregation-guide">
+<h1>AURA Data Aggregation Guide<a class="headerlink" href="#aura-data-aggregation-guide" title="Link to this heading"></a></h1>
+<p><strong>Aggregation rules for e-reporting — November 2025</strong></p>
+<p>Authors: Jaume Targa and María Colina. Revisors: Michel Houssiau and Joana Soares.</p>
+<p>This guide describes the processing of raw air quality observations, base aggregations, statistical indicators, exceedances and data completeness metrics.</p>
+<div class="toctree-wrapper compound">
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="chapters/01_introduction.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/02_raw_data.html">2 Processing of raw data by EEA system</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/02_raw_data.html#data-delivery-and-storage-architecture">2.1 Data Delivery and Storage Architecture</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/02_raw_data.html#structure-of-parquet-files">2.2 Structure of Parquet Files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/02_raw_data.html#storage-of-key-attributes-for-processing-and-traceability">2.3 Storage of Key Attributes for Processing and Traceability</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chapters/02_raw_data.html#sampling-point-as-primary-identifier">2.3.1 Sampling Point as Primary Identifier</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chapters/02_raw_data.html#pollutant-and-unit">2.3.2 Pollutant and Unit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chapters/02_raw_data.html#temporal-boundaries-of-observations">2.3.3 Temporal Boundaries of Observations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chapters/02_raw_data.html#validity-and-verification-flags">2.3.4 Validity and Verification Flags</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/03_preprocessing.html">3 Data pre-processing prior to calculation of aggregations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/03_preprocessing.html#outlier-detection-and-removal">3.1 Outlier Detection and Removal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/03_preprocessing.html#overlap-resolution">3.2 Overlap Resolution</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/03_preprocessing.html#handling-of-variable-aggregation-types-var">3.3 Handling of Variable Aggregation Types (var)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/03_preprocessing.html#time-zone-adjustment">3.4 Time Zone Adjustment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/03_preprocessing.html#application-of-validity-and-verification-flags">3.5 Application of Validity and Verification Flags</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/04_base_aggregations.html">4 Calculation of base aggregations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/04_base_aggregations.html#hour-8">4.1 Hour<span class="xref std std-ref">[8]</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/04_base_aggregations.html#daily-average-p1d">4.2 Daily Average (P1D)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/04_base_aggregations.html#hour-running-mean-p8h-run">4.3 8-hour running mean (P8H-run)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/04_base_aggregations.html#daily-maximum-8-hour-running-mean-p8h-dmax">4.4 Daily maximum 8-hour running mean (P8H-dmax)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/04_base_aggregations.html#aot40h">4.5 AOT40h</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/05_statistics.html">5 Calculation of statistics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05_statistics.html#averages">5.1 Averages</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chapters/05_statistics.html#calculation-of-averages">5.1.1 Calculation of Averages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chapters/05_statistics.html#winter-and-summer-means">5.1.2 Winter and summer means</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05_statistics.html#rolling-six-month-averages">5.2 Rolling Six-Month Averages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05_statistics.html#maximum-and-minimum">5.3 Maximum and minimum</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05_statistics.html#number-of-exceedances-above-a-threshold">5.4 Number of Exceedances Above a Threshold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05_statistics.html#three-consecutive-values-above-a-threshold">5.5 Three consecutive values Above a Threshold</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05_statistics.html#kth-highest-value-maxk">5.6 Kth highest value (maxk)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05_statistics.html#percentiles">5.7 Percentiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05_statistics.html#aot40-only-o3">5.8 AOT40 (only O<sub>3</sub>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chapters/05_statistics.html#numberof-valid-hours-for-aot40-aot40-nv">5.8.1 Numberof valid hours for AOT40 (AOT40-nv)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chapters/05_statistics.html#aot40-for-vegetation-protection-aot40c">5.8.2 AOT40 for vegetation protection (AOT40c)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chapters/05_statistics.html#aot40-for-forest-protection-aot40f">5.8.3 AOT40 for forest protection (AOT40f)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chapters/05_statistics.html#aot40-for-vegetation-protection-averaged-over-5-years">5.8.4 AOT40 for vegetation protection averaged over 5 years</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05_statistics.html#somo35-and-somo10-only-o3">5.9 SOMO35 and SOMO10 (Only O₃)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05_statistics.html#multi-annual-aggregates">5.10 Multi-Annual Aggregates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chapters/05_statistics.html#p3y-3-year-average-of-annual-means">5.10.1 P3Y (3-Year Average of Annual Means)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chapters/05_statistics.html#p3y-dmaxabove120">5.10.2 P3Y-dmaxAbove120</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05_statistics.html#average-exposure-indicator-aei-pm2-5-and-no2">5.11 Average Exposure Indicator (AEI) (PM<sub>2.5</sub> and NO<sub>2</sub>)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05_statistics.html#national-exposure-reduction-target-nert">5.12 National Exposure Reduction Target (NERT)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/05_statistics.html#average-exposure-reduction-obligation-aero">5.13 Average Exposure Reduction Obligation (AERO)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/06_exceedances.html">6 Calculation of basic exceedance information</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/06_exceedances.html#exceedance-of-thresholds-based-on-calendar-year-winter-mean-and-maximum-daily-8-h-mean-aggregated-statistics">6.1 Exceedance of thresholds based on calendar year, winter mean, and maximum daily 8-h mean aggregated statistics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/06_exceedances.html#number-of-hours-or-days-with-exceedance">6.2 Number of hours or days with exceedance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/06_exceedances.html#number-of-three-consecutive-hours-with-exceedance">6.3 Number of three consecutive hours with exceedance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/06_exceedances.html#accessing-aggregated-statistics">6.4 Accessing aggregated statistics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/07_data_coverage.html">7 Data capture, time coverage and data coverage</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/07_data_coverage.html#definitions">7.1 Definitions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chapters/07_data_coverage.html#data-capture-dcap">7.1.1 Data capture (Dcap)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chapters/07_data_coverage.html#time-coverage-tc">7.1.2 Time coverage (TC)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chapters/07_data_coverage.html#data-coverage-dc">7.1.3 Data coverage (DC)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/07_data_coverage.html#calculation-algorithms">7.2 Calculation algorithms</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chapters/07_data_coverage.html#calculations-for-hourly-and-daily-data-types-29">7.2.1 Calculations for hourly and daily data types<span class="xref std std-ref">[29]</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chapters/07_data_coverage.html#calculations-from-base-aggregation-data">7.2.2 ### Calculations from base aggregation data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="chapters/07_data_coverage.html#missing-data-fractions-arising-from-maintenance-and-calibration">7.2.3 Missing data fractions arising from maintenance and calibration</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/08_aqi.html">8 European Air Quality Index (AQI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/09_references.html">9 References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/footnotes.html">Footnotes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-1">Footnote 1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-2">Footnote 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-3">Footnote 3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-4">Footnote 4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-5">Footnote 5</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-6">Footnote 6</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-7">Footnote 7</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-8">Footnote 8</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-9">Footnote 9</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-10">Footnote 10</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-11">Footnote 11</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-12">Footnote 12</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-13">Footnote 13</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-14">Footnote 14</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-15">Footnote 15</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-16">Footnote 16</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-17">Footnote 17</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-18">Footnote 18</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-19">Footnote 19</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-20">Footnote 20</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-21">Footnote 21</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-22">Footnote 22</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-23">Footnote 23</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-24">Footnote 24</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-25">Footnote 25</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-26">Footnote 26</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-27">Footnote 27</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-28">Footnote 28</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-29">Footnote 29</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/footnotes.html#footnote-30">Footnote 30</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/annex_a.html">Annex A: Environmental objectives and reporting metrics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/annex_a.html#environmental-objectives-and-reporting-metrics-valid-until-31-december-2029">Environmental objectives and reporting metrics (valid until 31 December 2029)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/annex_a.html#environmental-objectives-and-reporting-metrics-applicable-from-1-january-2030">Environmental objectives and reporting metrics (applicable from 1 January 2030)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/annex_b.html">Annex B: Assessment thresholds</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="chapters/annex_b.html#assessment-threshold-valid-until-31-december-2029">Assessment threshold (valid until 31 December 2029)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chapters/annex_b.html#assessment-threshold-applicable-from-1-january-2030">Assessment threshold (applicable from 1 January 2030)</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="chapters/annex_c.html">Annex C: Historical methods for calculation of data capture and time coverage from multi day sampler-based data types integrated over an averaging period</a></li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="chapters/01_introduction.html" class="btn btn-neutral float-right" title="1 Introduction" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, EEA AQ Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

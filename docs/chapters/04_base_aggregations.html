@@ -1,0 +1,272 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>4 Calculation of base aggregations &mdash; AURA Data Aggregation Guide 0.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
+      <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=14e3707c" />
+
+  
+    <link rel="shortcut icon" href="../_static/favicon.png"/>
+      <script src="../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../_static/documentation_options.js?v=2709fde1"></script>
+      <script src="../_static/doctools.js?v=9a2dae69"></script>
+      <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../_static/design-tabs.js?v=f930bc37"></script>
+      <script src="../_static/aura-sidebar.js?v=6695ddf7"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="5 Calculation of statistics" href="05_statistics.html" />
+    <link rel="prev" title="3 Data pre-processing prior to calculation of aggregations" href="03_preprocessing.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+<div class="aura-branding">
+  <div class="aura-brand-row">
+    <a class="aura-eea-link" href="https://www.eea.europa.eu/" aria-label="European Environment Agency">
+      <img class="aura-eea-logo" src="../_static/EEA.png" alt="European Environment Agency">
+    </a>
+    <div class="aura-name">AURA</div>
+  </div>
+
+  <nav class="aura-sites" aria-label="AURA websites">
+    <a href="https://eeadata.github.io/AQ.Portal/">portal</a>
+    <a href="https://eeadata.github.io/AQ.Documentation.ReportingGuide/">reporting guide</a>
+    <a href="https://eeadata.github.io/AQ.Documentation.ReferenceGuide/">reference guide</a>
+  </nav>
+
+  <div class="aura-resources">
+    <div class="aura-resources-label">AURA resources</div>
+    <span class="aura-current" aria-current="page">data aggregation guide</span>
+    <a class="aura-register-link" href="https://eeadata.github.io/AQ.Documentation.ReferenceGuide/register.html">
+      Correction &amp; modification register
+    </a>
+  </div>
+</div>
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+  
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="01_introduction.html">1 Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="02_raw_data.html">2 Processing of raw data by EEA system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="03_preprocessing.html">3 Data pre-processing prior to calculation of aggregations</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">4 Calculation of base aggregations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#hour-8">4.1 Hour<span class="xref std std-ref">[8]</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#daily-average-p1d">4.2 Daily Average (P1D)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hour-running-mean-p8h-run">4.3 8-hour running mean (P8H-run)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#daily-maximum-8-hour-running-mean-p8h-dmax">4.4 Daily maximum 8-hour running mean (P8H-dmax)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#aot40h">4.5 AOT40h</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="05_statistics.html">5 Calculation of statistics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="06_exceedances.html">6 Calculation of basic exceedance information</a></li>
+<li class="toctree-l1"><a class="reference internal" href="07_data_coverage.html">7 Data capture, time coverage and data coverage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="08_aqi.html">8 European Air Quality Index (AQI)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="09_references.html">9 References</a></li>
+<li class="toctree-l1"><a class="reference internal" href="footnotes.html">Footnotes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex_a.html">Annex A: Environmental objectives and reporting metrics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex_b.html">Annex B: Assessment thresholds</a></li>
+<li class="toctree-l1"><a class="reference internal" href="annex_c.html">Annex C: Historical methods for calculation of data capture and time coverage from multi day sampler-based data types integrated over an averaging period</a></li>
+</ul>
+
+  <a class="aura-pdf-link" href="../_static/AQ_Data_Aggregation_Guide.pdf" title="Complete guide in PDF format">PDF version</a>
+
+
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">AURA Data Aggregation Guide</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">4 Calculation of base aggregations</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/chapters/04_base_aggregations.md.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section class="tex2jax_ignore mathjax_ignore" id="calculation-of-base-aggregations">
+<h1>4 Calculation of base aggregations<a class="headerlink" href="#calculation-of-base-aggregations" title="Link to this heading"></a></h1>
+<p>The raw data reported by countries may have different temporal granularities, identified by the field AggType, such as <em>hour</em>, <em>day</em>, or <em>var</em>.</p>
+<p>An intermediate step in the calculation of final statistics is the generation of base aggregations. Once the raw data have been preprocessed (see Chapter 3), these base aggregations are calculated and subsequently used as input for the computation of final statistics. The types of base aggregation include:</p>
+<ul class="simple">
+<li><p>Hour</p></li>
+<li><p>P1D (daily average)</p></li>
+<li><p>P8H-run (8-hour running mean)</p></li>
+<li><p>P8H-dmax (daily maximum 8-hour running mean)</p></li>
+<li><p>AOT40h</p></li>
+</ul>
+<p>The calculation rules for each of these aggregations are described in the following sections.</p>
+<section id="hour-8">
+<h2>4.1 Hour<a class="reference internal" href="footnotes.html#footnote-8"><span class="std std-ref">[8]</span></a><a class="headerlink" href="#hour-8" title="Link to this heading"></a></h2>
+<p>When the AggType is “hour”, no further aggregation is required. The base values used are the valid hourly data directly available in the Parquet files. These values must meet the validity and verification criteria described in Chapter 3 to be used in any subsequent calculation.</p>
+</section>
+<section id="daily-average-p1d">
+<h2>4.2 Daily Average (P1D)<a class="headerlink" href="#daily-average-p1d" title="Link to this heading"></a></h2>
+<p>The daily average or daily mean is the average of all valid hourly values for a day. Data which is originally reported as “day” will be considered directly as P1D without any manipulation<a class="reference internal" href="footnotes.html#footnote-9"><span class="std std-ref">[9]</span></a>.</p>
+<p>The raw primary data are hourly values<a class="reference internal" href="footnotes.html#footnote-10"><span class="std std-ref">[10]</span></a>.</p>
+<p>A daily or 24-hour average is calculated if <strong><u>at least 18 valid hourly values are available in the 24-hour period</u></strong> (75%<a class="reference internal" href="footnotes.html#footnote-11"><span class="std std-ref">[11]</span></a>) starting at the hour ending at 01:00 hours. If the minimum required proportion of valid data is not available, no valid daily or 24-hour average is produced for that day; instead, the corresponding entry is flagged as invalid (-1).</p>
+<p>The resulting value is associated with the aggregation code <a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1D">P1D</a>.</p>
+</section>
+<section id="hour-running-mean-p8h-run">
+<h2>4.3 8-hour running mean (P8H-run)<a class="headerlink" href="#hour-running-mean-p8h-run" title="Link to this heading"></a></h2>
+<p>The 8-hour running mean value is calculated for each hour as the average of the valid hourly values for that hour and the seven preceding hours, resulting in a continuously shifting 8-hour window. For instance, in Example 2 show in the box, the 8-hour running mean corresponding to hour 1 of a given day covers from hour 17 (starting hour) of the previous day to hour 1 (ending hour) of the current day. Similarly, the 8-hour running mean for hour 24 includes data from (starting) hour 16 to (ending) hour 24 of the same day.</p>
+<div class="aura-example admonition">
+<p class="admonition-title">Example 2. Calculation of the 8-hour running mean (P8H-run)</p>
+<p>The table below shows how the 8-hour averaging window shifts hour by hour and which hourly values are included in each case.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Hour of day (dayₙ)</p></th>
+<th class="head"><p>8-hour averaging period</p></th>
+<th class="head"><p>Included hours</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>01:00</p></td>
+<td><p>17:00 (dayₙ₋₁) – 01:00 (dayₙ)</p></td>
+<td><p>17, 18, 19, 20, 21, 22, 23, 01</p></td>
+</tr>
+<tr class="row-odd"><td><p>08:00</p></td>
+<td><p>01:00 – 08:00 (dayₙ)</p></td>
+<td><p>01, 02, 03, 04, 05, 06, 07, 08</p></td>
+</tr>
+<tr class="row-even"><td><p>24:00</p></td>
+<td><p>16:00 – 24:00 (dayₙ)</p></td>
+<td><p>16, 17, 18, 19, 20, 21, 22, 23, 24</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Each aggregated value is stored together with its start and end time. Although the aggregation code P8H-run refers to the <strong>hour-end</strong>, both the starting and ending timestamps of the 8-hour window are recorded to ensure full traceability of the period used in the calculation.</p>
+<p>An 8-hour running average concentration is calculated if <strong><u>at least 6 valid hourly values are available</u></strong> over the 8-hour averaging period (75%<a class="reference internal" href="footnotes.html#footnote-12"><span class="std std-ref">[12]</span></a>). If the data requirement is not fulfilled, no valid 8-hour average is produced for that hour; instead, the corresponding aggregation is flagged as invalid (-1).</p>
+<p>The input data are hourly observations (<a class="reference external" href="https://dd.eionet.europa.eu/vocabularyconcept/aq/primaryObservation/hour">primary observation: hour</a>), and the result is encoded with the code <a class="reference external" href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/P8H-run/view">P8H-run</a>. This aggregation is calculated exclusively for ozone (O₃) and carbon monoxide (CO).</p>
+</section>
+<section id="daily-maximum-8-hour-running-mean-p8h-dmax">
+<h2>4.4 Daily maximum 8-hour running mean (P8H-dmax)<a class="headerlink" href="#daily-maximum-8-hour-running-mean-p8h-dmax" title="Link to this heading"></a></h2>
+<p>The daily maximum 8-hour running mean is obtained by identifying the highest valid value among all 8-hour running means computed during a day, considering the hour-end of each 8-hour averaging period as the reference time. As a prerequisite, the 8-hour running means must have been previously calculated for the day under analysis, as described in Chapter 4.3.</p>
+<p>The calculation considers the 24 possible 8-hour periods within a day, and the daily maximum 8-hour running mean is derived only <strong><u>if at least 18 of them</u></strong> (i.e. 75%<a class="reference internal" href="footnotes.html#footnote-13"><span class="std std-ref">[13]</span></a>) are valid. If this threshold is not met, no valid daily maximum 8-hour running mean is produced; instead, the result is flagged as invalid (-1). The resulting aggregation is encoded as <a class="reference external" href="http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P8H-dmax">P8H-dmax</a>. This indicator is also calculated only for ozone (O₃) and carbon monoxide (CO).</p>
+</section>
+<section id="aot40h">
+<h2>4.5 AOT40h<a class="headerlink" href="#aot40h" title="Link to this heading"></a></h2>
+<p>The AOT40h (Accumulated Ozone exposure over a Threshold of 40 parts per billion, calculated on hourly values) is an intermediate aggregation used in the computation of the AOT40. It is based on valid hourly concentrations of ozone (O₃), and represents the hourly contribution to the AOT40 metric for each individual hour in the relevant time window.</p>
+<p>It is calculated only during daytime hours — specifically, for each hour between 08:00 UTC+01 (StartTime &gt;= 08:00) and 20:00 UTC+01 (EndTime &lt;= 20:00) and within the vegetation period defined from April 1st to September 30th of the reference year.</p>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><blockquote>
+<p><strong>Definitions and criteria (according to EU (2024), Anex I, section 2)</strong></p>
+<p>The ‘Accumulated Ozone exposure over a Threshold of 40 parts per billion’ (AOT40), expressed in ‘(μg/m3) × hours’, means the sum of the difference between hourly concentrations greater than 80 μg/m3 (= 40 parts per billion) and 80 μg/m3 over a given period using only the 1-hour values measured between 8:00 and 20:00 Central European Time (CET) each day.</p>
+</blockquote></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p>For each of these hours, a positive contribution is considered only if the hourly ozone concentration exceeds 80 µg/m³ (equivalent to 40 ppb under standard conditions). In such cases, the amount exceeding the threshold (i.e. the difference between the measured concentration and 80 µg/m³) is recorded as the hourly contribution. If the hourly value is equal to or below the threshold, the contribution is set to zero.</p>
+<div class="aura-example admonition">
+<p class="admonition-title">Example 3. Calculation of the AOT40h</p>
+<p>The table below shows how the AOT40h values are obtained in each case.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Date</p></th>
+<th class="head"><p>Hourly value</p></th>
+<th class="head"><p>Validity flag</p></th>
+<th class="head"><p>AOT40h</p></th>
+<th class="head"><p>Validity flag AOT40h</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>02/07/2025 09:00</p></td>
+<td><p>125</p></td>
+<td><p>-1</p></td>
+<td><p>0</p></td>
+<td><p>-1</p></td>
+</tr>
+<tr class="row-odd"><td><p>02/07/2025 10:00</p></td>
+<td><p>75</p></td>
+<td><p>1</p></td>
+<td><p>0</p></td>
+<td><p>1</p></td>
+</tr>
+<tr class="row-even"><td><p>02/07/2025 11:00</p></td>
+<td><p>95</p></td>
+<td><p>1</p></td>
+<td><p>15</p></td>
+<td><p>1</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Only validated hourly values that meet the criteria described in Chapter 3 are considered. If an hourly value is not valid, the AOT40h contribution for that hour is marked as invalid (-1) and excluded from subsequent accumulation steps. The aggregation is encoded with the code <strong>AOT40h</strong>.</p>
+<p>The input data are hourly observations (<a class="reference external" href="https://dd.eionet.europa.eu/vocabularyconcept/aq/primaryObservation/hour">primary observation: hour</a>), and the result is encoded with the code <a class="reference external" href="https://dd.eionet.europa.eu/vocabularyconcept/aq/aggregationprocess/AOT40h/view?vocabularyFolder.workingCopy=false&amp;amp;facet=HTML+Representation">AOT40h</a>. This aggregation is calculated exclusively for ozone (O₃).</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="03_preprocessing.html" class="btn btn-neutral float-left" title="3 Data pre-processing prior to calculation of aggregations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="05_statistics.html" class="btn btn-neutral float-right" title="5 Calculation of statistics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2026, EEA AQ Team.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
