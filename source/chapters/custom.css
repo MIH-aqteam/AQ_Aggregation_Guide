@@ -1,0 +1,898 @@
+/* =========================================================
+   AQ REPORTING GUIDE — GREY REPORTNET-STYLE THEME
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   General layout
+   --------------------------------------------------------- */
+
+.wy-nav-content {
+    max-width: 1200px !important;
+    padding: 40px 55px;
+}
+
+.wy-nav-content-wrap {
+    background: hsl(0, 0%, 95%);
+}
+
+/* ---------------------------------------------------------
+   Typography
+   --------------------------------------------------------- */
+
+body,
+.wy-nav-content,
+.wy-menu-vertical,
+.rst-content {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #33383D;
+}
+
+.rst-content {
+    font-size: 14px;
+    line-height: 1.35;
+}
+
+.rst-content p {
+    margin-bottom: 10px;
+}
+
+.rst-content ul,
+.rst-content ol {
+    margin-bottom: 10px;
+}
+
+.rst-content li {
+    margin-bottom: 4px;
+}
+
+/* ---------------------------------------------------------
+   Top banner and logo area
+   --------------------------------------------------------- */
+
+.wy-side-nav-search,
+.wy-nav-top {
+    background: #4F555A !important;
+}
+
+.wy-side-nav-search {
+    border-bottom: 1px solid #D5D5D5;
+}
+
+/* Remove home icon but keep project title */
+.wy-side-nav-search > a.icon-home::before {
+    display: none !important;
+}
+
+/* Project title */
+.wy-side-nav-search > a.icon-home {
+    display: block;
+    color: #FFFFFF !important;
+    font-weight: 600;
+    font-size: 18px;
+    padding-top: 110px;
+    position: relative;
+}
+
+/* EEA logo above title */
+.wy-side-nav-search > a.icon-home::after {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 88px;
+    background-image: url("EEA.png");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+
+/* Search box */
+.wy-side-nav-search input[type="text"] {
+    border: 1px solid #C8C8C8;
+    border-radius: 2px;
+    background: #FFFFFF;
+    color: #33383D;
+    box-shadow: none;
+}
+
+/* ---------------------------------------------------------
+   Left navigation
+   --------------------------------------------------------- */
+
+.wy-nav-side {
+    background: #F4F4F4 !important;
+    border-right: 1px solid #D8D8D8;
+}
+
+.wy-menu-vertical p.caption {
+    display: none !important;
+}
+
+.wy-menu-vertical a {
+    color: #68717A !important;
+    background: transparent !important;
+}
+
+.wy-menu-vertical a:hover {
+    background: #E8E8E8 !important;
+    color: #202428 !important;
+}
+
+.wy-menu-vertical li.current > a,
+.wy-menu-vertical li.on > a {
+    background: #E3E3E3 !important;
+    color: #202428 !important;
+    border-left: 4px solid #666D73 !important;
+    font-weight: 600;
+}
+
+.wy-menu-vertical li.current a {
+    border-color: #D4D4D4;
+}
+
+.wy-menu-vertical li.toctree-l1.current > a {
+    background: #DDDDDD !important;
+    color: #202428 !important;
+}
+
+.wy-menu-vertical li.toctree-l2.current > a,
+.wy-menu-vertical li.toctree-l3.current > a {
+    background: #ECECEC !important;
+    color: #202428 !important;
+}
+
+/* ---------------------------------------------------------
+   Headings
+   --------------------------------------------------------- */
+
+.rst-content h1,
+.rst-content h2,
+.rst-content h3,
+.rst-content h4,
+.rst-content h5,
+.rst-content h6 {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #252A2E;
+}
+
+.rst-content h1 {
+    font-size: 2.2em;
+    font-weight: 700;
+    margin-bottom: 22px;
+}
+
+.rst-content h2 {
+    font-size: 1.45em;
+    font-weight: 600;
+    border-bottom: 1px solid #BFC3C6;
+    padding-bottom: 5px;
+    margin-top: 30px;
+    margin-bottom: 15px;
+}
+
+.rst-content h3 {
+    font-size: 1.15em;
+    font-weight: 600;
+    margin-top: 22px;
+    margin-bottom: 10px;
+    background: #F2F2F2;
+    padding: 6px 9px;
+    border-left: 4px solid #737A80;
+}
+
+/* ---------------------------------------------------------
+   Links
+   --------------------------------------------------------- */
+
+.rst-content a,
+.rst-content a:visited {
+    color: #65717A;
+    text-decoration: underline;
+}
+
+.rst-content a:hover {
+    color: #24282C;
+}
+
+.toctree-wrapper a {
+    font-weight: 500;
+}
+
+.toctree-wrapper > ul > li > a {
+    font-size: 1.15em;
+}
+
+/* ---------------------------------------------------------
+   Tables
+   --------------------------------------------------------- */
+
+.rst-content table.docutils {
+    border: 1px solid #D1D1D1;
+}
+
+.rst-content table.docutils td,
+.rst-content table.docutils th {
+    padding: 4px 6px;
+    font-size: 13px;
+    line-height: 1.25;
+    white-space: normal !important;
+    border: 1px solid #D1D1D1;
+}
+
+.rst-content table.docutils th {
+    background: #E4E4E4;
+    color: #252A2E;
+    font-weight: 700;
+}
+
+.rst-content table.docutils tr:nth-child(even) {
+    background: #F7F7F7;
+}
+
+/* ---------------------------------------------------------
+   Contents title
+   --------------------------------------------------------- */
+
+.rst-content p.topic-title {
+    color: #353A3E !important;
+    font-weight: 700;
+}
+
+/* ---------------------------------------------------------
+   Code and literal text
+   --------------------------------------------------------- */
+
+.rst-content code,
+.rst-content tt {
+    background: #F0F0F0;
+    border: 1px solid #DDDDDD;
+    color: #33383D;
+}
+
+/* ---------------------------------------------------------
+   Relationship dropdowns
+   --------------------------------------------------------- */
+
+/* Space between individual relationship dropdowns */
+.rst-content details.sd-dropdown {
+    margin-top: 0;
+    margin-bottom: 14px;
+    border: 1px solid #C9CDD0 !important;
+    border-radius: 4px;
+    box-shadow: none !important;
+    overflow: hidden;
+}
+
+/* Relationship title bar */
+.rst-content details.sd-dropdown > summary,
+.rst-content details.sd-dropdown > summary.sd-summary-title,
+.rst-content .sd-dropdown > .sd-summary-title {
+    padding: 11px 14px !important;
+    background: #E4E6E8 !important;
+    border-left: 5px solid #666D73 !important;
+    color: #252A2E !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    font-size: 1.12rem !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    text-decoration: none !important;
+}
+
+/* Actual text inside the dropdown title */
+.rst-content details.sd-dropdown > summary .sd-summary-text,
+.rst-content .sd-summary-title .sd-summary-text {
+    color: #252A2E !important;
+    font-size: 1.12rem !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+}
+
+/* Hover state for relationship title */
+.rst-content details.sd-dropdown > summary:hover,
+.rst-content details.sd-dropdown > summary.sd-summary-title:hover {
+    background: #D9DCDE !important;
+    color: #171A1D !important;
+}
+
+/* Open relationship title */
+.rst-content details.sd-dropdown[open] > summary,
+.rst-content details.sd-dropdown[open] > summary.sd-summary-title {
+    background: #DDE0E2 !important;
+    border-bottom: 1px solid #C9CDD0 !important;
+}
+
+/* Dropdown arrow */
+.rst-content details.sd-dropdown > summary::marker {
+    color: #5E666C;
+}
+
+.rst-content details.sd-dropdown > summary .sd-summary-state-marker {
+    color: #5E666C !important;
+}
+
+/* Dropdown content */
+.rst-content details.sd-dropdown > div.sd-summary-content,
+.rst-content details.sd-dropdown > .sd-summary-content {
+    padding: 16px 16px 10px 16px !important;
+    background: #FFFFFF;
+}
+
+/* Preserve the existing internal subtitles */
+.rst-content details.sd-dropdown .sd-summary-content > p > strong,
+.rst-content details.sd-dropdown .sd-summary-content strong {
+    color: #33383D;
+}
+
+/* ---------------------------------------------------------
+   Landing page cards
+   --------------------------------------------------------- */
+
+.landing-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    gap: 18px;
+    margin: 30px 0;
+}
+
+.landing-card {
+    display: block;
+    padding: 20px;
+    border: 1px solid #D0D0D0;
+    border-left: 5px solid #6B7278;
+    border-radius: 4px;
+    background: #F7F7F7;
+    text-decoration: none !important;
+    color: #33383D !important;
+}
+
+.landing-card:hover {
+    background: #ECECEC;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.landing-icon {
+    font-size: 30px;
+    margin-bottom: 8px;
+}
+
+.landing-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #34393D;
+    margin-bottom: 6px;
+}
+
+.landing-text {
+    font-size: 14px;
+    line-height: 1.35;
+    color: #51575C;
+}
+
+/* ---------------------------------------------------------
+   Version information
+   --------------------------------------------------------- */
+
+.version-info {
+    font-size: 0.80em;
+    font-style: italic;
+    color: #777777;
+    border-bottom: 1px solid #D0D0D0;
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+}
+
+/* ---------------------------------------------------------
+   Breadcrumbs and footer
+   --------------------------------------------------------- */
+
+.wy-breadcrumbs {
+    color: #747B81;
+}
+
+.wy-breadcrumbs a {
+    color: #747B81;
+}
+
+footer {
+    color: #777D82;
+}
+
+/* ---------------------------------------------------------
+   Reporting tables illustrated matrix
+   --------------------------------------------------------- */
+
+.reporting-table-grid {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 10px;
+    margin-top: 20px;
+    margin-bottom: 25px;
+}
+
+/* Entire card is clickable */
+.rst-content a.reporting-table-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: 190px;
+    padding: 10px;
+    overflow: hidden;
+
+    color: #333333;
+    background: #FFFFFF;
+    border: 1px solid #D4D4D4;
+    border-radius: 5px;
+
+    text-align: center;
+    text-decoration: none;
+    box-shadow: none;
+
+    transition:
+        border-color 0.15s ease,
+        background-color 0.15s ease,
+        transform 0.15s ease;
+}
+
+.rst-content a.reporting-table-card:hover {
+    color: #111111;
+    background: #F2F2F2;
+    border-color: #777777;
+    text-decoration: none;
+    transform: translateY(-2px);
+}
+
+/* Table name */
+.reporting-table-title {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-height: 38px;
+    margin-bottom: 6px;
+
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.15;
+    overflow-wrap: anywhere;
+}
+
+/* Identical image area for every card */
+.reporting-table-image {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 0;
+    overflow: hidden;
+}
+
+/* Normalises illustrations having different dimensions */
+.rst-content .reporting-table-image img {
+    display: block;
+    width: 100%;
+    height: 125px;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+
+    object-fit: contain;
+    object-position: center;
+    border: 0;
+}
+
+/* ---------------------------------------------------------
+   Responsive reporting table grid
+   --------------------------------------------------------- */
+
+/* Five columns on moderately wide screens */
+@media screen and (max-width: 1250px) {
+    .reporting-table-grid {
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+    }
+}
+
+/* Four columns on smaller desktop screens */
+@media screen and (max-width: 1050px) {
+    .reporting-table-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+}
+
+/* Three columns on tablets */
+@media screen and (max-width: 800px) {
+    .reporting-table-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+/* Two columns on phones */
+@media screen and (max-width: 550px) {
+    .reporting-table-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .rst-content a.reporting-table-card {
+        height: 175px;
+    }
+
+    .rst-content .reporting-table-image img {
+        height: 110px;
+    }
+}
+
+/* Reference-only table cards */
+
+.rst-content a.reporting-table-card.reference-only-table {
+    background: #2b2f33;
+    border-color: #111417;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.28);
+}
+
+.rst-content a.reporting-table-card.reference-only-table:hover {
+    background: #1f2225;
+    border-color: #000000;
+    box-shadow: 0 7px 16px rgba(0, 0, 0, 0.38);
+}
+
+.rst-content a.reporting-table-card.reference-only-table .reporting-table-title {
+    color: #ffffff;
+}
+
+.rst-content a.reporting-table-card.reference-only-table .reporting-table-image {
+    background: #3a3f44;
+}
+
+.rst-content a.reporting-table-card.reference-only-table:hover .reporting-table-image {
+    background: #32363a;
+}
+
+.rst-content .reference-only-badge {
+    display: inline-block;
+    align-self: center;
+    margin: 0.15rem 0 0.45rem;
+    padding: 0.18rem 0.55rem;
+    color: #ffffff;
+    background: #0d0f11;
+    border: 1px solid #686d72;
+    border-radius: 3px;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    line-height: 1.2;
+}
+
+/* =========================================================
+   AURA FAMILY NAVIGATION
+   Shell-only addition. Existing Reference Guide greys and
+   core-page styling remain unchanged.
+   ========================================================= */
+
+.wy-side-nav-search {
+    padding: 0 0 10px !important;
+}
+
+.aura-branding {
+    margin: 0 0 10px;
+    background: #4F555A;
+    text-align: center;
+}
+
+.aura-brand-row {
+    padding: 12px 10px 8px;
+    white-space: nowrap;
+}
+
+.aura-eea-link {
+    display: inline-block;
+    vertical-align: middle;
+    width: 115px;
+    margin: 0 4px 0 0;
+    padding: 0 !important;
+}
+
+.aura-eea-logo {
+    display: block !important;
+    width: 100px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+    transform: none !important;
+    object-fit: contain;
+}
+
+.aura-name {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 5px;
+    color: #FFFFFF;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.04em;
+}
+
+.aura-sites {
+    width: 100%;
+    font-size: 16px;
+    line-height: 1.2;
+    text-align: right;
+}
+
+.aura-sites a,
+.aura-sites .aura-current {
+    display: block;
+    min-height: 31px;
+    padding: 6px 18px 6px 10px;
+    color: #FFFFFF !important;
+    text-decoration: none !important;
+}
+
+.aura-sites a:hover,
+.aura-sites a:focus {
+    background: rgba(255, 255, 255, 0.14);
+    color: #FFFFFF !important;
+}
+
+.aura-sites .aura-current {
+    background: #FFFFFF;
+    color: #202428 !important;
+    font-weight: 600;
+}
+
+/* Search keeps the Reference/Reporting grey treatment. */
+.wy-side-nav-search input[type="text"] {
+    margin: 0 10px;
+    width: calc(100% - 20px);
+}
+
+/* The AURA block replaces the old project-title/logo construction. */
+.wy-side-nav-search > a.icon-home {
+    display: none !important;
+}
+
+/* ---------------------------------------------------------
+   AURA shared resources
+   --------------------------------------------------------- */
+
+.aura-resources {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.28);
+    text-align: right;
+}
+
+.aura-resources-label {
+    margin: 0 18px 5px 10px;
+    color: rgba(255, 255, 255, 0.68);
+    font-size: 11px;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.aura-register-link {
+    display: block;
+    min-height: 31px;
+    padding: 6px 18px 6px 10px;
+    color: #FFFFFF !important;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.2;
+    text-decoration: none !important;
+}
+
+.aura-register-link:hover,
+.aura-register-link:focus-visible {
+    background: rgba(255, 255, 255, 0.14);
+    color: #FFFFFF !important;
+}
+
+/* PDF version link at the bottom of the left navigation */
+/* PDF version button at the bottom of the left navigation */
+.aura-pdf-link {
+    margin: 20px 12px 14px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.aura-pdf-link a {
+    display: block;
+    padding: 4px 6px;
+    border: 1px solid #a64b4b;
+    border-radius: 3px;
+    color: #222 !important;
+    background: #ffffff;
+    font-size: 0.80em;
+    font-weight: 400;
+    text-align: center;
+    text-decoration: none !important;
+}
+
+.aura-pdf-link a:hover {
+    color: #ffffff !important;
+    background: #c62828;
+}
+/* Aggregation Guide QA: consistent AURA resources links */
+.aura-resources .aura-current,
+.aura-resources .aura-register-link {
+    display: block; padding: 6px 18px 6px 10px;
+    font-size: 14px !important; font-weight: 400 !important;
+    line-height: 1.2; min-height: 31px;
+}
+/* Statistics tables 3, 4, 5: responsive, compact and readable */
+.rst-content table.aura-stat-table {width:100% !important; max-width:100%; table-layout:fixed; border-collapse:collapse; font-size:11px;}
+.rst-content table.aura-stat-table th,
+.rst-content table.aura-stat-table td {padding:4px 3px; overflow-wrap:anywhere; word-break:normal; vertical-align:top;}
+.rst-content table.aura-stat-table p {margin:0 0 3px;}
+.rst-content table.aura-stat-table ul {margin:0 0 3px 12px;}
+.rst-content table.aura-stat-table-3 {font-size:9px;}
+.rst-content table.aura-stat-table-3 th,
+.rst-content table.aura-stat-table-3 td {padding:3px 2px;}
+/* Examples are visually distinct across chapters */
+.rst-content .aura-example,
+.rst-content table.aura-example-table {
+    background:#F0F1F2 !important; border:1px solid #CDD1D4;
+    border-radius:3px; margin:14px 0 18px; padding:12px 14px;
+}
+.rst-content .aura-example .admonition-title {background:#DFE2E4 !important; color:#30363B !important; font-weight:700;}
+.rst-content table.aura-example-table th,
+.rst-content table.aura-example-table td {background:#F0F1F2 !important;}
+.rst-content table.aura-example-table th:first-child {font-weight:400;}
+.rst-content table.aura-example-table th p:first-child strong {font-weight:700;}
+@media (max-width: 850px) {
+ .wy-nav-content {padding:20px 18px;}
+ .rst-content table.aura-stat-table-3 {font-size:8px;}
+}
+
+
+/* QA-13/14: tables 3, 4 and 5 share the same visual language. */
+.rst-content table.aura-stat-table {
+  width:100% !important; max-width:100%; border-collapse:collapse;
+  table-layout:auto; font-size:11px !important; line-height:1.35;
+  border:1px solid #c5cbd0;
+}
+.rst-content table.aura-stat-table th,
+.rst-content table.aura-stat-table td {
+  font-size:inherit !important; padding:6px 7px !important;
+  border:1px solid #c5cbd0 !important; vertical-align:top;
+  overflow-wrap:break-word; word-break:normal;
+}
+.rst-content table.aura-stat-table thead tr,
+.rst-content table.aura-stat-table thead th {
+  background:#e5e9ec !important; color:#303940; font-weight:700;
+}
+.rst-content table.aura-stat-table tbody tr:nth-child(odd) {background:#fff !important;}
+.rst-content table.aura-stat-table tbody tr:nth-child(even) {background:#f2f4f5 !important;}
+.rst-content table.aura-stat-table tbody tr:nth-child(odd) td {background:#fff !important;}
+.rst-content table.aura-stat-table tbody tr:nth-child(even) td {background:#f2f4f5 !important;}
+.rst-content table.aura-stat-table a.aura-pollutant-code {
+  font-size:inherit; font-weight:400; text-decoration:underline;
+}
+/* Keep a single aligned grid; allow horizontal scrolling on narrower screens. */
+.rst-content .aura-table-scroll {max-width:100%; overflow-x:auto; -webkit-overflow-scrolling:touch; margin:12px 0;}
+.rst-content .aura-table-scroll table.aura-stat-table-3 {
+  width:1100px !important; min-width:1100px; max-width:none;
+  table-layout:fixed; font-size:11px !important;
+}
+.rst-content .aura-table-scroll table.aura-stat-table-3 colgroup col {min-width:0;}
+/* Responsive images retain their natural proportions. */
+.rst-content figure.aura-figure {margin:18px auto 22px; text-align:center;}
+.rst-content figure.aura-figure img {display:block; max-width:100%; height:auto; margin:0 auto;}
+.rst-content figure.aura-figure figcaption {font-size:13px; margin-top:8px; color:#4d555b;}
+.rst-content img.aura-inline-illustration {max-width:100%; height:auto; display:block; margin:8px 0 12px;}
+
+/* AURA Aggregation Guide QA Round 3 — definitive table and example styles */
+.rst-content .aura-table-scroll {
+ display:block !important; width:100% !important; max-width:100% !important;
+ overflow-x:scroll !important; overflow-y:hidden; box-sizing:border-box;
+ -webkit-overflow-scrolling:touch; scrollbar-width:auto;
+ border:1px solid #c5cbd0; margin:14px 0 20px;
+}
+.rst-content .aura-table-scroll table.aura-stat-table-3 {
+ display:table !important; width:1800px !important; min-width:1800px !important;
+ max-width:none !important; table-layout:fixed !important;
+ font-size:11px !important; line-height:1.35 !important;
+ margin:0 !important;
+}
+.rst-content .aura-table-scroll table.aura-stat-table-3 col:nth-child(1) {width:100px !important;}
+.rst-content .aura-table-scroll table.aura-stat-table-3 col:nth-child(2) {width:130px !important;}
+.rst-content .aura-table-scroll table.aura-stat-table-3 col:nth-child(3) {width:190px !important;}
+.rst-content .aura-table-scroll table.aura-stat-table-3 col:nth-child(4) {width:190px !important;}
+.rst-content .aura-table-scroll table.aura-stat-table-3 col:nth-child(5) {width:190px !important;}
+.rst-content .aura-table-scroll table.aura-stat-table-3 col:nth-child(6) {width:190px !important;}
+.rst-content .aura-table-scroll table.aura-stat-table-3 col:nth-child(7) {width:220px !important;}
+.rst-content .aura-table-scroll table.aura-stat-table-3 col:nth-child(8) {width:190px !important;}
+.rst-content .aura-table-scroll table.aura-stat-table-3 col:nth-child(9) {width:210px !important;}
+.rst-content .aura-table-scroll table.aura-stat-table-3 col:nth-child(10) {width:190px !important;}
+.rst-content .aura-table-scroll table.aura-stat-table-3 th,
+.rst-content .aura-table-scroll table.aura-stat-table-3 td {
+ font-size:11px !important; padding:6px 7px !important;
+ overflow-wrap:normal !important; word-break:normal !important;
+ white-space:normal !important;
+}
+.rst-content .aura-table-scroll table.aura-stat-table-3 a {overflow-wrap:normal !important; word-break:normal !important;}
+.rst-content .aura-table-separator {height:20px; display:block; clear:both;}
+.rst-content .admonition.aura-example {padding:0 !important; background:#f0f1f2 !important; border:1px solid #cdd1d4 !important; margin:16px 0 20px;}
+.rst-content .admonition.aura-example > .admonition-title {
+ display:block !important; margin:0 !important; padding:8px 12px 8px 32px !important;
+ background:#dfe2e4 !important; color:#30363b !important;
+ font-weight:700 !important; text-align:left !important; line-height:1.4 !important;
+}
+.rst-content .admonition.aura-example > .aura-example-body {padding:12px 14px;}
+.rst-content .admonition.aura-example > .aura-example-body > *:last-child {margin-bottom:0;}
+.rst-content .admonition.aura-example table {width:auto; max-width:100%;}
+.rst-content .admonition.aura-example p, .rst-content .admonition.aura-example li {text-align:left;}
+
+/* QA-21: enforce consistent typography for every descendant of Table 3.
+   Bold text stays bold, but inherits the same font size as all other cells. */
+.rst-content .aura-table-scroll table.aura-stat-table-3,
+.rst-content .aura-table-scroll table.aura-stat-table-3 :is(th,td,p,div,span,a,strong,b,em,i,small,code,ul,ol,li,sup,sub) {
+ font-size:11px !important;
+ font-family:Arial, Helvetica, sans-serif !important;
+ line-height:1.4 !important;
+}
+.rst-content .aura-table-scroll table.aura-stat-table-3 sup {vertical-align:super !important;}
+.rst-content .aura-table-scroll table.aura-stat-table-3 sub {vertical-align:sub !important;}
+/* PDF version control in the sidebar */
+.aura-pdf-link {display:block; margin:16px 14px 8px; padding:9px 12px;
+ border:1px solid #b6bdc2; border-radius:3px; background:#e5e8ea;
+ color:#303940 !important; font-size:14px; font-weight:600; text-align:center;
+ text-decoration:none !important;}
+.aura-pdf-link:hover {background:#f4f5f6;}
+@media print {
+ .wy-nav-side,.wy-nav-top,.rst-versions,.aura-pdf-link {display:none !important;}
+ .wy-nav-content-wrap {margin:0 !important;}
+ .wy-nav-content {max-width:none !important; padding:0 !important;}
+ .aura-table-scroll {overflow:visible !important; width:100% !important;}
+ .aura-table-scroll table.aura-stat-table-3 {width:100% !important; min-width:0 !important; table-layout:auto !important; font-size:7px !important;}
+ .aura-table-scroll table.aura-stat-table-3 * {font-size:7px !important; overflow-wrap:anywhere !important;}
+}
+
+
+/* QA-23: native-looking left toggles for in-page subsections. */
+.wy-menu-vertical li.aura-has-subsections {position:relative !important;}
+.wy-menu-vertical li.aura-has-subsections > a {padding-left:30px !important;}
+.wy-menu-vertical li.aura-has-subsections > a .toctree-expand,
+.wy-menu-vertical li.aura-has-subsections > .toctree-expand {display:none !important;}
+.wy-menu-vertical li.aura-has-subsections > button.aura-subsection-toggle {
+  display:block !important; position:absolute !important; left:8px !important; top:9px !important;
+  right:auto !important; width:15px !important; height:15px !important;
+  margin:0 !important; padding:0 !important; border:1px solid #68717a !important;
+  border-radius:2px !important; background:transparent !important; color:#68717a !important;
+  font:normal 13px/12px Arial,sans-serif !important; text-align:center !important;
+  cursor:pointer !important; z-index:20 !important;
+}
+.wy-menu-vertical li.aura-has-subsections > button.aura-subsection-toggle:hover {
+  background:#e1e4e6 !important; color:#202428 !important;
+}
+.wy-menu-vertical li.aura-has-subsections > ul.aura-subsections {
+  margin:0 0 4px !important; padding:0 !important; list-style:none !important;
+}
+.wy-menu-vertical ul.aura-subsections li {list-style:none !important;}
+.wy-menu-vertical ul.aura-subsections a {
+  display:block !important; padding:5px 8px 5px 29px !important;
+  font-size:12px !important; line-height:1.35 !important; overflow-wrap:anywhere;
+}
+.wy-menu-vertical ul.aura-subsections li.aura-subsection-level-3 a {padding-left:40px !important;}
+.wy-menu-vertical ul.aura-subsections li.aura-subsection-level-4 a {padding-left:51px !important;}
+/* Manual PDF button at the end of the menu: a thin red outline. */
+.aura-pdf-link {
+  display:block !important; margin:20px 14px 16px !important; padding:9px 12px !important;
+  border:1px solid #b3262d !important; border-radius:3px !important;
+  background:transparent !important; color:#b3262d !important;
+  font-size:14px !important; font-weight:700 !important; text-align:center !important;
+  text-decoration:none !important;
+}
+.aura-pdf-link:hover {background:#fff1f1 !important;}
+
+/* PDF button: suppress inherited theme pseudo-icon. */
+a.aura-pdf-link::before, a.aura-pdf-link::after { content:none !important; display:none !important; }
