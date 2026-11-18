@@ -888,3 +888,10 @@ footer {
 .wy-menu-vertical .aura-pdf-link, .aura-pdf-link {
  border:1px solid #b3262d !important;
 }
+
+/* Keep the active Aggregation Guide link legible and clickable on hover. */
+.aura-sites a.aura-current:hover,
+.aura-sites a.aura-current:focus {
+    background: #FFFFFF;
+    color: #202428 !important;
+}

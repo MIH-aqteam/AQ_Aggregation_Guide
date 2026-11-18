@@ -8,7 +8,7 @@ Primary data are delivered by reporting countries through two main channels:
 
 - **E1a**: Officially validated data, submitted via the Central Data Repository (CDR).
 
-- **UTD (****Up-To-Date)**: Near-real-time data, provided via File Transfer Protocol (FTP) or Sensor Observation Service (SOS) endpoints.
+- **UTD (Up-To-Date)**: Near-real-time data, provided via File Transfer Protocol (FTP) or Sensor Observation Service (SOS) endpoints.
 
 For each unique Sampling Point (SPO), the system stores:
 
@@ -32,7 +32,7 @@ Files are organised by country and SPO unique identifier and are accessible thro
 
 Each Parquet file contains a complete time series for a given Sampling Point (SPO) and pollutant, including the metadata most relevant for compliance assessment, quality control and time series as reported by national authorities. The structure is standardised and follows a schema optimised for high-performance processing and interoperability. The following fields are defined:
 
-Table 1: Structure of parquet files
+**Table 1: Structure of parquet files**
 
 | Field            | Description                                                                                                                                                                                                                                                                                      |
 |------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -79,7 +79,7 @@ Data quality is indicated through two fields:
 
 The following table summarises the validity and verification codes:
 
-Table 2: Validity and verification status flags
+**Table 2: Validity and verification status flags**
 
 | Category                | Number | Code                                                                         |
 |-------------------------|--------|------------------------------------------------------------------------------|

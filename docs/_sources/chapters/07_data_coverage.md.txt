@@ -115,7 +115,7 @@ Where:
 <td><span class="math display">$$\frac{7724}{8760} \bullet 100 = 88,17\ \%$$</span></td>
 </tr>
 </tbody>
-</table><span class="math display">$$\frac{8760}{8760} \bullet 100 = 100\ \%$$</span><span class="math display">$$\frac{7724}{8760} \bullet 100 = 88,17\ \%$$</span><span class="math display">$$\frac{7724}{8760} \bullet 100 = 88,17\ \%$$</span>
+</table>
 </div>
 </div>
 
@@ -148,11 +148,11 @@ Where:
 <td><span class="math display">$$\frac{309}{365} \bullet 100 = 84,66\ \%$$</span></td>
 </tr>
 </tbody>
-</table><span class="math display">$$\frac{362}{365} \bullet 100 = 99,18\ \%$$</span><span class="math display">$$\frac{309}{362} \bullet 100 = 85,36\ \%$$</span><span class="math display">$$\frac{309}{365} \bullet 100 = 84,66\ \%$$</span>
+</table>
 </div>
 </div>
 
-### 7.2.2 ### Calculations from base aggregation data
+### 7.2.2 Calculations from base aggregation data
 
 The calculations for base aggregation data are done following same logic as shown in Chapter 7.2.1
 

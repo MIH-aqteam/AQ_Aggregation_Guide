@@ -4,7 +4,7 @@ Basic exceedance information is required to facilitate the assessment of environ
 
 To determine exceedance situations, concentrations are compared with a threshold (known variously as limit values, target values, thresholds and margins above thresholds in the Directives). In this comparison, numerical rounding shall be the last step of any calculation, i.e., immediately before comparing the result with any threshold of any type and shall be done only once. The numerical rounding rules shall be based on the principle presented in Table 6.
 
-Table 6: Number of decimals required as a function of the values of concentration
+**Table 6: Number of decimals required as a function of the values of concentration**
 
 | Value x         | Number of decimals   |
 |-----------------|----------------------|

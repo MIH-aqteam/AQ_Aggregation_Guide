@@ -28,7 +28,7 @@ Table 4 and Table 5 complement Table 3 by specifying:
 </tbody>
 </table>
 
-Table 3: Key aggregations and extra statistics. See also Table 4 and Table 5
+**Table 3: Key aggregations and extra statistics** See also Table 4 and Table 5
 
 <div class="aura-table-scroll" role="region" aria-label="Table 3: horizontally scrollable aggregation table" tabindex="0">
 <table class="aura-stat-table aura-stat-table-3">
@@ -618,9 +618,7 @@ Table 3: Key aggregations and extra statistics. See also Table 4 and Table 5
 <td><ul>
 <li><p>annual mean weighted average</p></li>
 </ul></td>
-<td><blockquote>
-<p><strong>P1Y</strong></p>
-</blockquote></td>
+<td><p><strong>P1Y</strong></p>
 </tr>
 <tr class="odd">
 <td><blockquote>
@@ -884,7 +882,7 @@ NOTES:* \* *If daily values reported. \*\* Component codelist is http://dd.eione
 *  
 *
 
-Table 4: List of base statistics used in the computation of derived aggregation indicators, their pollutant applicability, minimum validity criteria (for fixed measurements), and corresponding vocabulary URLs
+**Table 4: List of base statistics used in the computation of derived aggregation indicators, their pollutant applicability, minimum validity criteria (for fixed measurements), and corresponding vocabulary URLs**
 
 <table class="aura-stat-table aura-stat-table-4">
 <thead>
@@ -953,7 +951,7 @@ Table 4: List of base statistics used in the computation of derived aggregation 
 
 <div class="aura-table-separator" aria-hidden="true"></div>
 
-Table 5: List of statistics, the primary observation or aggregation they are based on the pollutant for which it is calculated, the minimum number of valid values{ref}`[16] <footnote-16>` in order to be flagged as valid (for fixed measurements), and the corresponding vocabulary URL
+**Table 5: List of statistics, the primary observation or aggregation they are based on the pollutant for which it is calculated, the minimum number of valid values{ref}`[16] <footnote-16>` in order to be flagged as valid (for fixed measurements), and the corresponding vocabulary URL**
 
 <table class="aura-stat-table aura-stat-table-5">
 <colgroup>
@@ -1583,9 +1581,7 @@ The aggregates calculated using this method are:
 
 - P1D (daily mean): <http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1D>
 
-- P1M (monthly mean):
-
-<http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1M>
+- P1M (monthly mean): <http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1M>
 
 - P1Y (annual mean): <http://dd.eionet.europa.eu/vocabulary/aq/aggregationprocess/P1Y>
 

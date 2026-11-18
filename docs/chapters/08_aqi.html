@@ -10,7 +10,7 @@
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b86133f3" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
-      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=14e3707c" />
+      <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8269feb9" />
 
   
     <link rel="shortcut icon" href="../_static/favicon.png"/>
@@ -45,11 +45,11 @@
     <a href="https://eeadata.github.io/AQ.Portal/">portal</a>
     <a href="https://eeadata.github.io/AQ.Documentation.ReportingGuide/">reporting guide</a>
     <a href="https://eeadata.github.io/AQ.Documentation.ReferenceGuide/">reference guide</a>
+    <a class="aura-current" href="../index.html" aria-current="page" title="Aggregation Guide home">data aggregation guide</a>
   </nav>
 
   <div class="aura-resources">
     <div class="aura-resources-label">AURA resources</div>
-    <span class="aura-current" aria-current="page">data aggregation guide</span>
     <a class="aura-register-link" href="https://eeadata.github.io/AQ.Documentation.ReferenceGuide/register.html">
       Correction &amp; modification register
     </a>
@@ -118,76 +118,75 @@
 <p>The AQI values are now refreshed hourly, using hourly pollutant concentration data, which enhances its sensitivity to short-term temporal variations. The index remains available at station level, with additional visualization options such as map layers based on modelled concentrations.</p>
 <p>Pollutant-specific bands are set according to WHO’s long- and short-term guideline levels and interim targets, with PM2.5 serving as the reference pollutant. Bands for other pollutants are calculated to reflect equivalent relative risks of all-cause mortality associated with short-term exposure. These bands have been further refined to align with EU air quality information and alert thresholds.</p>
 <p>The updated AQI is structured as follows (values are expressed in µg/m³, reference time 1 hour):</p>
-<p>Table 7: Updated European Air Quality Index (AQI)</p>
-<table class="docutils align-default">
+<p><strong>Table 7: Updated European Air Quality Index (AQI)</strong></p>
+<div style="overflow-x: auto;">
+<table style="width: 100%; border-collapse: collapse; text-align: center;">
 <thead>
-<tr class="row-odd"><th class="head"><p></p></th>
-<th class="head"><p></p></th>
-<th class="head"><p></p></th>
-<th class="head"><p></p></th>
-<th class="head"><p></p></th>
-<th class="head"><p></p></th>
-<th class="head"><p></p></th>
-<th class="head"><p></p></th>
+<tr>
+<th style="background-color: #F0F0F0; text-align: left;">Pollutant</th>
+<th style="background-color: #F0F0F0; text-align: left;">Reference time</th>
+<th style="background-color: #00CFE3; color: black;">Good</th>
+<th style="background-color: #00C79A; color: black;">Fair</th>
+<th style="background-color: #FFFF66; color: black;">Moderate</th>
+<th style="background-color: #FF0800; color: black;">Poor</th>
+<th style="background-color: #C00000; color: white;">Very poor</th>
+<th style="background-color: #7030A0; color: white;">Extremely poor</th>
 </tr>
 </thead>
 <tbody>
-<tr class="row-even"><td><p><strong>Pollutant</strong></p></td>
-<td><p><strong>Reference time</strong></p></td>
-<td><p><strong>Good</strong></p></td>
-<td><p><strong>Fair</strong></p></td>
-<td><p><strong>Moderate</strong></p></td>
-<td><p><strong>Poor</strong></p></td>
-<td><p><strong>Very poor</strong></p></td>
-<td><p><strong>Extremely poor</strong></p></td>
+<tr>
+<td style="background-color: #F0F0F0; text-align: left;">PM<sub>2.5</sub></td>
+<td style="background-color: #F0F0F0; text-align: left;">1h</td>
+<td style="background-color: #00CFE3;">0-5</td>
+<td style="background-color: #00C79A;">6-15</td>
+<td style="background-color: #FFFF66;">16-50</td>
+<td style="background-color: #FF0800;">51-90</td>
+<td style="background-color: #C00000; color: white;">91-140</td>
+<td style="background-color: #7030A0; color: white;">&gt;140</td>
 </tr>
-<tr class="row-odd"><td><p><strong>PM<sub>2.5</sub></strong></p></td>
-<td><p><strong>1h</strong></p></td>
-<td><p><strong>0-5</strong></p></td>
-<td><p><strong>6-15</strong></p></td>
-<td><p><strong>16-50</strong></p></td>
-<td><p><strong>51-90</strong></p></td>
-<td><p><strong>91-140</strong></p></td>
-<td><p><strong>&gt;140</strong></p></td>
+<tr>
+<td style="background-color: #F0F0F0; text-align: left;">PM<sub>10</sub></td>
+<td style="background-color: #F0F0F0; text-align: left;">1h</td>
+<td style="background-color: #00CFE3;">0-15</td>
+<td style="background-color: #00C79A;">16-45</td>
+<td style="background-color: #FFFF66;">46-120</td>
+<td style="background-color: #FF0800;">121-195</td>
+<td style="background-color: #C00000; color: white;">196-270</td>
+<td style="background-color: #7030A0; color: white;">&gt;270</td>
 </tr>
-<tr class="row-even"><td><p><strong>PM<sub>10</sub></strong></p></td>
-<td><p><strong>1h</strong></p></td>
-<td><p><strong>0-15</strong></p></td>
-<td><p><strong>16-45</strong></p></td>
-<td><p><strong>46-120</strong></p></td>
-<td><p><strong>121-195</strong></p></td>
-<td><p><strong>196-270</strong></p></td>
-<td><p><strong>&gt;270</strong></p></td>
+<tr>
+<td style="background-color: #F0F0F0; text-align: left;">O<sub>3</sub></td>
+<td style="background-color: #F0F0F0; text-align: left;">1h</td>
+<td style="background-color: #00CFE3;">0-60</td>
+<td style="background-color: #00C79A;">61-100</td>
+<td style="background-color: #FFFF66;">101-120</td>
+<td style="background-color: #FF0800;">121-160</td>
+<td style="background-color: #C00000; color: white;">161-180</td>
+<td style="background-color: #7030A0; color: white;">&gt;180</td>
 </tr>
-<tr class="row-odd"><td><p><strong>O<sub>3</sub></strong></p></td>
-<td><p><strong>1h</strong></p></td>
-<td><p><strong>0-60</strong></p></td>
-<td><p><strong>61-100</strong></p></td>
-<td><p><strong>101-120</strong></p></td>
-<td><p><strong>121-160</strong></p></td>
-<td><p><strong>161-180</strong></p></td>
-<td><p><strong>&gt;180</strong></p></td>
+<tr>
+<td style="background-color: #F0F0F0; text-align: left;">NO<sub>2</sub></td>
+<td style="background-color: #F0F0F0; text-align: left;">1h</td>
+<td style="background-color: #00CFE3;">0-10</td>
+<td style="background-color: #00C79A;">11-25</td>
+<td style="background-color: #FFFF66;">26-60</td>
+<td style="background-color: #FF0800;">61-100</td>
+<td style="background-color: #C00000; color: white;">101-150</td>
+<td style="background-color: #7030A0; color: white;">&gt;150</td>
 </tr>
-<tr class="row-even"><td><p><strong>NO<sub>2</sub></strong></p></td>
-<td><p><strong>1h</strong></p></td>
-<td><p><strong>0-10</strong></p></td>
-<td><p><strong>11-25</strong></p></td>
-<td><p><strong>26-60</strong></p></td>
-<td><p><strong>61-100</strong></p></td>
-<td><p><strong>101-150</strong></p></td>
-<td><p><strong>&gt;150</strong></p></td>
-</tr>
-<tr class="row-odd"><td><p><strong>SO<sub>2</sub></strong></p></td>
-<td><p><strong>1h</strong></p></td>
-<td><p><strong>0-20</strong></p></td>
-<td><p><strong>21-40</strong></p></td>
-<td><p><strong>41-125</strong></p></td>
-<td><p><strong>126-190</strong></p></td>
-<td><p><strong>191-275</strong></p></td>
-<td><p><strong>&gt;275</strong></p></td>
+<tr>
+<td style="background-color: #F0F0F0; text-align: left;">SO<sub>2</sub></td>
+<td style="background-color: #F0F0F0; text-align: left;">1h</td>
+<td style="background-color: #00CFE3;">0-20</td>
+<td style="background-color: #00C79A;">21-40</td>
+<td style="background-color: #FFFF66;">41-125</td>
+<td style="background-color: #FF0800;">126-190</td>
+<td style="background-color: #C00000; color: white;">191-275</td>
+<td style="background-color: #7030A0; color: white;">&gt;275</td>
 </tr>
 </tbody>
 </table>
+</div>
 <p>Health advice associated with the AQI bands guides the general population and sensitive groups in adjusting outdoor activities to minimize health risks.</p>
 <p>This update enhances scientific robustness and communication clarity of the AQI, supporting better public awareness and health protection across EEA member countries.</p>
 </section>
